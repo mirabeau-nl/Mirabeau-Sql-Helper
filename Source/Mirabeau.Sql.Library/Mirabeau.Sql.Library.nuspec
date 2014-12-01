@@ -6,7 +6,7 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <projectUrl>https://bitbucket.org/mirabeau/mirabeau-net-sqlhelper</projectUrl>
+    <projectUrl>https://github.com/mirabeau-nl/Mirabeau-Sql-Helper</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Static helper class for performing MS SQL operations.</description>
     <copyright>Copyright 2013</copyright>
