@@ -55,7 +55,10 @@ This assembly has proven itself by being used for several clients and is based o
 
 ### How do I get set up? ###
 
-Build the project, or get the nuget package (TODO: Nuget link)
+Build the project, or get the nuget package:
+```sh
+Install-Package Mirabeau.Sql.Library
+```
 
 If you have long running queries and need to change the connection timeout you can set the config value SqlCommandTimeout in te appsettings (in seconds)
 <add key="SqlCommandTimeout" value="45"/>
