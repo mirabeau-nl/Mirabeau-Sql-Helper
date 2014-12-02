@@ -61,7 +61,9 @@ Install-Package Mirabeau.Sql.Library
 ```
 
 If you have long running queries and need to change the connection timeout you can set the config value SqlCommandTimeout in te appsettings (in seconds)
+```sh
 <add key="SqlCommandTimeout" value="45"/>
+```
 
 ### Contribution guidelines ###
 * Comments, methods and variables in english.
