@@ -191,7 +191,11 @@ namespace Mirabeau.Sql.Library
             string hashKey = connection.ConnectionString + ":" + storedProcedureName + 
                              (includeReturnValueParameter ? ":include ReturnValue Parameter" : "");
 
-            IList<SqlParameter> cachedParameters = paramCache[hashKey];
+            IList<SqlParameter> cachedParameters = null;
+            if (paramCache.ContainsKey(hashKey))
+            {
+                cachedParameters = paramCache[hashKey];
+            }
 
             if (cachedParameters == null)
             {
