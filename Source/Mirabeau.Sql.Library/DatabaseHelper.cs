@@ -1101,7 +1101,7 @@ namespace Mirabeau.Sql.Library
 
         /// <summary>
         /// Execute a stored procedure via a SqlCommand (that returns a resultset) against the database specified in 
-        /// the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+        /// the connection string using the provided parameter values. This method will query the database to discover the parameters for the 
         /// stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
         /// </summary>
         /// <remarks>
