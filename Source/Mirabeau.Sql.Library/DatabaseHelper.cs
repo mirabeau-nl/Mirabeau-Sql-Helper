@@ -92,8 +92,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteNonQuery(connectionString, commandType, commandText, null);
+            return ExecuteNonQueryAsync(connectionString, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -129,7 +128,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteNonQuery(connectionString, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -165,19 +164,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            if (string.IsNullOrWhiteSpace(connectionString))
-            {
-                throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "connectionString");
-            }
-
-            // Create & open a SqlConnection, and dispose of it after we are done
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            {
-                cn.Open();
-
-                // Call the overload that takes a connection in place of the connection string
-                return ExecuteNonQuery(cn, commandType, commandText, commandParameters);
-            }
+            return ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -226,21 +213,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(connectionString, storedProcedureName);
-
-                // Assign the provided values to these parameters based on parameter order
-                AssignParameterValues(commandParameters, parameterValues);
-
-                // Call the overload that takes an array of SqlParameters
-                return ExecuteNonQuery(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Otherwise we can just call the SP without params
-            return ExecuteNonQuery(connectionString, CommandType.StoredProcedure, storedProcedureName);
+            return ExecuteNonQueryAsync(connectionString, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -289,8 +262,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(SqlConnection connection, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters.
-            return ExecuteNonQuery(connection, commandType, commandText, null);
+            return ExecuteNonQueryAsync(connection, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -306,6 +278,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, CommandType commandType, string commandText)
         {
+            // Pass through the call providing null for the set of SqlParameters.
             return await ExecuteNonQueryAsync(connection, commandType, commandText, null);
         }
 
@@ -324,7 +297,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteNonQuery(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -360,18 +333,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            // Create a command and prepare it for execution
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters);
-
-                // Finally, execute the command
-                int retval = cmd.ExecuteNonQuery();
-
-                // Detach the SqlParameters from the command object, so they can be used again
-                cmd.Parameters.Clear();
-                return retval;
-            }
+            return ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -419,21 +381,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(null, connection, storedProcedureName);
-
-                // Assign the provided values to these parameters based on parameter order
-                AssignParameterValues(commandParameters, parameterValues);
-
-                // Call the overload that takes an array of SqlParameters
-                return ExecuteNonQuery(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Otherwise we can just call the SP without params
-            return ExecuteNonQuery(connection, CommandType.StoredProcedure, storedProcedureName);
+            return ExecuteNonQueryAsync(connection, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -482,8 +430,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(SqlTransaction transaction, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteNonQuery(transaction, commandType, commandText, null);
+            return ExecuteNonQueryAsync(transaction, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -518,7 +465,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteNonQuery(transaction, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -554,23 +501,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            if (transaction == null)
-            {
-                throw new ArgumentNullException("transaction", String_Resources.ParameterCannotBeNull);
-            }
-
-            // Create a command and prepare it for execution
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                PrepareCommand(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters);
-
-                // Execute the query
-                int retval = cmd.ExecuteNonQuery();
-
-                // Detach the SqlParameters from the command object, so they can be used again
-                cmd.Parameters.Clear();
-                return retval;
-            }
+            return ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -623,26 +554,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static int ExecuteNonQuery(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
-            if (transaction == null)
-            {
-                throw new ArgumentNullException("transaction", String_Resources.CannotbeNull);
-            }
-
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
-
-                // Assign the provided values to these parameters based on parameter order
-                AssignParameterValues(commandParameters, parameterValues);
-
-                // Call the overload that takes an array of SqlParameters
-                return ExecuteNonQuery(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Otherwise we can just call the SP without params
-            return ExecuteNonQuery(transaction, CommandType.StoredProcedure, storedProcedureName);
+            return ExecuteNonQueryAsync(transaction, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -738,6 +650,11 @@ namespace Mirabeau.Sql.Library
         /// <returns>A dataset containing the resultset generated by the command</returns>
         public static DataSet ExecuteDataSet(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "connectionString");
+            }
+
             // Create & open a SqlConnection, and dispose of it after we are done
             using (SqlConnection cn = new SqlConnection(connectionString))
             {
@@ -1013,51 +930,6 @@ namespace Mirabeau.Sql.Library
         #region ExecuteReader
 
         /// <summary>
-        /// Create and prepare a SqlCommand, and call ExecuteReader with the appropriate CommandBehavior.
-        /// </summary>
-        /// <remarks>
-        /// If we created and opened the connection, we want the connection to be closed when the DataReader is closed.
-        /// If the caller provided the connection, we want to leave it to them to manage.
-        /// </remarks>
-        /// <param name="connection">A valid SqlConnection, on which to execute this command</param>
-        /// <param name="transaction">A valid SqlTransaction, or 'null'</param>
-        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
-        /// <param name="commandText">The stored procedure name or T-SQL command</param>
-        /// <param name="commandParameters">An array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
-        /// <param name="connectionOwnership">Indicates whether the connection parameter was provided by the caller, or created by SqlHelper</param>
-        /// <returns>SqlDataReader containing the results of the command</returns>
-        [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        private static SqlDataReader ExecuteReader(
-            SqlConnection connection,
-            SqlTransaction transaction,
-            CommandType commandType,
-            string commandText,
-            IEnumerable<SqlParameter> commandParameters,
-            SqlConnectionOwnership connectionOwnership)
-        {
-            // Create a command and prepare it for execution
-            SqlCommand cmd = new SqlCommand();
-            PrepareCommand(cmd, connection, transaction, commandType, commandText, commandParameters);
-
-            // Create a reader
-            SqlDataReader dr;
-
-            // Call ExecuteReader with the appropriate CommandBehavior
-            if (connectionOwnership == SqlConnectionOwnership.External)
-            {
-                dr = cmd.ExecuteReader();
-            }
-            else
-            {
-                dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-            }
-
-            // Detach the SqlParameters from the command object, so they can be used again.
-            cmd.Parameters.Clear();
-            return dr;
-        }
-
-        /// <summary>
         /// Create and prepare a SqlCommand, and call ExecuteReaderAsync with the appropriate CommandBehavior.
         /// </summary>
         /// <remarks>
@@ -1072,13 +944,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="connectionOwnership">Indicates whether the connection parameter was provided by the caller, or created by SqlHelper</param>
         /// <returns>SqlDataReader containing the results of the command</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        private static async Task<SqlDataReader> ExecuteReaderAsync(
-            SqlConnection connection,
-            SqlTransaction transaction,
-            CommandType commandType,
-            string commandText,
-            IEnumerable<SqlParameter> commandParameters,
-            SqlConnectionOwnership connectionOwnership)
+        private static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters, SqlConnectionOwnership connectionOwnership)
         {
             // Create a command and prepare it for execution
             SqlCommand cmd = new SqlCommand();
@@ -1116,8 +982,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(connectionString, commandType, commandText, null);
+            return ExecuteReaderAsync(connectionString, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -1154,7 +1019,7 @@ namespace Mirabeau.Sql.Library
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
         public static SqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteReader(connectionString, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteReaderAsync(connectionString, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1192,22 +1057,7 @@ namespace Mirabeau.Sql.Library
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
         public static SqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            // Create and open the sql connection.
-            SqlConnection cn = new SqlConnection(connectionString);
-            cn.Open();
-
-            try
-            {
-                // Call the private overload that takes an internally owned connection in place of the connection string
-                SqlDataReader reader = ExecuteReader(cn, null, commandType, commandText, commandParameters, SqlConnectionOwnership.Internal);
-                return reader;
-            }
-            catch
-            {
-                // If we fail to return the SqlDatReader, we need to close the connection ourselves
-                cn.Close();
-                throw;
-            }
+            return ExecuteReaderAsync(connectionString, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1226,6 +1076,11 @@ namespace Mirabeau.Sql.Library
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
         public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "connectionString");
+            }
+
             // Create and open the sql connection.
             SqlConnection cn = new SqlConnection(connectionString);
             await cn.OpenAsync();
@@ -1246,7 +1101,7 @@ namespace Mirabeau.Sql.Library
 
         /// <summary>
         /// Execute a stored procedure via a SqlCommand (that returns a resultset) against the database specified in 
-        /// the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+        /// the connection string using the provided parameter values. This method will query the database to discover the parameters for the 
         /// stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
         /// </summary>
         /// <remarks>
@@ -1260,21 +1115,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(connectionString, storedProcedureName);
-
-                // Assign the provided values to these parameters based on parameter order
-                AssignParameterValues(commandParameters, parameterValues);
-
-                // Call the overload that takes an array of SqlParameters
-                return ExecuteReader(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Otherwise we can just call the SP without params
-            return ExecuteReader(connectionString, CommandType.StoredProcedure, storedProcedureName);
+            return ExecuteReaderAsync(connectionString, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -1323,8 +1164,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(SqlConnection connection, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(connection, commandType, commandText, null);
+            return ExecuteReaderAsync(connection, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -1359,7 +1199,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteReader(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteReaderAsync(connection, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1395,7 +1235,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return ExecuteReader(connection, null, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
+            return ExecuteReaderAsync(connection, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1432,23 +1272,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            if (connection == null)
-            {
-                throw new ArgumentNullException("connection", String_Resources.CannotbeNull);
-            }
-
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(null, connection, storedProcedureName);
-
-                AssignParameterValues(commandParameters, parameterValues);
-
-                return ExecuteReader(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(connection, CommandType.StoredProcedure, storedProcedureName);
+            return ExecuteReaderAsync(connection, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -1499,8 +1323,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(SqlTransaction transaction, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(transaction, commandType, commandText, null);
+            return ExecuteReaderAsync(transaction, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -1535,7 +1358,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteReader(transaction, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteReaderAsync(transaction, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1571,13 +1394,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            if (transaction == null)
-            {
-                throw new ArgumentNullException("transaction", String_Resources.CannotbeNull);
-            }
-
-            // Pass through to private overload, indicating that the connection is owned by the caller
-            return ExecuteReader(transaction.Connection, transaction, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
+            return ExecuteReaderAsync(transaction, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1620,23 +1437,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static SqlDataReader ExecuteReader(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
-            if (transaction == null)
-            {
-                throw new ArgumentNullException("transaction", String_Resources.CannotbeNull);
-            }
-
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
-
-                AssignParameterValues(commandParameters, parameterValues);
-
-                return ExecuteReader(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteReader(transaction, CommandType.StoredProcedure, storedProcedureName);
+            return ExecuteReaderAsync(transaction, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -1705,8 +1506,24 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(string connectionString, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteScalar(connectionString, commandType, commandText, null);
+            return ExecuteScalar<object>(connectionString, commandType, commandText);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the database specified in 
+        /// the connection string. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(connString, CommandType.StoredProcedure, "GetOrderCount");
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(string connectionString, CommandType commandType, string commandText)
+        {
+            return ExecuteScalarAsync<T>(connectionString, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -1742,7 +1559,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteScalar(connectionString, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteScalar<object>(connectionString, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(connString, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return ExecuteScalarAsync<T>(connectionString, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1760,7 +1595,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await ExecuteScalarAsync(connectionString, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return await ExecuteScalarAsync<object>(connectionString, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(connString, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteScalarAsync<T>(connectionString, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
         }
 
         /// <summary>
@@ -1778,14 +1631,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            // Create & open a SqlConnection, and dispose of it after we are done
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            {
-                cn.Open();
+            return ExecuteScalar<object>(connectionString, commandType, commandText, commandParameters);
+        }
 
-                // Stuur de aanvraag door naar de overload waaraan een connectie meegegeven kan worden.
-                return ExecuteScalar(cn, commandType, commandText, commandParameters);
-            }
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(connString, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
+        {
+            return ExecuteScalarAsync<T>(connectionString, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1803,13 +1667,36 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
+            return await ExecuteScalarAsync<object>(connectionString, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  Task&lt;T&gt; orderCount = ExecuteScalarAsync&lt;T&gt;(connString, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
+        {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "connectionString");
+            }
+
             // Create & open a SqlConnection, and dispose of it after we are done
             using (SqlConnection cn = new SqlConnection(connectionString))
             {
                 await cn.OpenAsync();
 
                 // Stuur de aanvraag door naar de overload waaraan een connectie meegegeven kan worden.
-                return await ExecuteScalarAsync(cn, commandType, commandText, commandParameters);
+                return await ExecuteScalarAsync<T>(cn, commandType, commandText, commandParameters);
             }
         }
 
@@ -1829,21 +1716,26 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(connectionString, storedProcedureName);
+            return ExecuteScalar<object>(connectionString, storedProcedureName, parameterValues);
+        }
 
-                // Assign the provided values to these parameters based on parameter order
-                AssignParameterValues(commandParameters, parameterValues);
-
-                // Call the overload that takes an array of SqlParameters
-                return ExecuteScalar(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Otherwise we can just call the SP without params
-            return ExecuteScalar(connectionString, CommandType.StoredProcedure, storedProcedureName);
+        /// <summary>
+        /// Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the database specified in 
+        /// the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+        /// stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+        /// </summary>
+        /// <remarks>
+        /// This method provides no access to output parameters or the stored procedure's return value parameter.
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(connString, "GetOrderCount", 24, 36);
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="storedProcedureName">The name of the stored procedure</param>
+        /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(string connectionString, string storedProcedureName, params object[] parameterValues)
+        {
+            return ExecuteScalarAsync<T>(connectionString, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -1862,6 +1754,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
+            return await ExecuteScalarAsync<object>(connectionString, storedProcedureName, parameterValues);
+        }
+
+        /// <summary>
+        /// Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the database specified in 
+        /// the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+        /// stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+        /// </summary>
+        /// <remarks>
+        /// This method provides no access to output parameters or the stored procedure's return value parameter.
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(connString, "GetOrderCount", 24, 36);
+        /// </remarks>
+        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
+        /// <param name="storedProcedureName">The name of the stored procedure</param>
+        /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(string connectionString, string storedProcedureName, params object[] parameterValues)
+        {
             // If we receive parameter values, we need to figure out where they go
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
@@ -1872,11 +1783,11 @@ namespace Mirabeau.Sql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of SqlParameters
-                return await ExecuteScalarAsync(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<T>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync(connectionString, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync<T>(connectionString, CommandType.StoredProcedure, storedProcedureName);
         }
 
         /// <summary>
@@ -1892,8 +1803,23 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(SqlConnection connection, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteScalar(connection, commandType, commandText, null);
+            return ExecuteScalar<object>(connection, commandType, commandText);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided SqlConnection. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(conn, CommandType.StoredProcedure, "GetOrderCount");
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(SqlConnection connection, CommandType commandType, string commandText)
+        {
+            return ExecuteScalarAsync<T>(connection, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -1909,8 +1835,24 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlConnection connection, CommandType commandType, string commandText)
         {
+            return await ExecuteScalarAsync<object>(connection, commandType, commandText);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided SqlConnection. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(conn, CommandType.StoredProcedure, "GetOrderCount");
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(SqlConnection connection, CommandType commandType, string commandText)
+        {
             // Pass through the call providing null for the set of SqlParameters
-            return await ExecuteScalarAsync(connection, commandType, commandText, null);
+            return await ExecuteScalarAsync<T>(connection, commandType, commandText, null);
         }
 
         /// <summary>
@@ -1928,7 +1870,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteScalar(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteScalar<object>(connection, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(conn, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return ExecuteScalarAsync<T>(connection, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1946,7 +1906,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await ExecuteScalarAsync(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return await ExecuteScalarAsync<object>(connection, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(conn, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteScalarAsync<T>(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
         }
 
         /// <summary>
@@ -1964,18 +1942,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            // Create a command and prepare it for execution
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters);
+            return ExecuteScalar<object>(connection, commandType, commandText, commandParameters);
+        }
 
-                // Execute the command & return the results
-                object retval = cmd.ExecuteScalar();
-
-                // Wis de SqlParameters van het command object, zodat ze opnieuw kunnen worden gebruikt.
-                cmd.Parameters.Clear();
-                return retval;
-            }
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = (int)ExecuteScalar&lt;int&gt;(conn, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
+        {
+            return ExecuteScalarAsync<T>(connection, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -1993,6 +1978,24 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
+            return await ExecuteScalarAsync<object>(connection, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(conn, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
+        {
             // Create a command and prepare it for execution
             using (SqlCommand cmd = new SqlCommand())
             {
@@ -2003,7 +2006,7 @@ namespace Mirabeau.Sql.Library
 
                 // Wis de SqlParameters van het command object, zodat ze opnieuw kunnen worden gebruikt.
                 cmd.Parameters.Clear();
-                return retval;
+                return (T)retval;
             }
         }
 
@@ -2015,7 +2018,7 @@ namespace Mirabeau.Sql.Library
         /// <remarks>
         /// This method provides no access to output parameters or the stored procedure's return value parameter.
         /// e.g.:  
-        ///  int orderCount = (int)ExecuteScalar(conn, "GetOrderCount", 24, 36);
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(conn, "GetOrderCount", 24, 36);
         /// </remarks>
         /// <param name="connection">A valid SqlConnection</param>
         /// <param name="storedProcedureName">The name of the stored procedure</param>
@@ -2023,26 +2026,26 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            if (connection == null)
-            {
-                throw new ArgumentNullException("connection", String_Resources.CannotbeNull);
-            }
+            return ExecuteScalar<object>(connection, storedProcedureName, parameterValues);
+        }
 
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(null, connection, storedProcedureName);
-
-                // Assign the provided values to these parameters based on parameter order
-                AssignParameterValues(commandParameters, parameterValues);
-
-                // Call the overload that takes an array of SqlParameters
-                return ExecuteScalar(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Otherwise we can just call the SP without params
-            return ExecuteScalar(connection, CommandType.StoredProcedure, storedProcedureName);
+        /// <summary>
+        /// Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+        /// using the provided parameter values.  This method will query the database to discover the parameters for the 
+        /// stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+        /// </summary>
+        /// <remarks>
+        /// This method provides no access to output parameters or the stored procedure's return value parameter.
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(conn, "GetOrderCount", 24, 36);
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="storedProcedureName">The name of the stored procedure</param>
+        /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
+        {
+            return ExecuteScalarAsync<T>(connection, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -2061,6 +2064,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
+            return await ExecuteScalarAsync<object>(connection, storedProcedureName, parameterValues);
+        }
+
+        /// <summary>
+        /// Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+        /// using the provided parameter values.  This method will query the database to discover the parameters for the 
+        /// stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+        /// </summary>
+        /// <remarks>
+        /// This method provides no access to output parameters or the stored procedure's return value parameter.
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(conn, "GetOrderCount", 24, 36);
+        /// </remarks>
+        /// <param name="connection">A valid SqlConnection</param>
+        /// <param name="storedProcedureName">The name of the stored procedure</param>
+        /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
+        {
             if (connection == null)
             {
                 throw new ArgumentNullException("connection", String_Resources.CannotbeNull);
@@ -2076,11 +2098,11 @@ namespace Mirabeau.Sql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of SqlParameters
-                return await ExecuteScalarAsync(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<T>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync(connection, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync<T>(connection, CommandType.StoredProcedure, storedProcedureName);
         }
 
         /// <summary>
@@ -2088,7 +2110,7 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <remarks>
         /// e.g.:  
-        ///  int orderCount = (int)ExecuteScalar(trans, CommandType.StoredProcedure, "GetOrderCount");
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(trans, CommandType.StoredProcedure, "GetOrderCount");
         /// </remarks>
         /// <param name="transaction">A valid SqlTransaction</param>
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
@@ -2096,8 +2118,23 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(SqlTransaction transaction, CommandType commandType, string commandText)
         {
-            // Pass through the call providing null for the set of SqlParameters
-            return ExecuteScalar(transaction, commandType, commandText, null);
+            return ExecuteScalar<object>(transaction, commandType, commandText);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided SqlTransaction. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(trans, CommandType.StoredProcedure, "GetOrderCount");
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(SqlTransaction transaction, CommandType commandType, string commandText)
+        {
+            return ExecuteScalarAsync<T>(transaction, commandType, commandText).TaskResult();
         }
 
         /// <summary>
@@ -2114,7 +2151,24 @@ namespace Mirabeau.Sql.Library
         public static async Task<object> ExecuteScalarAsync(SqlTransaction transaction, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return await ExecuteScalarAsync(transaction, commandType, commandText, null);
+            return await ExecuteScalarAsync<object>(transaction, commandType, commandText);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided SqlTransaction. 
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(trans, CommandType.StoredProcedure, "GetOrderCount");
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(SqlTransaction transaction, CommandType commandType, string commandText)
+        {
+            // Pass through the call providing null for the set of SqlParameters
+            return await ExecuteScalarAsync<T>(transaction, commandType, commandText, null);
         }
 
         /// <summary>
@@ -2132,7 +2186,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteScalar(transaction, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return ExecuteScalar<object>(transaction, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlTransaction
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(trans, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return ExecuteScalarAsync<T>(transaction, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -2150,7 +2222,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await ExecuteScalarAsync(transaction, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return await ExecuteScalarAsync<object>(transaction, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlTransaction
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(trans, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
+        {
+            return await ExecuteScalarAsync<T>(transaction, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
         }
 
         /// <summary>
@@ -2168,23 +2258,25 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            if (transaction == null)
-            {
-                throw new ArgumentNullException("transaction", String_Resources.CannotbeNull);
-            }
+            return ExecuteScalar<object>(transaction, commandType, commandText, commandParameters);
+        }
 
-            // Create a command and prepare it for execution
-            using (SqlCommand cmd = new SqlCommand())
-            {
-                PrepareCommand(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters);
-
-                // Create the DataAdapter & DataSet
-                object retval = cmd.ExecuteScalar();
-
-                // Detach the SqlParameters from the command object, so they can be used again
-                cmd.Parameters.Clear();
-                return retval;
-            }
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlTransaction
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(trans, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
+        {
+            return ExecuteScalarAsync<T>(transaction, commandType, commandText, commandParameters).TaskResult();
         }
 
         /// <summary>
@@ -2202,6 +2294,24 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
+            return await ExecuteScalarAsync<object>(transaction, commandType, commandText, commandParameters);
+        }
+
+        /// <summary>
+        /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlTransaction
+        /// using the provided parameters.
+        /// </summary>
+        /// <remarks>
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(trans, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@productId", 24));
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+        /// <param name="commandText">The stored procedure name or T-SQL command</param>
+        /// <param name="commandParameters">An array of SqlParameters used to execute the command</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
+        {
             if (transaction == null)
             {
                 throw new ArgumentNullException("transaction", String_Resources.CannotbeNull);
@@ -2217,7 +2327,7 @@ namespace Mirabeau.Sql.Library
 
                 // Detach the SqlParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
-                return retval;
+                return (T)retval;
             }
         }
 
@@ -2237,26 +2347,26 @@ namespace Mirabeau.Sql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static object ExecuteScalar(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
-            if (transaction == null)
-            {
-                throw new ArgumentNullException("transaction", String_Resources.CannotbeNull);
-            }
+            return ExecuteScalar<object>(transaction, storedProcedureName, parameterValues);
+        }
 
-            // If we receive parameter values, we need to figure out where they go
-            if ((parameterValues != null) && (parameterValues.Length > 0))
-            {
-                // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
-
-                // Assign the provided values to these parameters based on parameter order
-                AssignParameterValues(commandParameters, parameterValues);
-
-                // Call the overload that takes an array of SqlParameters
-                return ExecuteScalar(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
-            }
-
-            // Otherwise we can just call the SP without params
-            return ExecuteScalar(transaction, CommandType.StoredProcedure, storedProcedureName);
+        /// <summary>
+        /// Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified
+        /// SqlTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
+        /// stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+        /// </summary>
+        /// <remarks>
+        /// This method provides no access to output parameters or the stored procedure's return value parameter.
+        /// e.g.:  
+        ///  int orderCount = ExecuteScalar&lt;int&gt;(trans, "GetOrderCount", 24, 36);
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="storedProcedureName">The name of the stored procedure</param>
+        /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static T ExecuteScalar<T>(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
+        {
+            return ExecuteScalarAsync<T>(transaction, storedProcedureName, parameterValues).TaskResult();
         }
 
         /// <summary>
@@ -2295,6 +2405,44 @@ namespace Mirabeau.Sql.Library
 
             // Otherwise we can just call the SP without params
             return await ExecuteScalarAsync(transaction, CommandType.StoredProcedure, storedProcedureName);
+        }
+
+        /// <summary>
+        /// Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified
+        /// SqlTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
+        /// stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+        /// </summary>
+        /// <remarks>
+        /// This method provides no access to output parameters or the stored procedure's return value parameter.
+        /// e.g.:  
+        ///  Task&lt;{T}&gt; orderCount = ExecuteScalarAsync&lt;{T}&gt;(trans, "GetOrderCount", 24, 36);
+        /// </remarks>
+        /// <param name="transaction">A valid SqlTransaction</param>
+        /// <param name="storedProcedureName">The name of the stored procedure</param>
+        /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        public static async Task<T> ExecuteScalarAsync<T>(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
+        {
+            if (transaction == null)
+            {
+                throw new ArgumentNullException("transaction", String_Resources.CannotbeNull);
+            }
+
+            // If we receive parameter values, we need to figure out where they go
+            if ((parameterValues != null) && (parameterValues.Length > 0))
+            {
+                // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
+                IList<SqlParameter> commandParameters = SqlHelperParameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
+
+                // Assign the provided values to these parameters based on parameter order
+                AssignParameterValues(commandParameters, parameterValues);
+
+                // Call the overload that takes an array of SqlParameters
+                return await ExecuteScalarAsync<T>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+            }
+
+            // Otherwise we can just call the SP without params
+            return await ExecuteScalarAsync<T>(transaction, CommandType.StoredProcedure, storedProcedureName);
         }
 
         #endregion ExecuteScalar
@@ -2914,6 +3062,12 @@ namespace Mirabeau.Sql.Library
                 }
             }
         }
+
+        private static T TaskResult<T>(this Task<T> task)
+        {
+            return task.GetAwaiter().GetResult();
+        }
+
         #endregion
     }
 }
