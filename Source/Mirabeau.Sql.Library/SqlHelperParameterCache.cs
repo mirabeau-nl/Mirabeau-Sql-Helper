@@ -86,7 +86,7 @@ namespace Mirabeau.Sql.Library
         /// <returns>The <see cref="IList{SqlParameter}"/>.</returns>
         private static IList<SqlParameter> CloneParameters(IList<SqlParameter> originalParameters)
         {
-            IList<SqlParameter> clonedParameters = new List<SqlParameter>(originalParameters.Count);
+            SqlParameter[] clonedParameters = new SqlParameter[originalParameters.Count];
 
             for (int i = 0; i < originalParameters.Count; i++)
             {
@@ -191,7 +191,11 @@ namespace Mirabeau.Sql.Library
             string hashKey = connection.ConnectionString + ":" + storedProcedureName + 
                              (includeReturnValueParameter ? ":include ReturnValue Parameter" : "");
 
-            IList<SqlParameter> cachedParameters = paramCache[hashKey];
+            IList<SqlParameter> cachedParameters = null;
+            if (paramCache.ContainsKey(hashKey))
+            {
+                cachedParameters = paramCache[hashKey];
+            }
 
             if (cachedParameters == null)
             {
