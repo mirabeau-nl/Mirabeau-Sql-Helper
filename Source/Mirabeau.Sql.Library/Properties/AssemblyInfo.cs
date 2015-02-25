@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mirabeau BV")]
 [assembly: AssemblyProduct("Mirabeau.Sql.Library")]
-[assembly: AssemblyCopyright("Copyright © Mirabeau BV 2013")]
+[assembly: AssemblyCopyright("Copyright © Mirabeau BV 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
