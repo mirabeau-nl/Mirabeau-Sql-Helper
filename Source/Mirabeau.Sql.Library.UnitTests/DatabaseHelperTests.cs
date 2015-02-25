@@ -18,7 +18,7 @@ namespace Mirabeau.Sql.Library.UnitTests
             [TestCase("  ")]
             public void ShouldThrowArgumentExceptionForConnectionstring(string connectionstring)
             {
-                Assert.Throws(typeof(ArgumentException), () => DatabaseHelper.ExecuteNonQuery(connectionstring, CommandType.Text, "select"));
+                Assert.That(() => DatabaseHelper.ExecuteNonQuery(connectionstring, CommandType.Text, "select"), Throws.TypeOf<ArgumentException>());
             }
 
             [TestCase(null)]
@@ -35,7 +35,7 @@ namespace Mirabeau.Sql.Library.UnitTests
                 SqlConnection connection = null;
 
                 // ReSharper disable once ExpressionIsAlwaysNull
-                Assert.Throws(typeof(ArgumentNullException), () => DatabaseHelper.ExecuteNonQuery(connection, CommandType.Text, "select"));
+                Assert.That(() => DatabaseHelper.ExecuteNonQuery(connection, CommandType.Text, "select"), Throws.TypeOf<ArgumentNullException>());
             }
 
             [Test]
@@ -52,7 +52,7 @@ namespace Mirabeau.Sql.Library.UnitTests
             [TestCase("  ")]
             public void ShouldNotThrowNullReferenceExceptionForEmptyCommand(string command)
             {
-                Assert.Throws(typeof(ArgumentException), () => DatabaseHelper.ExecuteNonQuery(_connection, CommandType.Text, command));
+                Assert.That(() => DatabaseHelper.ExecuteNonQuery(_connection, CommandType.Text, command), Throws.TypeOf<ArgumentException>());
             }
 
             [TestCase(null)]
@@ -69,7 +69,7 @@ namespace Mirabeau.Sql.Library.UnitTests
                 SqlConnection connection = null;
 
                 // ReSharper disable once ExpressionIsAlwaysNull
-                Assert.Throws(typeof(ArgumentNullException), () => DatabaseHelper.ExecuteNonQuery(connection, "spname"));
+                Assert.That(() => DatabaseHelper.ExecuteNonQuery(connection, "spname"), Throws.TypeOf<ArgumentNullException>());
             }
 
             [Test]
@@ -86,10 +86,7 @@ namespace Mirabeau.Sql.Library.UnitTests
             {
                 SqlConnection connection = null;
 
-                Assert.Throws(
-                    typeof(ArgumentNullException),
-                    // ReSharper disable once ExpressionIsAlwaysNull
-                    () => DatabaseHelper.ExecuteNonQuery(connection, "spname", 0.CreateSqlParameter("parameter")));
+                Assert.That(() => DatabaseHelper.ExecuteNonQuery(connection, "spname", 0.CreateSqlParameter("parameter")), Throws.TypeOf<ArgumentNullException>());
             }
 
             [Test]
@@ -107,7 +104,7 @@ namespace Mirabeau.Sql.Library.UnitTests
             {
                 SqlConnection connection = new SqlConnection("Data Source=.; Initial Catalog=X; User Id=Y; Password=######;");
 
-                Assert.Throws(typeof(ArgumentException), () => DatabaseHelper.ExecuteNonQuery(connection, storedProcedureName));
+                Assert.That(() => DatabaseHelper.ExecuteNonQuery(connection, storedProcedureName), Throws.TypeOf<ArgumentException>());
             }
 
             [TestCase(null)]
@@ -126,7 +123,7 @@ namespace Mirabeau.Sql.Library.UnitTests
                 SqlTransaction transaction = null;
 
                 // ReSharper disable once ExpressionIsAlwaysNull
-                Assert.Throws(typeof(ArgumentNullException), () => DatabaseHelper.ExecuteNonQuery(transaction, "spname"));
+                Assert.That(() => DatabaseHelper.ExecuteNonQuery(transaction, "spname"), Throws.TypeOf<ArgumentNullException>());
             }
 
             [Test]
@@ -144,7 +141,7 @@ namespace Mirabeau.Sql.Library.UnitTests
             {
                 SqlConnection connection = new SqlConnection("Data Source=.; Initial Catalog=X; User Id=Y; Password=######;");
 
-                Assert.Throws(typeof(ArgumentException), () => DatabaseHelper.ExecuteNonQuery(connection, storedProcedure, 1));
+                Assert.That(() => DatabaseHelper.ExecuteNonQuery(connection, storedProcedure, 1), Throws.TypeOf<ArgumentException>());
             }
 
             [TestCase(null)]
@@ -154,6 +151,22 @@ namespace Mirabeau.Sql.Library.UnitTests
                 SqlConnection connection = new SqlConnection("Data Source=.; Initial Catalog=X; User Id=Y; Password=######;");
 
                 Assert.That(async () => await DatabaseHelper.ExecuteNonQueryAsync(connection, storedProcedure, 1), Throws.TypeOf<ArgumentException>());
+            }
+
+            [Test]
+            public void ShouldThrowArgumentNullForConnectionExceptionForExecuteScalar()
+            {
+                SqlConnection connection = null;
+
+                Assert.That(() => DatabaseHelper.ExecuteScalar(connection, "spname"), Throws.TypeOf<ArgumentNullException>());
+            }
+
+            [TestCase(null)]
+            [TestCase("")]
+            [TestCase("  ")]
+            public void ShouldThrowArgumentExceptionForConnectionstringForExecuteScalar(string connectionstring)
+            {
+                Assert.That(() => DatabaseHelper.ExecuteScalar(connectionstring, CommandType.Text, "select"), Throws.TypeOf<ArgumentException>());
             }
         }
     }
