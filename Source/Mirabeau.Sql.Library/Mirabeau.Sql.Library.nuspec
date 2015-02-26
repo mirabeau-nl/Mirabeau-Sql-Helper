@@ -9,6 +9,6 @@
     <projectUrl>https://github.com/mirabeau-nl/Mirabeau-Sql-Helper</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Static helper class for performing MS SQL operations.</description>
-    <copyright>Copyright 2013</copyright>
+    <copyright>Copyright 2015</copyright>
   </metadata>
 </package>
