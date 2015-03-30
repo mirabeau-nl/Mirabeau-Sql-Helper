@@ -7,16 +7,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mirabeau.Sql.Library")]
+[assembly: AssemblyTitle("Mirabeau.MsSql.Library")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Mirabeau BV")]
-[assembly: AssemblyProduct("Mirabeau.Sql.Library")]
+[assembly: AssemblyCompany("Mirabeau")]
+[assembly: AssemblyProduct("Mirabeau.MsSql.Library")]
 [assembly: AssemblyCopyright("Copyright © Mirabeau BV 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("Mirabeau.MsSql.Library, PublicKey=00240000048000009400000006020000002400005253413100040000010001005518300253e09e1480c8150286d1b8998d2fb905ac0f2a97cb482e682d6447ece4a3e6fbfa0eb34b5fb8a5914e61425fbce6ce78ddf610cda22281d48813d247fcef15fb4dbd7b457a5f550c9a7f2213c50093294d9e25e1016ddfcdc505147ab0e0c1fe5a9682b2901a677ecd52ce8c15653f69c82e3a5c83145d32e06bffb7")]
-//[assembly: InternalsVisibleTo("Mirabeau.MySql.Library")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -24,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fcaf4f57-412d-4ba5-9034-3599bce767f6")]
+[assembly: Guid("8fc3e744-ae9d-4c62-92ab-db2e37093597")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -21,37 +21,39 @@
 // LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR
 // FITNESS FOR A PARTICULAR PURPOSE.
 // ==============================================================================
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+using Mirabeau.Sql.Library;
 
-namespace Mirabeau.Sql.Library
+namespace Mirabeau.MsSql.Library
 {
     /// <summary>
     /// SqlHelperParameterCache provides functions to leverage a static cache of procedure parameters, and the
     /// ability to discover parameters for stored procedures at run-time.
     /// </summary>
-    internal static class SqlHelperParameterCache
+    internal class ParameterCache : IParameterCache
     {
         #region private methods, variables, and constructors
 
-        private static readonly ConcurrentDictionary<string, IList<SqlParameter>> paramCache = new ConcurrentDictionary<string, IList<SqlParameter>>();
+        private static readonly ConcurrentDictionary<string, IList<DbParameter>> ParamCache = new ConcurrentDictionary<string, IList<DbParameter>>();
 
         /// <summary>
-        /// Resolve at run time the appropriate set of SqlParameters for a stored procedure
+        /// Resolve at run time the appropriate set of DbParameters for a stored procedure
         /// </summary>
         /// <param name="transaction">A valid SqlTransaction object</param>
         /// <param name="connection">A valid SqlConnection object</param>
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="includeReturnValueParameter">Whether or not to include their return value parameter</param>
         /// <returns>The parameter array discovered.</returns>
-        private static IList<SqlParameter> DiscoverSpParameterSet(SqlTransaction transaction, SqlConnection connection, string storedProcedureName, bool includeReturnValueParameter)
+        private IList<DbParameter> DiscoverSpParameterSet(DbTransaction transaction, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
         {
-            using (SqlCommand cmd = new SqlCommand(storedProcedureName, connection))
+            using (SqlCommand cmd = new SqlCommand(storedProcedureName, connection as SqlConnection))
             {
                 if (connection.State != ConnectionState.Open)
                 {
@@ -61,7 +63,7 @@ namespace Mirabeau.Sql.Library
                 cmd.CommandType = CommandType.StoredProcedure;
                 if (transaction != null)
                 {
-                    cmd.Transaction = transaction;
+                    cmd.Transaction = transaction as SqlTransaction;
                 }
 
                 SqlCommandBuilder.DeriveParameters(cmd);
@@ -71,7 +73,7 @@ namespace Mirabeau.Sql.Library
                     cmd.Parameters.RemoveAt(0);
                 }
 
-                SqlParameter[] discoveredParameters = new SqlParameter[cmd.Parameters.Count];
+                DbParameter[] discoveredParameters = new DbParameter[cmd.Parameters.Count];
 
                 cmd.Parameters.CopyTo(discoveredParameters, 0);
 
@@ -80,17 +82,17 @@ namespace Mirabeau.Sql.Library
         }
 
         /// <summary>
-        /// Deep copy of cached SqlParameter array
+        /// Deep copy of cached DbParameter array
         /// </summary>
         /// <param name="originalParameters">The original parameters.</param>
-        /// <returns>The <see cref="IList{SqlParameter}"/>.</returns>
-        private static IList<SqlParameter> CloneParameters(IList<SqlParameter> originalParameters)
+        /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
+        private IList<DbParameter> CloneParameters(IList<DbParameter> originalParameters)
         {
-            SqlParameter[] clonedParameters = new SqlParameter[originalParameters.Count];
+            DbParameter[] clonedParameters = new DbParameter[originalParameters.Count];
 
             for (int i = 0; i < originalParameters.Count; i++)
             {
-                clonedParameters[i] = (SqlParameter)((ICloneable)originalParameters[i]).Clone();
+                clonedParameters[i] = (DbParameter)((ICloneable)originalParameters[i]).Clone();
             }
 
             return clonedParameters;
@@ -105,12 +107,12 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <param name="connectionString">A valid connection string for a SqlConnection</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
-        /// <param name="commandParameters">An array of SqlParameters to be cached</param>
-        internal static void CacheParameterSet(string connectionString, string commandText, params SqlParameter[] commandParameters)
+        /// <param name="commandParameters">An array of DbParameters to be cached</param>
+        internal void CacheParameterSet(string connectionString, string commandText, params DbParameter[] commandParameters)
         {
             string hashKey = connectionString + ":" + commandText;
 
-            paramCache[hashKey] = commandParameters;
+            ParamCache[hashKey] = commandParameters;
         }
 
         /// <summary>
@@ -118,12 +120,12 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <param name="connectionString">A valid connection string for a SqlConnection</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
-        /// <returns>An array of SqlParameters</returns>
-        internal static IList<SqlParameter> GetCachedParameterSet(string connectionString, string commandText)
+        /// <returns>An array of DbParameters</returns>
+        internal IList<DbParameter> GetCachedParameterSet(string connectionString, string commandText)
         {
             string hashKey = connectionString + ":" + commandText;
 
-            IList<SqlParameter> cachedParameters = paramCache[hashKey];
+            IList<DbParameter> cachedParameters = ParamCache[hashKey];
 
             if (cachedParameters == null)
             {
@@ -138,75 +140,78 @@ namespace Mirabeau.Sql.Library
         #region Parameter Discovery Functions
 
         /// <summary>
-        /// Retrieves the set of SqlParameters appropriate for the stored procedure
+        /// Retrieves the set of DbParameters appropriate for the stored procedure
         /// </summary>
         /// <remarks>
         /// This method will query the database for this information, and then store it in a cache for future requests.
         /// </remarks>
         /// <param name="connectionString">A valid connection string for a SqlConnection</param>
         /// <param name="storedProcdureName">The name of the stored procedure</param>
-        /// <returns>The <see cref="IList{SqlParameter}"/>.</returns>
+        /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        internal static IList<SqlParameter> GetSPParameterSet(string connectionString, string storedProcdureName)
+        public IList<DbParameter> GetSPParameterSet(string connectionString, string storedProcdureName)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             return GetSPParameterSet(null, connection, storedProcdureName, false);
         }
 
         /// <summary>
-        /// Retrieves the set of SqlParameters appropriate for the stored procedure
+        /// Retrieves the set of DbParameters appropriate for the stored procedure
         /// </summary>
-        /// <param name="transaction">A valid SqlTransaction object</param>
+        /// <param name="connectionString">A valid SqlTransaction object</param>
         /// <param name="connection">A valid SqlConnection object</param>
-        /// <param name="storedProcdureName">The name of the stored procedure</param>
-        /// <returns>The <see cref="IList{SqlParameter}"/>.</returns>
-        internal static IList<SqlParameter> GetSPParameterSet(SqlTransaction transaction, SqlConnection connection, string storedProcdureName)
+        /// <param name="storedProcedureName">The name of the stored procedure</param>
+        /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
+        public IList<DbParameter> GetSPParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName)
         {
-            return GetSPParameterSet(transaction, connection, storedProcdureName, false);
+            return GetSPParameterSet(connectionString, connection, storedProcedureName, false);
         }
 
         /// <summary>
-        /// Retrieves the set of SqlParameters appropriate for the stored procedure
+        /// Retrieves the set of DbParameters appropriate for the stored procedure
         /// </summary>
         /// <remarks>
         /// This method will query the database for this information, and then store it in a cache for future requests.
         /// </remarks>
-        /// <param name="transaction">A valid SqlTransaction object</param>
+        /// <param name="connectionString">A valid SqlTransaction object</param>
         /// <param name="connection">A valid SqlConnection object</param>
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="includeReturnValueParameter">A boolean value indicating whether the return value parameter should be included in the results</param>
-        /// <returns>The <see cref="IList{SqlParameter}"/>.</returns>
-        internal static IList<SqlParameter> GetSPParameterSet(SqlTransaction transaction, SqlConnection connection, string storedProcedureName, bool includeReturnValueParameter)
+        /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
+        public IList<DbParameter> GetSPParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
         {
             if (connection == null)
             {
-                throw new ArgumentNullException("connection", String_Resources.CannotbeNull);
+                // TODO: Fix
+                //throw new ArgumentNullException("connection", String_Resources.CannotbeNull);
             }
 
             if (string.IsNullOrEmpty(storedProcedureName))
             {
-                throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "storedProcedureName");
+                // TODO: Fix
+                //throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "storedProcedureName");
             }
 
             string hashKey = connection.ConnectionString + ":" + storedProcedureName + 
                              (includeReturnValueParameter ? ":include ReturnValue Parameter" : "");
 
-            IList<SqlParameter> cachedParameters = null;
-            if (paramCache.ContainsKey(hashKey))
+            IList<DbParameter> cachedParameters = null;
+            if (ParamCache.ContainsKey(hashKey))
             {
-                cachedParameters = paramCache[hashKey];
+                cachedParameters = ParamCache[hashKey];
             }
 
             if (cachedParameters == null)
             {
                 cachedParameters =
-                    paramCache[hashKey] =
-                        DiscoverSpParameterSet(transaction, connection, storedProcedureName, includeReturnValueParameter);
+                    ParamCache[hashKey] =
+                        DiscoverSpParameterSet(connectionString, connection, storedProcedureName, includeReturnValueParameter);
             }
 
             return CloneParameters(cachedParameters);
         }
 
         #endregion Parameter Discovery Functions
+
     }
 }
