@@ -21,7 +21,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <DocumentationFile>bin\Debug\Mirabeau.MsSql.Library.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Mirabeau.MsSql.Library.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,7 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IMsSqlHelper.cs" />
+    <Compile Include="IMSSqlHelper.cs" />
+    <Compile Include="IParameterCache.cs" />
     <Compile Include="MsSqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParameterCache.cs" />

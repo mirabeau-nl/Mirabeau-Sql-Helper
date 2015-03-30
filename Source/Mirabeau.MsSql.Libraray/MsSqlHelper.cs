@@ -10,10 +10,16 @@ using Mirabeau.Sql.Library;
 
 namespace Mirabeau.MsSql.Library
 {
+    /// <summary>
+    /// Helper class for MsSql commands.
+    /// </summary>
     public class MsSqlHelper : DatabaseHelper, IMsSqlHelper
     {
         private readonly ParameterCache _parameterCache;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MsSqlHelper"/> class.
+        /// </summary>
         public MsSqlHelper()
             : this(new ParameterCache())
         {
@@ -26,16 +32,30 @@ namespace Mirabeau.MsSql.Library
             _parameterCache = parameterCache;
         }
 
+        /// <summary>
+        /// Creates a new DbConnection.
+        /// </summary>
+        /// <param name="connectionString">The connection string to the database.</param>
+        /// <returns></returns>
         public override DbConnection CreateConnection(string connectionString)
         {
             return new SqlConnection(connectionString);
         }
 
+        /// <summary>
+        /// Creates a new DbCommand.
+        /// </summary>
+        /// <returns></returns>
         public override DbCommand CreateCommand()
         {
             return new SqlCommand();
         }
 
+        /// <summary>
+        /// Creates a new DbDataAdapter.
+        /// </summary>
+        /// <param name="command">the <see cref="DbCommand" />.</param>
+        /// <returns></returns>
         public override DbDataAdapter CreateDataAdapter(DbCommand command)
         {
             return new SqlDataAdapter(command as SqlCommand);
@@ -82,7 +102,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(connectionString, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -115,7 +135,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(null, connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -172,7 +192,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -228,7 +248,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(connectionString, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -266,7 +286,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(null, connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -322,7 +342,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(connectionString, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -359,7 +379,7 @@ namespace Mirabeau.MsSql.Library
             // If we receive parameter values, we need to figure out where they go
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(null, connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 AssignParameterValues(commandParameters, parameterValues);
 
@@ -413,7 +433,7 @@ namespace Mirabeau.MsSql.Library
             // If we receive parameter values, we need to figure out where they go
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 AssignParameterValues(commandParameters, parameterValues);
 
@@ -467,7 +487,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(connectionString, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -619,7 +639,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(null, connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -657,7 +677,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -735,7 +755,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -905,7 +925,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(null, connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -943,7 +963,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(null, connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -1125,7 +1145,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -1163,7 +1183,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetSPParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);

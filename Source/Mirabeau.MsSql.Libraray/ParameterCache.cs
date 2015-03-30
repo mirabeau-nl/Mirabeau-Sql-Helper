@@ -51,7 +51,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="includeReturnValueParameter">Whether or not to include their return value parameter</param>
         /// <returns>The parameter array discovered.</returns>
-        private IList<DbParameter> DiscoverSpParameterSet(DbTransaction transaction, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
+        private static IList<DbParameter> DiscoverSpParameterSet(DbTransaction transaction, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
         {
             using (SqlCommand cmd = new SqlCommand(storedProcedureName, connection as SqlConnection))
             {
@@ -86,7 +86,7 @@ namespace Mirabeau.MsSql.Library
         /// </summary>
         /// <param name="originalParameters">The original parameters.</param>
         /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
-        private IList<DbParameter> CloneParameters(IList<DbParameter> originalParameters)
+        private static IList<DbParameter> CloneParameters(IList<DbParameter> originalParameters)
         {
             DbParameter[] clonedParameters = new DbParameter[originalParameters.Count];
 
@@ -108,7 +108,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="connectionString">A valid connection string for a SqlConnection</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters to be cached</param>
-        internal void CacheParameterSet(string connectionString, string commandText, params DbParameter[] commandParameters)
+        private static void CacheParameterSet(string connectionString, string commandText, params DbParameter[] commandParameters)
         {
             string hashKey = connectionString + ":" + commandText;
 
@@ -121,7 +121,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="connectionString">A valid connection string for a SqlConnection</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>An array of DbParameters</returns>
-        internal IList<DbParameter> GetCachedParameterSet(string connectionString, string commandText)
+        private static IList<DbParameter> GetCachedParameterSet(string connectionString, string commandText)
         {
             string hashKey = connectionString + ":" + commandText;
 
@@ -140,7 +140,7 @@ namespace Mirabeau.MsSql.Library
         #region Parameter Discovery Functions
 
         /// <summary>
-        /// Retrieves the set of DbParameters appropriate for the stored procedure
+        /// Retrieves the set of DbParameters appropriate for the stored procedure.
         /// </summary>
         /// <remarks>
         /// This method will query the database for this information, and then store it in a cache for future requests.
@@ -149,26 +149,26 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcdureName">The name of the stored procedure</param>
         /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        public IList<DbParameter> GetSPParameterSet(string connectionString, string storedProcdureName)
+        public IList<DbParameter> GetStoredProcedureParameterSet(string connectionString, string storedProcdureName)
         {
             SqlConnection connection = new SqlConnection(connectionString);
-            return GetSPParameterSet(null, connection, storedProcdureName, false);
+            return GetStoredProcedureParameterSet(null, connection, storedProcdureName, false);
         }
 
         /// <summary>
-        /// Retrieves the set of DbParameters appropriate for the stored procedure
+        /// Retrieves the set of DbParameters appropriate for the stored procedure.
         /// </summary>
         /// <param name="connectionString">A valid SqlTransaction object</param>
         /// <param name="connection">A valid SqlConnection object</param>
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
-        public IList<DbParameter> GetSPParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName)
+        public IList<DbParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName)
         {
-            return GetSPParameterSet(connectionString, connection, storedProcedureName, false);
+            return GetStoredProcedureParameterSet(connectionString, connection, storedProcedureName, false);
         }
 
         /// <summary>
-        /// Retrieves the set of DbParameters appropriate for the stored procedure
+        /// Retrieves the set of DbParameters appropriate for the stored procedure.
         /// </summary>
         /// <remarks>
         /// This method will query the database for this information, and then store it in a cache for future requests.
@@ -178,18 +178,16 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="includeReturnValueParameter">A boolean value indicating whether the return value parameter should be included in the results</param>
         /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
-        public IList<DbParameter> GetSPParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
+        public IList<DbParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
         {
             if (connection == null)
             {
-                // TODO: Fix
-                //throw new ArgumentNullException("connection", String_Resources.CannotbeNull);
+                throw new ArgumentNullException("connection", String_Resources.CannotbeNull);
             }
 
             if (string.IsNullOrEmpty(storedProcedureName))
             {
-                // TODO: Fix
-                //throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "storedProcedureName");
+                throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "storedProcedureName");
             }
 
             string hashKey = connection.ConnectionString + ":" + storedProcedureName + 

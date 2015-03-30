@@ -7,6 +7,9 @@ using Mirabeau.Sql.Library;
 
 namespace Mirabeau.MsSql.Library
 {
+    /// <summary>
+    /// Interface for the MsSql helper.
+    /// </summary>
     public interface IMsSqlHelper : IDatabaseHelper
     {
         /// <summary>

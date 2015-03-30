@@ -27,8 +27,8 @@ namespace Mirabeau.Sql.Library.IntegrationTests
         [Test]
         public void ShouldExecuteReader()
         {
-            IEnumerable<SqlParameter> parametersList = new List<SqlParameter>();
-            SqlParameter[] parametersArray = new SqlParameter[0];
+            IEnumerable<DbParameter> parametersList = new List<DbParameter>();
+            DbParameter[] parametersArray = new DbParameter[0];
 
             using (var reader = _sqlHelper.ExecuteReader(Connectionstring, "[sys].[sp_datatype_info]", -7, 1))
             {

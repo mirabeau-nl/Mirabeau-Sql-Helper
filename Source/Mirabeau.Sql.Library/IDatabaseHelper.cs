@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mirabeau.Sql.Library
 {
+    /// <summary>
+    /// Interface for the database helper class.
+    /// </summary>
     public interface IDatabaseHelper
     {
         /// <summary>
