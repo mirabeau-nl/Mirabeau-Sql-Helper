@@ -100,43 +100,6 @@ namespace Mirabeau.MsSql.Library
 
         #endregion private methods, variables, and constructors
 
-        #region caching functions
-
-        /// <summary>
-        /// Add parameter array to the cache
-        /// </summary>
-        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
-        /// <param name="commandText">The stored procedure name or T-SQL command</param>
-        /// <param name="commandParameters">An array of DbParameters to be cached</param>
-        private static void CacheParameterSet(string connectionString, string commandText, params DbParameter[] commandParameters)
-        {
-            string hashKey = connectionString + ":" + commandText;
-
-            ParamCache[hashKey] = commandParameters;
-        }
-
-        /// <summary>
-        /// Retrieve a parameter array from the cache
-        /// </summary>
-        /// <param name="connectionString">A valid connection string for a SqlConnection</param>
-        /// <param name="commandText">The stored procedure name or T-SQL command</param>
-        /// <returns>An array of DbParameters</returns>
-        private static IList<DbParameter> GetCachedParameterSet(string connectionString, string commandText)
-        {
-            string hashKey = connectionString + ":" + commandText;
-
-            IList<DbParameter> cachedParameters = ParamCache[hashKey];
-
-            if (cachedParameters == null)
-            {
-                return null;
-            }
-
-            return CloneParameters(cachedParameters);
-        }
-
-        #endregion caching functions
-
         #region Parameter Discovery Functions
 
         /// <summary>
