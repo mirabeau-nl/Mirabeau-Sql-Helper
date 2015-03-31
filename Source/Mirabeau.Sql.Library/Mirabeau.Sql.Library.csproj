@@ -84,7 +84,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="DbDataReaderHelper.cs" />
-    <Compile Include="SqlParameterExtensions.cs" />
     <Compile Include="String.Resources.Designer.cs">
       <DependentUpon>String.Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>

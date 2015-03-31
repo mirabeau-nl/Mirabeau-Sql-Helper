@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Globalization;
+using Mirabeau.Sql.Library;
 
-namespace Mirabeau.Sql.Library
+namespace Mirabeau.MsSql.Library
 {
     /// <summary>
     /// Extension methods for <see cref="SqlParameter"/>.
@@ -158,18 +158,21 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this DateTime theValue, string parameterName)
+        /// <param name="dateTimeType">Type of the SQL column.</param>
+        /// <returns>
+        /// The <see cref="SqlParameter" />
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">parameterName</exception>
+        public static SqlParameter CreateSqlParameter(this DateTime theValue, string parameterName, SqlDbType dateTimeType)
         {
             if (string.IsNullOrEmpty(parameterName))
             {
                 throw new ArgumentNullException("parameterName", String_Resources.CannotbeNullOrEmpty);
             }
 
-            // TODO: Check for better solution.
-            // http://stackoverflow.com/questions/425870/using-datetime-in-a-sqlparameter-for-stored-procedure-format-error
-
-            return new SqlParameter(parameterName, theValue.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
+            SqlParameter parameter = new SqlParameter(parameterName, dateTimeType);
+            parameter.Value = theValue;
+            return parameter;
         }
 
         /// <summary>
@@ -198,8 +201,12 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this DateTime? theValue, string parameterName)
+        /// <param name="dateTimeType">Type of the SQL column.</param>
+        /// <returns>
+        /// The <see cref="SqlParameter" />
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">parameterName</exception>
+        public static SqlParameter CreateSqlParameter(this DateTime? theValue, string parameterName, SqlDbType dateTimeType)
         {
             if (string.IsNullOrEmpty(parameterName))
             {
@@ -211,7 +218,7 @@ namespace Mirabeau.Sql.Library
                 return new SqlParameter(parameterName, DBNull.Value);
             }
 
-            return new SqlParameter(parameterName, ((DateTime)theValue).ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
+            return theValue.Value.CreateSqlParameter(parameterName, dateTimeType);
         }
 
         /// <summary>
