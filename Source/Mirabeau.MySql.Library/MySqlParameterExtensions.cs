@@ -1,181 +1,181 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
-namespace Mirabeau.MsSql.Library
+namespace Mirabeau.MySql.Library
 {
     /// <summary>
-    /// Extension methods for <see cref="SqlParameter"/>.
+    /// Extension methods for <see cref="MySqlParameter"/>.
     /// </summary>
-    public static class SqlParameterExtensions
+    public static class MySqlParameterExtensions
     {
-        private static readonly SqlParameterFactory Factory = new SqlParameterFactory();
+        private static readonly MySqlParameterFactory Factory = new MySqlParameterFactory();
 
         /// <summary>
-        /// Uses the <see cref="ICloneable"/>Interface to clone a <see cref="SqlParameter"/>.
+        /// Uses the <see cref="ICloneable"/>Interface to clone a <see cref="MySqlParameter"/>.
         /// </summary>
-        /// <param name="sqlParameter">The SQL parameter.</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter Clone(this SqlParameter sqlParameter)
+        /// <param name="MySqlParameter">The SQL parameter.</param>
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter Clone(this MySqlParameter MySqlParameter)
         {
-            ICloneable cloneable = sqlParameter;
-            return cloneable == null ? null : cloneable.Clone() as SqlParameter;
+            ICloneable cloneable = MySqlParameter;
+            return cloneable == null ? null : cloneable.Clone() as MySqlParameter;
         }
 
         /// <summary>
-        /// Creates a SqlParameter with either DBNull or a value.
+        /// Creates a MySqlParameter with either DBNull or a value.
         /// </summary>
         /// <param name="nullableObject">The nullable object.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter<T>(this T? nullableObject, string parameterName) where T : struct
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter<T>(this T? nullableObject, string parameterName) where T : struct
         {
             return Factory.CreateParameter(nullableObject, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter with either DBNull or a value
+        /// Creates a MySqlParameter with either DBNull or a value
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this string theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this string theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter with either DBNull or a value
+        /// Creates a MySqlParameter with either DBNull or a value
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this int? theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this int? theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter
+        /// Creates a MySqlParameter
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this int theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this int theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter with either DBNull or a value
+        /// Creates a MySqlParameter with either DBNull or a value
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this decimal? theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this decimal? theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter
+        /// Creates a MySqlParameter
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this decimal theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this decimal theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter
+        /// Creates a MySqlParameter
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this bool theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this bool theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter
+        /// Creates a MySqlParameter
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
         /// <param name="dateTimeType">Type of the SQL column.</param>
         /// <returns>
-        /// The <see cref="SqlParameter" />
+        /// The <see cref="MySqlParameter" />
         /// </returns>
         /// <exception cref="System.ArgumentNullException">parameterName</exception>
-        public static SqlParameter CreateSqlParameter(this DateTime theValue, string parameterName, DbType dateTimeType)
+        public static MySqlParameter CreateMySqlParameter(this DateTime theValue, string parameterName, DbType dateTimeType)
         {
-            SqlParameter sqlParameter = Factory.CreateParameter(theValue, parameterName);
-            sqlParameter.DbType = dateTimeType;
-            return sqlParameter;
+            MySqlParameter MySqlParameter = Factory.CreateParameter(theValue, parameterName);
+            MySqlParameter.DbType = dateTimeType;
+            return MySqlParameter;
         }
 
         /// <summary>
-        /// Creates a SqlParameter with either DBNull or a value
+        /// Creates a MySqlParameter with either DBNull or a value
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this bool? theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this bool? theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter with either DBNull or a value
+        /// Creates a MySqlParameter with either DBNull or a value
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
         /// <param name="dateTimeType">Type of the SQL column.</param>
         /// <returns>
-        /// The <see cref="SqlParameter" />
+        /// The <see cref="MySqlParameter" />
         /// </returns>
         /// <exception cref="System.ArgumentNullException">parameterName</exception>
-        public static SqlParameter CreateSqlParameter(this DateTime? theValue, string parameterName, DbType dateTimeType)
+        public static MySqlParameter CreateMySqlParameter(this DateTime? theValue, string parameterName, DbType dateTimeType)
         {
             if (theValue.HasValue)
             {
-                CreateSqlParameter(theValue.Value, parameterName, dateTimeType);
+                CreateMySqlParameter(theValue.Value, parameterName, dateTimeType);
             }
 
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter with either DBNull or a value
+        /// Creates a MySqlParameter with either DBNull or a value
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this long? theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this long? theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a <see cref="SqlParameter"/>.
+        /// Creates a <see cref="MySqlParameter"/>.
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">The name of the parameter.</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this long theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this long theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }
 
         /// <summary>
-        /// Creates a SqlParameter for a tinyint
+        /// Creates a MySqlParameter for a tinyint
         /// </summary>
         /// <param name="theValue">the value.</param>
         /// <param name="parameterName">The name of the parameter</param>
-        /// <returns>The <see cref="SqlParameter"/></returns>
-        public static SqlParameter CreateSqlParameter(this byte theValue, string parameterName)
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateMySqlParameter(this byte theValue, string parameterName)
         {
             return Factory.CreateParameter(theValue, parameterName);
         }

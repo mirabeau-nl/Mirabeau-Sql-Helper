@@ -52,9 +52,11 @@
     <Compile Include="IMSqlHelper.cs" />
     <Compile Include="IParameterCache.cs" />
     <Compile Include="MsSqlHelper.cs" />
+    <Compile Include="ParameterFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParameterCache.cs" />
     <Compile Include="SqlParameterExtensions.cs" />
+    <Compile Include="SqlParameterFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mirabeau.Sql.Library\Mirabeau.Sql.Library.csproj">

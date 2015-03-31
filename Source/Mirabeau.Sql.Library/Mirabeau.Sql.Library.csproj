@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IDatabaseHelper.cs" />
+    <Compile Include="ParameterFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="DbDataReaderHelper.cs" />

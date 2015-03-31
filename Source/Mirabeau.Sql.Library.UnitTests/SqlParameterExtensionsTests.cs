@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using Mirabeau.Sql.Library;
 using NUnit.Framework;
 
 // ReSharper disable ExpressionIsAlwaysNull
@@ -35,7 +34,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
 
             emptyString = string.Empty;
             SqlParameter sqlParameter2 = emptyString.CreateSqlParameter("ParameterName");
-            Assert.That(sqlParameter2.Value, Is.EqualTo(DBNull.Value));
+            Assert.That(sqlParameter2.Value, Is.EqualTo(emptyString));
             Assert.That(sqlParameter2.ParameterName, Is.EqualTo("ParameterName"));
 
             const string otherValue = "AString";
@@ -57,8 +56,15 @@ namespace Mirabeau.MsSql.Library.UnitTests
 
             int anotherValue = 3;
             SqlParameter sqlParameter2 = anotherValue.CreateSqlParameter("ParameterName");
+            Assert.That(sqlParameter2.SqlDbType, Is.EqualTo(SqlDbType.Int));
             Assert.That(sqlParameter2.Value, Is.EqualTo(3));
             Assert.That(sqlParameter2.ParameterName, Is.EqualTo("ParameterName"));
+
+            int? valueThree = 3;
+            SqlParameter sqlParameter3 = valueThree.CreateSqlParameter("ParameterName");
+            Assert.That(sqlParameter2.SqlDbType, Is.EqualTo(SqlDbType.Int));
+            Assert.That(sqlParameter3.Value, Is.EqualTo(3));
+            Assert.That(sqlParameter3.ParameterName, Is.EqualTo("ParameterName"));
         }
 
         /// <summary>
@@ -170,7 +176,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
         public void ShouldUse24HourNotationForDates()
         {
             DateTime dateTime = new DateTime(2011, 10, 19, 16, 30, 25, 123);
-            SqlParameter sqlParameter1 = dateTime.CreateSqlParameter("ParameterName", SqlDbType.DateTime);
+            SqlParameter sqlParameter1 = dateTime.CreateSqlParameter("ParameterName", DbType.DateTime);
             Assert.That(sqlParameter1.Value, Is.EqualTo(dateTime));
         }
 
@@ -181,7 +187,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
         public void ShouldUse24HourNotationForNullableDates()
         {
             DateTime? nullableDateTime = new DateTime(2011, 10, 19, 16, 30, 25, 123);
-            SqlParameter sqlParameter1 = nullableDateTime.CreateSqlParameter("ParameterName", SqlDbType.DateTime);
+            SqlParameter sqlParameter1 = nullableDateTime.CreateSqlParameter("ParameterName", DbType.DateTime);
             Assert.That(sqlParameter1.Value, Is.EqualTo(nullableDateTime.Value));
         }
     }
