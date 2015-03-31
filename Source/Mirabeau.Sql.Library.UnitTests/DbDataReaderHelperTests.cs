@@ -1,7 +1,8 @@
 ﻿using System;
+using Mirabeau.Sql.Library;
 using NUnit.Framework;
 
-namespace Mirabeau.Sql.Library.UnitTests
+namespace Mirabeau.MsSql.Library.UnitTests
 {
     /// <summary>
     /// Test class for the database reader.

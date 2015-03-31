@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using Mirabeau.MsSql.Library;
+using Mirabeau.Sql.Library;
 using NUnit.Framework;
 
-namespace Mirabeau.Sql.Library.UnitTests
+namespace Mirabeau.MsSql.Library.UnitTests
 {
     public class DatabaseHelperTests
     {

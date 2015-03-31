@@ -1,14 +1,17 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mirabeau.MsSql.Library.IntegrationTests")]
+[assembly: AssemblyTitle("Mirabeau.MySql.Library")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Mirabeau BV")]
-[assembly: AssemblyProduct("Mirabeau.MsSql.Library.IntegrationTests")]
+[assembly: AssemblyCompany("Mirabeau")]
+[assembly: AssemblyProduct("Mirabeau.MySql.Library")]
 [assembly: AssemblyCopyright("Copyright © Mirabeau BV 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9d8e67b5-5b16-40a7-b6a2-4edccf46d0ea")]
+[assembly: Guid("acfb823b-2345-4189-a1e3-8df2d8851402")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,3 +36,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: CLSCompliant(true)]
+[assembly: NeutralResourcesLanguage("")]

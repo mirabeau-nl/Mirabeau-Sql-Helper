@@ -8,8 +8,8 @@
     <ProjectGuid>{E602608D-DA5D-4430-960A-694D1FD8D2A2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mirabeau.Sql.Library.UnitTests</RootNamespace>
-    <AssemblyName>Mirabeau.Sql.Library.UnitTests</AssemblyName>
+    <RootNamespace>Mirabeau.MsSql.Library.UnitTests</RootNamespace>
+    <AssemblyName>Mirabeau.MsSql.Library.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mirabeau.Sql.Library.UnitTests")]
+[assembly: AssemblyTitle("Mirabeau.MsSql.Library.UnitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mirabeau BV")]
-[assembly: AssemblyProduct("Mirabeau.Sql.Library.UnitTests")]
+[assembly: AssemblyProduct("Mirabeau.MsSql.Library.UnitTests")]
 [assembly: AssemblyCopyright("Copyright © Mirabeau BV 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

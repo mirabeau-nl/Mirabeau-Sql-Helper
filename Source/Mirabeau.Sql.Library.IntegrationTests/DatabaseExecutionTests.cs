@@ -2,10 +2,10 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using Mirabeau.MsSql.Library;
+using Mirabeau.Sql.Library;
 using NUnit.Framework;
 
-namespace Mirabeau.Sql.Library.IntegrationTests
+namespace Mirabeau.MsSql.Library.IntegrationTests
 {
     [TestFixture, Explicit("Requires SQL-server master database.")]
     public class DatabaseExecutionTests

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 
@@ -164,6 +165,9 @@ namespace Mirabeau.Sql.Library
             {
                 throw new ArgumentNullException("parameterName", String_Resources.CannotbeNullOrEmpty);
             }
+
+            // TODO: Check for better solution.
+            // http://stackoverflow.com/questions/425870/using-datetime-in-a-sqlparameter-for-stored-procedure-format-error
 
             return new SqlParameter(parameterName, theValue.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture));
         }

@@ -7,8 +7,8 @@
     <ProjectGuid>{EE337C58-D756-441D-A91B-80A94A2FD627}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mirabeau.Sql.Library.IntegrationTests</RootNamespace>
-    <AssemblyName>Mirabeau.Sql.Library.IntegrationTests</AssemblyName>
+    <RootNamespace>Mirabeau.MsSql.Library.IntegrationTests</RootNamespace>
+    <AssemblyName>Mirabeau.MsSql.Library.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

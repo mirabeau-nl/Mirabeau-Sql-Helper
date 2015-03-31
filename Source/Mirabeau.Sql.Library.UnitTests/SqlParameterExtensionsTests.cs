@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Data.SqlClient;
+using Mirabeau.Sql.Library;
 using NUnit.Framework;
 
 // ReSharper disable ExpressionIsAlwaysNull
-namespace Mirabeau.Sql.Library.UnitTests
+namespace Mirabeau.MsSql.Library.UnitTests
 {
     /// <summary>
     /// Tests for the <see cref="SqlParameterExtensions"/>
@@ -36,9 +37,9 @@ namespace Mirabeau.Sql.Library.UnitTests
             Assert.That(sqlParameter2.Value, Is.EqualTo(DBNull.Value));
             Assert.That(sqlParameter2.ParameterName, Is.EqualTo("ParameterName"));
 
-            const string OtherValue = "AString";
-            SqlParameter sqlParameter3 = OtherValue.CreateSqlParameter("ParameterName");
-            Assert.That(sqlParameter3.Value, Is.EqualTo(OtherValue));
+            const string otherValue = "AString";
+            SqlParameter sqlParameter3 = otherValue.CreateSqlParameter("ParameterName");
+            Assert.That(sqlParameter3.Value, Is.EqualTo(otherValue));
             Assert.That(sqlParameter3.ParameterName, Is.EqualTo("ParameterName"));
         }
 
@@ -70,7 +71,7 @@ namespace Mirabeau.Sql.Library.UnitTests
             Assert.That(sqlParameter1.Value, Is.EqualTo(DBNull.Value));
             Assert.That(sqlParameter1.ParameterName, Is.EqualTo("ParameterName"));
 
-            bool anotherValue = true;
+            const bool anotherValue = true;
             SqlParameter sqlParameter2 = anotherValue.CreateSqlParameter("ParameterName");
             Assert.That(sqlParameter2.Value, Is.EqualTo(true));
             Assert.That(sqlParameter2.ParameterName, Is.EqualTo("ParameterName"));
@@ -125,6 +126,7 @@ namespace Mirabeau.Sql.Library.UnitTests
             SqlParameter sqlParameter2 = anotherValue.CreateSqlParameter("ParameterName");
             Assert.That(sqlParameter2.Value, Is.EqualTo(anotherValue));
             Assert.That(sqlParameter2.ParameterName, Is.EqualTo("ParameterName"));
+
         }
 
         /// <summary>
