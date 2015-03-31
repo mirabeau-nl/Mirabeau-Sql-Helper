@@ -176,7 +176,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
         public void ShouldUse24HourNotationForDates()
         {
             DateTime dateTime = new DateTime(2011, 10, 19, 16, 30, 25, 123);
-            SqlParameter sqlParameter1 = dateTime.CreateSqlParameter("ParameterName", DbType.DateTime);
+            SqlParameter sqlParameter1 = dateTime.CreateSqlParameter("ParameterName", SqlDbType.DateTime);
             Assert.That(sqlParameter1.Value, Is.EqualTo(dateTime));
         }
 
@@ -187,7 +187,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
         public void ShouldUse24HourNotationForNullableDates()
         {
             DateTime? nullableDateTime = new DateTime(2011, 10, 19, 16, 30, 25, 123);
-            SqlParameter sqlParameter1 = nullableDateTime.CreateSqlParameter("ParameterName", DbType.DateTime);
+            SqlParameter sqlParameter1 = nullableDateTime.CreateSqlParameter("ParameterName", SqlDbType.DateTime);
             Assert.That(sqlParameter1.Value, Is.EqualTo(nullableDateTime.Value));
         }
     }

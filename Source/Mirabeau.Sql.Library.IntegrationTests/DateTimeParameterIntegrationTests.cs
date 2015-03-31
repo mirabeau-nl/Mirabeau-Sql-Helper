@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Mirabeau.Sql.Library;
 using NUnit.Framework;
 
 namespace Mirabeau.MsSql.Library.IntegrationTests
 {
-    [TestFixture]
+    [TestFixture, Explicit("Requires SQL-server master database.")]
     public class DateTimeParameterIntegrationTests
     {
         private const string Connectionstring = "Server=TEST-DB1;Database=master;Integrated Security=true";
@@ -29,10 +28,10 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
         {
             IList<SqlParameter> parameters = new List<SqlParameter>();
             parameters.Add(1.CreateSqlParameter("id"));
-            parameters.Add(DateTime.UtcNow.CreateSqlParameter("d1", DbType.Date));
-            parameters.Add(DateTime.UtcNow.CreateSqlParameter("d2", DbType.DateTime));
-            parameters.Add(DateTime.UtcNow.CreateSqlParameter("d3", DbType.DateTime2));
-            parameters.Add(DateTime.UtcNow.CreateSqlParameter("d4", DbType.DateTimeOffset));
+            parameters.Add(DateTime.UtcNow.CreateSqlParameter("d1", SqlDbType.Date));
+            parameters.Add(DateTime.UtcNow.CreateSqlParameter("d2", SqlDbType.DateTime));
+            parameters.Add(DateTime.UtcNow.CreateSqlParameter("d3", SqlDbType.DateTime2));
+            parameters.Add(DateTime.UtcNow.CreateSqlParameter("d4", SqlDbType.DateTimeOffset));
 
             string insert =
                 "INSERT INTO dbo.tmp_dates (id, d1, d2, d3 , d4) VALUES(@id, @d1, @d2, @d3, @d4)";
@@ -45,10 +44,10 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
         {
             IList<SqlParameter> parameters = new List<SqlParameter>();
             parameters.Add(2.CreateSqlParameter("id"));
-            parameters.Add(DateTime.Now.CreateSqlParameter("d1", DbType.Date));
-            parameters.Add(DateTime.Now.CreateSqlParameter("d2", DbType.DateTime));
-            parameters.Add(DateTime.Now.CreateSqlParameter("d3", DbType.DateTime2));
-            parameters.Add(DateTime.Now.CreateSqlParameter("d4", DbType.DateTimeOffset));
+            parameters.Add(DateTime.Now.CreateSqlParameter("d1", SqlDbType.Date));
+            parameters.Add(DateTime.Now.CreateSqlParameter("d2", SqlDbType.DateTime));
+            parameters.Add(DateTime.Now.CreateSqlParameter("d3", SqlDbType.DateTime2));
+            parameters.Add(DateTime.Now.CreateSqlParameter("d4", SqlDbType.DateTimeOffset));
 
             string insert =
                 "INSERT INTO dbo.tmp_dates (id, d1, d2, d3 , d4) VALUES(@id, @d1, @d2, @d3, @d4)";

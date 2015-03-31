@@ -109,10 +109,10 @@ namespace Mirabeau.MsSql.Library
         /// The <see cref="SqlParameter" />
         /// </returns>
         /// <exception cref="System.ArgumentNullException">parameterName</exception>
-        public static SqlParameter CreateSqlParameter(this DateTime theValue, string parameterName, DbType dateTimeType)
+        public static SqlParameter CreateSqlParameter(this DateTime theValue, string parameterName, SqlDbType dateTimeType)
         {
             SqlParameter sqlParameter = Factory.CreateParameter(theValue, parameterName);
-            sqlParameter.DbType = dateTimeType;
+            sqlParameter.SqlDbType = dateTimeType;
             return sqlParameter;
         }
 
@@ -137,7 +137,7 @@ namespace Mirabeau.MsSql.Library
         /// The <see cref="SqlParameter" />
         /// </returns>
         /// <exception cref="System.ArgumentNullException">parameterName</exception>
-        public static SqlParameter CreateSqlParameter(this DateTime? theValue, string parameterName, DbType dateTimeType)
+        public static SqlParameter CreateSqlParameter(this DateTime? theValue, string parameterName, SqlDbType dateTimeType)
         {
             if (theValue.HasValue)
             {

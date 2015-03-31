@@ -14,11 +14,11 @@ namespace Mirabeau.MySql.Library
         /// <summary>
         /// Uses the <see cref="ICloneable"/>Interface to clone a <see cref="MySqlParameter"/>.
         /// </summary>
-        /// <param name="MySqlParameter">The SQL parameter.</param>
+        /// <param name="parameter">The SQL parameter.</param>
         /// <returns>The <see cref="MySqlParameter"/></returns>
-        public static MySqlParameter Clone(this MySqlParameter MySqlParameter)
+        public static MySqlParameter Clone(this MySqlParameter parameter)
         {
-            ICloneable cloneable = MySqlParameter;
+            ICloneable cloneable = parameter;
             return cloneable == null ? null : cloneable.Clone() as MySqlParameter;
         }
 
@@ -109,11 +109,11 @@ namespace Mirabeau.MySql.Library
         /// The <see cref="MySqlParameter" />
         /// </returns>
         /// <exception cref="System.ArgumentNullException">parameterName</exception>
-        public static MySqlParameter CreateMySqlParameter(this DateTime theValue, string parameterName, DbType dateTimeType)
+        public static MySqlParameter CreateMySqlParameter(this DateTime theValue, string parameterName, MySqlDbType dateTimeType)
         {
-            MySqlParameter MySqlParameter = Factory.CreateParameter(theValue, parameterName);
-            MySqlParameter.DbType = dateTimeType;
-            return MySqlParameter;
+            MySqlParameter mySqlParameter = Factory.CreateParameter(theValue, parameterName);
+            mySqlParameter.MySqlDbType = dateTimeType;
+            return mySqlParameter;
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Mirabeau.MySql.Library
         /// The <see cref="MySqlParameter" />
         /// </returns>
         /// <exception cref="System.ArgumentNullException">parameterName</exception>
-        public static MySqlParameter CreateMySqlParameter(this DateTime? theValue, string parameterName, DbType dateTimeType)
+        public static MySqlParameter CreateMySqlParameter(this DateTime? theValue, string parameterName, MySqlDbType dateTimeType)
         {
             if (theValue.HasValue)
             {
