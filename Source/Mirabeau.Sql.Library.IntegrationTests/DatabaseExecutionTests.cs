@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using Mirabeau.Sql.Library;
 using NUnit.Framework;
 
 namespace Mirabeau.MsSql.Library.IntegrationTests
@@ -16,6 +15,8 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
         private const string Query = "SELECT COUNT(*) FROM sys.objects WHERE type = @type";
         private readonly IMsSqlHelper _sqlHelper = new MsSqlHelper();
 
+        readonly IEnumerable<DbParameter> _parametersList = new List<DbParameter>();
+        readonly DbParameter[] _parametersArray = new DbParameter[0];
         private SqlConnection _sqlConnection;
 
         [TestFixtureSetUp]
@@ -27,9 +28,6 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
         [Test]
         public void ShouldExecuteReader()
         {
-            IEnumerable<DbParameter> parametersList = new List<DbParameter>();
-            DbParameter[] parametersArray = new DbParameter[0];
-
             using (var reader = _sqlHelper.ExecuteReader(Connectionstring, "[sys].[sp_datatype_info]", -7, 1))
             {
                 while (reader.Read())
@@ -44,14 +42,14 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
                 }
             }
 
-            using (var reader = _sqlHelper.ExecuteReader(_sqlConnection, CommandType.StoredProcedure, StoredProcedureName, parametersList))
+            using (var reader = _sqlHelper.ExecuteReader(_sqlConnection, CommandType.StoredProcedure, StoredProcedureName, _parametersList))
             {
                 while (reader.Read())
                 {
                 }
             }
 
-            using (var reader = _sqlHelper.ExecuteReader(_sqlConnection, CommandType.StoredProcedure, StoredProcedureName, parametersArray))
+            using (var reader = _sqlHelper.ExecuteReader(_sqlConnection, CommandType.StoredProcedure, StoredProcedureName, _parametersArray))
             {
                 while (reader.Read())
                 {
@@ -65,14 +63,14 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
                 }
             }
 
-            using (var reader = _sqlHelper.ExecuteReader(Connectionstring, CommandType.StoredProcedure, StoredProcedureName, parametersList))
+            using (var reader = _sqlHelper.ExecuteReader(Connectionstring, CommandType.StoredProcedure, StoredProcedureName, _parametersList))
             {
                 while (reader.Read())
                 {
                 }
             }
 
-            using (var reader = _sqlHelper.ExecuteReader(Connectionstring, CommandType.StoredProcedure, StoredProcedureName, parametersArray))
+            using (var reader = _sqlHelper.ExecuteReader(Connectionstring, CommandType.StoredProcedure, StoredProcedureName, _parametersArray))
             {
                 while (reader.Read())
                 {
@@ -88,14 +86,14 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
                     }
                 }
 
-                using (var reader = _sqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, StoredProcedureName, parametersList))
+                using (var reader = _sqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, StoredProcedureName, _parametersList))
                 {
                     while (reader.Read())
                     {
                     }
                 }
 
-                using (var reader = _sqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, StoredProcedureName, parametersArray))
+                using (var reader = _sqlHelper.ExecuteReader(transaction, CommandType.StoredProcedure, StoredProcedureName, _parametersArray))
                 {
                     while (reader.Read())
                     {
@@ -104,8 +102,6 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
 
                 transaction.Rollback();
             }
-
-
         }
 
         [Test]
@@ -134,18 +130,24 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
         public void ShouldExecuteNonQueryStoredProcedure()
         {
             _sqlHelper.ExecuteNonQuery(Connectionstring, CommandType.StoredProcedure, StoredProcedureName);
+            _sqlHelper.ExecuteNonQuery(Connectionstring, CommandType.StoredProcedure, StoredProcedureName, _parametersArray);
+            _sqlHelper.ExecuteNonQuery(_sqlConnection, CommandType.StoredProcedure, StoredProcedureName);
+
         }
 
         [Test]
         public async void ShouldExecuteNonQueryAsyncStoredProcedure()
         {
             await _sqlHelper.ExecuteNonQueryAsync(Connectionstring, CommandType.StoredProcedure, StoredProcedureName);
+            await _sqlHelper.ExecuteNonQueryAsync(Connectionstring, CommandType.StoredProcedure, StoredProcedureName, _parametersArray);
+            await _sqlHelper.ExecuteNonQueryAsync(_sqlConnection, CommandType.StoredProcedure, StoredProcedureName);
         }
 
         [Test]
         public void ShouldExecuteDataSetStoredProcedure()
         {
             _sqlHelper.ExecuteDataSet(Connectionstring, CommandType.StoredProcedure, StoredProcedureName);
+            _sqlHelper.ExecuteDataSet(_sqlConnection, CommandType.StoredProcedure, StoredProcedureName);
         }
 
         [Test]

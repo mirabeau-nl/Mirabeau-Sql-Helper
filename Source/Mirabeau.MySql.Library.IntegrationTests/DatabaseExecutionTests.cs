@@ -8,10 +8,10 @@ using NUnit.Framework;
 
 namespace Mirabeau.MySql.Library.IntegrationTests
 {
-    [TestFixture]
+    [TestFixture, Explicit("Requires MYSQL database.")]
     public class DatabaseExecutionTests
     {
-        // Created a free account on db4free. It is slow but allows some basic query testing.
+        // Created a free account on db4free. It is slow, and unreliable.. but allows some basic query testing.
         private const string ConnectionString = "server=db4free.net;uid=testcodelib;pwd=testcodelib;database=testcodelib;";
 
         [TestFixtureSetUp]
