@@ -92,7 +92,7 @@
     <Compile Include="SqlParameterExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mirabeau.MsSql.Libraray\Mirabeau.MsSql.Library.csproj">
+    <ProjectReference Include="..\Mirabeau.MsSql.Library\Mirabeau.MsSql.Library.csproj">
       <Project>{b7ef69f5-0582-4c03-b8d0-ade4060ed8fc}</Project>
       <Name>Mirabeau.MsSql.Library</Name>
     </ProjectReference>

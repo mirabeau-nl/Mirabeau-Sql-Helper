@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/mirabeau-nl/Mirabeau-Sql-Helper</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Static helper class for performing MYSQL operations.</description>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+</package>

@@ -151,22 +151,24 @@ namespace Mirabeau.MsSql.Library.UnitTests
         /// <summary>
         /// Test that null values cannot be passed.
         /// </summary>
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void CannotPassNullAsArgument()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void CannotPassNullEmptyOrWhiteSpaceAsArgument(string argument)
         {
-            string.Empty.CreateSqlParameter(null);
+            Assert.That(() => string.Empty.CreateSqlParameter(argument), Throws.Exception.TypeOf<ArgumentException>());
         }
 
         /// <summary>
         /// Test that null values cannot be passed.
         /// </summary>
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void CannotPassNullAsArgument2()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void CannotPassNullAsArgument2(string argument)
         {
             DateTime? when = null;
-            when.CreateSqlParameter(null);
+            Assert.That(() => when.CreateSqlParameter(argument), Throws.Exception.TypeOf<ArgumentException>());
         }
 
         /// <summary>

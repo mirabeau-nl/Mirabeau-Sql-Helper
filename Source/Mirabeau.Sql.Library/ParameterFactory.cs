@@ -37,9 +37,9 @@ namespace Mirabeau.Sql.Library
 
         private static void ValidateParameter(string parameterName)
         {
-            if (string.IsNullOrEmpty(parameterName))
+            if (string.IsNullOrWhiteSpace(parameterName))
             {
-                throw new ArgumentNullException("parameterName", String_Resources.CannotbeNullOrEmpty);
+                throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "parameterName");
             }
         }
     }
