@@ -61,12 +61,26 @@ namespace Mirabeau.MySql.Library.IntegrationTests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CREATE PROCEDURE GetByEmail(IN emailaddress VARCHAR(100))
+        /// BEGIN
+        ///    SELECT  * 
+        ///    FROM    tmp_unittest_table
+        ///    WHERE   email = emailaddress;
+        /// END.
+        /// </summary>
+        internal static string CreateProcedure {
+            get {
+                return ResourceManager.GetString("CreateProcedure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CREATE TABLE IF NOT EXISTS tmp_unittest_table (
         ///id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         ///firstname VARCHAR(30) NOT NULL,
         ///lastname VARCHAR(30) NOT NULL,
         ///email VARCHAR(100),
-        ///reg_date TIMESTAMP
+        ///registrationdate TIMESTAMP
         ///).
         /// </summary>
         internal static string CreateTable {
@@ -81,7 +95,7 @@ namespace Mirabeau.MySql.Library.IntegrationTests.Properties {
         ///	firstname
         ///,	lastname
         ///,	email
-        ///,	reg_date
+        ///,	registrationdate
         ///)
         ///values
         ///(

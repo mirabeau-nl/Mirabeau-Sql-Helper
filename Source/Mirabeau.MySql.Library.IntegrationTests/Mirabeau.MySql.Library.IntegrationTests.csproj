@@ -60,6 +60,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Content Include="SqlScripts\CreateProcedure.sql" />
     <Compile Include="TempTable.cs" />
   </ItemGroup>
   <ItemGroup>
