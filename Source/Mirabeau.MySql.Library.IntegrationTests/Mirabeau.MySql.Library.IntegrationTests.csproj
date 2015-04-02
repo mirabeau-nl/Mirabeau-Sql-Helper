@@ -60,7 +60,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tables.cs" />
     <Compile Include="TempTable.cs" />
   </ItemGroup>
   <ItemGroup>
