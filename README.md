@@ -7,6 +7,8 @@
 This is a helper assembly to make accessing the database easier. It helps you creating SqlParameters, executing queries and stored procedures and reading from the DataReader object.
 This assembly has proven itself by being used for several clients and is based on the Microsoft Data Access Application Block for .NET
 
+Currently it supports both MsSql and MySql databases.
+
 ### Examples ###
 #### Sql parameters ####
             // This extention is available for the common value types and the DateTime object
@@ -26,40 +28,47 @@ This assembly has proven itself by being used for several clients and is based o
 
 
 #### Executing queries ####
+            IMsSqlHelper msSqlHelper = new MsSqlHelper();
+            // Or in case of MySql: IMySqlHelper mySqlHelper = new MySqlHelper();
             string connectionString = "my database connection string";
 
             var parameters = new List<SqlParameter> { 1234.CreateSqlParameter("Parameter1"), "parmeter2value".CreateSqlParameter("Parameter2") };
 
-            using (IDataReader dataReader = DatabaseHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, "MyStoredProcedure", parameters))
+            using (IDataReader dataReader = msSqlHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, "MyStoredProcedure", parameters))
             {
-                while (dataReader.Read()) 
-                { 
+                while (dataReader.Read())
+                {
                     // Datareader helper
                     // For not-nullable columns:
                     int column1 = dataReader["databaseColumn1"].GetDbValueOrDefaultForValueType<int>();
-                    
+
                     // For nullable columns:
-                    int? column2 = dataReader["databaseColumn2"].GetDbValueOrNullForReferenceType<int>();
+                    int? column2 = dataReader["databaseColumn2"].GetDbValueForNullableValueType<int>();
                 }
             }
-            
+
             // Transactions
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
                 using (var sqlTransaction = sqlConnection.BeginTransaction())
                 {
-                    DatabaseHelper.ExecuteScalar(sqlTransaction, CommandType.StoredProcedure, "StoredProcedureName1");
-                    DatabaseHelper.ExecuteScalar(sqlTransaction, CommandType.StoredProcedure, "StoredProcedureName2");
+                    msSqlHelper.ExecuteScalar(sqlTransaction, CommandType.StoredProcedure, "StoredProcedureName1");
+                    msSqlHelper.ExecuteScalar(sqlTransaction, CommandType.StoredProcedure, "StoredProcedureName2");
                     sqlTransaction.Commit();
                 }
             }
+        }
 
 ### How do I get set up? ###
 
 Build the project, or get the nuget package:
 ```sh
-Install-Package Mirabeau.Sql.Library
+Install-Package Mirabeau.MsSql.Library
+```
+
+```sh
+Install-Package Mirabeau.MySql.Library
 ```
 
 If you have long running queries and need to change the connection timeout you can set the config value SqlCommandTimeout in te appsettings (in seconds)
