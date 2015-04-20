@@ -1,0 +1,19 @@
+version: 1.0.{build}
+skip_tags: true
+configuration: Release
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+deploy:
+- provider: NuGet
+  api_key:
+    secure: GOruy0D4tLPYvEfql1RwrUy/j4/WLxYyqFo596l8TNxqw+tP+Ah6zdm+bAgpj2B7
+  on:
+    branch: master
