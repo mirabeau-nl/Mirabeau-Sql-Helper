@@ -11,11 +11,10 @@ namespace Mirabeau.MySql.Library.IntegrationTests
     [TestFixture, Explicit("Requires MYSQL database.")]
     public class DatabaseExecutionTests
     {
-        readonly MySqlHelper _mySqlHelper = new MySqlHelper();
+        readonly IMySqlHelper _mySqlHelper = new MySqlHelper();
         private const string Email = "email@servername.net";
 
-        // Created a free account on db4free. It is slow, and unreliable.. but allows some basic query testing.
-        private const string ConnectionString = "server=db4free.net;uid=testcodelib;pwd=testcodelib;database=testcodelib;";
+        private const string ConnectionString = "server=x;uid=uid;pwd=pwd;database=db;";
 
         [TestFixtureSetUp]
         public void Setup()
