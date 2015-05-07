@@ -41,12 +41,7 @@ namespace Mirabeau.MsSql.Library
     /// </remarks>
     public static class DatabaseHelper
     {
-        private static readonly IMsSqlHelper MsSqlHelper;
-
-        static DatabaseHelper()
-        {
-            MsSqlHelper = new MsSqlHelper();
-        }
+        private static readonly IMsSqlHelper MsSqlHelper = new MsSqlHelper();
 
         #region ExecuteNonQuery
 
