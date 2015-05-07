@@ -51,6 +51,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IMSqlHelper.cs" />
     <Compile Include="IParameterCache.cs" />
+    <Compile Include="DatabaseHelper.cs" />
     <Compile Include="MsSqlHelper.cs" />
     <Compile Include="ParameterFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

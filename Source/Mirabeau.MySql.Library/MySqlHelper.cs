@@ -7,7 +7,7 @@ namespace Mirabeau.MySql.Library
     /// <summary>
     /// Helper class for MySql commands.
     /// </summary>
-    public class MySqlHelper : DatabaseHelper, IMySqlHelper
+    public class MySqlHelper : DatabaseHelperBase, IMySqlHelper
     {
         /// <summary>
         /// Creates a new DbConnection.

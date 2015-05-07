@@ -38,7 +38,7 @@ namespace Mirabeau.Sql.Library
     /// <remarks>
     /// In the AppSettings there is an option to set the value of the SqlCommandTimeout, to change the default SQL timeout.
     /// </remarks>
-    public abstract class DatabaseHelper : IDatabaseHelper
+    public abstract class DatabaseHelperBase : IDatabaseHelper
     {
         private static int _commandTimeout;
 
@@ -511,8 +511,6 @@ namespace Mirabeau.Sql.Library
             }
         }
 
-        
-
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbConnection. 
         /// </summary>
@@ -585,8 +583,6 @@ namespace Mirabeau.Sql.Library
                 }
             }
         }
-
-        
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbTransaction. 
