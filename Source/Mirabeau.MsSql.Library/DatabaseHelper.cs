@@ -43,6 +43,18 @@ namespace Mirabeau.MsSql.Library
     {
         private static readonly IMsSqlHelper MsSqlHelper = new MsSqlHelper();
 
+        /// <summary>
+        /// Gets or sets the command timeout property. Default value is read from config.
+        /// </summary>
+        /// <value>
+        /// The command timeout.
+        /// </value>
+        public static int CommandTimeout
+        {
+            get { return MsSqlHelper.CommandTimeout; }
+            set { MsSqlHelper.CommandTimeout = value; }
+        }
+
         #region ExecuteNonQuery
 
         /// <summary>

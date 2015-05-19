@@ -39,6 +39,18 @@ namespace Mirabeau.MySql.Library
     {
         private static readonly IMySqlHelper MySqlHelper = new MySqlHelper();
 
+        /// <summary>
+        /// Gets or sets the command timeout property. Default value is read from config.
+        /// </summary>
+        /// <value>
+        /// The command timeout.
+        /// </value>
+        public static int CommandTimeout
+        {
+            get { return MySqlHelper.CommandTimeout; }
+            set { MySqlHelper.CommandTimeout = value; }
+        }
+
         #region ExecuteNonQuery
 
         /// <summary>
@@ -1451,6 +1463,6 @@ namespace Mirabeau.MySql.Library
         }
 
         #endregion ExecuteScalar
-        }
+    }
 }
 // ReSharper restore MethodOverloadWithOptionalParameter
