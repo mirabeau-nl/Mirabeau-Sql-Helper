@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.Sql.Library", "Mirabeau.Sql.Library\Mirabeau.Sql.Library.csproj", "{0D304D74-5711-401F-9E23-0485524821E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.Sql.Library.UnitTests", "Mirabeau.Sql.Library.UnitTests\Mirabeau.Sql.Library.UnitTests.csproj", "{E602608D-DA5D-4430-960A-694D1FD8D2A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library.UnitTests", "Mirabeau.MsSql.Library.UnitTests\Mirabeau.MsSql.Library.UnitTests.csproj", "{E602608D-DA5D-4430-960A-694D1FD8D2A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A626A63D-B130-4569-8EB9-0E1F9CFA74DA}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A626A6
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.Sql.Library.IntegrationTests", "Mirabeau.Sql.Library.IntegrationTests\Mirabeau.Sql.Library.IntegrationTests.csproj", "{EE337C58-D756-441D-A91B-80A94A2FD627}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library.IntegrationTests", "Mirabeau.MsSql.Library.IntegrationTests\Mirabeau.MsSql.Library.IntegrationTests.csproj", "{EE337C58-D756-441D-A91B-80A94A2FD627}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library", "Mirabeau.MsSql.Library\Mirabeau.MsSql.Library.csproj", "{B7EF69F5-0582-4C03-B8D0-ADE4060ED8FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MySql.Library", "Mirabeau.MySql.Library\Mirabeau.MySql.Library.csproj", "{AADED218-6603-4ED4-8BBA-0F994CC62286}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MySql.Library.IntegrationTests", "Mirabeau.MySql.Library.IntegrationTests\Mirabeau.MySql.Library.IntegrationTests.csproj", "{589BA55B-D937-41CF-97D2-1B6CB23E7437}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MySql.Library.UnitTests", "Mirabeau.MySql.Library.UnitTests\Mirabeau.MySql.Library.UnitTests.csproj", "{67477434-4E6E-46C5-811A-249A321914A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +40,22 @@ Global
 		{EE337C58-D756-441D-A91B-80A94A2FD627}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE337C58-D756-441D-A91B-80A94A2FD627}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE337C58-D756-441D-A91B-80A94A2FD627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7EF69F5-0582-4C03-B8D0-ADE4060ED8FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7EF69F5-0582-4C03-B8D0-ADE4060ED8FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7EF69F5-0582-4C03-B8D0-ADE4060ED8FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7EF69F5-0582-4C03-B8D0-ADE4060ED8FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AADED218-6603-4ED4-8BBA-0F994CC62286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADED218-6603-4ED4-8BBA-0F994CC62286}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADED218-6603-4ED4-8BBA-0F994CC62286}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADED218-6603-4ED4-8BBA-0F994CC62286}.Release|Any CPU.Build.0 = Release|Any CPU
+		{589BA55B-D937-41CF-97D2-1B6CB23E7437}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{589BA55B-D937-41CF-97D2-1B6CB23E7437}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{589BA55B-D937-41CF-97D2-1B6CB23E7437}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{589BA55B-D937-41CF-97D2-1B6CB23E7437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67477434-4E6E-46C5-811A-249A321914A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67477434-4E6E-46C5-811A-249A321914A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67477434-4E6E-46C5-811A-249A321914A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67477434-4E6E-46C5-811A-249A321914A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
