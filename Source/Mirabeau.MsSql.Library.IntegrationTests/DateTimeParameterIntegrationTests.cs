@@ -24,7 +24,7 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
         }
 
         [Test]
-        public void ShouldInsertUtchDatesCorrectly()
+        public void ShouldInsertUtcDatesCorrectly()
         {
             IList<SqlParameter> parameters = new List<SqlParameter>();
             parameters.Add(1.CreateSqlParameter("id"));

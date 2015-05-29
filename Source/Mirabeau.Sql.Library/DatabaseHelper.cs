@@ -1851,45 +1851,7 @@ namespace Mirabeau.Sql.Library
 
         internal void PrepareCommand(DbCommand command, DbConnection connection, DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters)
         {
-            if (connection == null)
-            {
-                throw new ArgumentNullException("connection", String_Resources.CannotbeNull);
-            }
-
-            if (string.IsNullOrWhiteSpace(commandText))
-            {
-                throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "commandText");
-            }
-
-            // If the provided connection is not open, we will open it
-            if (connection.State != ConnectionState.Open)
-            {
-                connection.Open();
-            }
-
-            // Associate the connection with the command
-            command.Connection = connection;
-
-            // Read the timeout from the config.
-            command.CommandTimeout = CommandTimeout;
-
-            // Set the command text (stored procedure name or SQL statement)
-            command.CommandText = commandText;
-
-            // If we were provided a transaction, assign it
-            if (transaction != null)
-            {
-                command.Transaction = transaction;
-            }
-
-            // Set the command type
-            command.CommandType = commandType;
-
-            // Attach the command parameters if they are provided
-            if (commandParameters != null)
-            {
-                AttachParameters(command, commandParameters);
-            }
+            PrepareCommandAsync(command, connection, transaction, commandType, commandText, commandParameters); 
         }
 
         /// <summary>

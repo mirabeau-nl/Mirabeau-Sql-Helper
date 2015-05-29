@@ -53,7 +53,6 @@
     <Compile Include="IParameterCache.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="MsSqlHelper.cs" />
-    <Compile Include="ParameterFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ParameterCache.cs" />
     <Compile Include="SqlParameterExtensions.cs" />
