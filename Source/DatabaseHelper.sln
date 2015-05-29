@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.Sql.Library", "Mirabeau.Sql.Library\Mirabeau.Sql.Library.csproj", "{0D304D74-5711-401F-9E23-0485524821E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library.UnitTests", "Mirabeau.Sql.Library.UnitTests\Mirabeau.MsSql.Library.UnitTests.csproj", "{E602608D-DA5D-4430-960A-694D1FD8D2A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library.UnitTests", "Mirabeau.MsSql.Library.UnitTests\Mirabeau.MsSql.Library.UnitTests.csproj", "{E602608D-DA5D-4430-960A-694D1FD8D2A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A626A63D-B130-4569-8EB9-0E1F9CFA74DA}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A626A6
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library.IntegrationTests", "Mirabeau.Sql.Library.IntegrationTests\Mirabeau.MsSql.Library.IntegrationTests.csproj", "{EE337C58-D756-441D-A91B-80A94A2FD627}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library.IntegrationTests", "Mirabeau.MsSql.Library.IntegrationTests\Mirabeau.MsSql.Library.IntegrationTests.csproj", "{EE337C58-D756-441D-A91B-80A94A2FD627}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library", "Mirabeau.MsSql.Library\Mirabeau.MsSql.Library.csproj", "{B7EF69F5-0582-4C03-B8D0-ADE4060ED8FC}"
 EndProject
