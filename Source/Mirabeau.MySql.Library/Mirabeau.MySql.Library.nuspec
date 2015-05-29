@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>MySqlHelper</id>
     <version>$version$</version>
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <projectUrl>https://github.com/mirabeau-nl/Mirabeau-Sql-Helper</projectUrl>
+    <projectUrl>https://github.com/jeroenpot/Mirabeau-Sql-Helper</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Static helper class for performing MYSQL operations.</description>
+    <description>
+      Static helper class for performing MYSQL operations.
+      Based on the Microsoft .NET Data Access Application Block v2.0, but now support for MySql database actions.
+    </description>
     <copyright>Copyright 2015</copyright>
+    <tags>SqlHelper,MySql, DatabaseHelper, SQL, MySqlHelper</tags>
   </metadata>
 </package>

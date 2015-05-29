@@ -8,6 +8,8 @@ This is a helper assembly to make accessing the database easier. It helps you cr
 This assembly has proven itself by being used for several clients and is based on the Microsoft Data Access Application Block for .NET
 
 Currently it supports both MsSql and MySql databases.
+The base sourcecode was taken from the Microsoft .NET Data Access Application Block v2.0 and updated to use newer framework version, and added support for generics and async/await.
+There is also a now-static version (MsSqlHelper : IMsSqlHelper & MySqlHelper : IMySqlHelper)
 
 ### Examples ###
 #### Sql parameters ####
@@ -64,11 +66,11 @@ Currently it supports both MsSql and MySql databases.
 
 Build the project, or get the nuget package:
 ```sh
-Install-Package Mirabeau.MsSql.Library
+Install-Package MsSqlHelper
 ```
 
 ```sh
-Install-Package Mirabeau.MySql.Library
+Install-Package MySqlHelper
 ```
 
 If you have long running queries and need to change the connection timeout you can set the config value SqlCommandTimeout in te appsettings (in seconds)
