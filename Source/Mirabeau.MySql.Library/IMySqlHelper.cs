@@ -1,5 +1,4 @@
 using Mirabeau.Sql.Library;
-using MySql.Data.MySqlClient;
 
 namespace Mirabeau.MySql.Library
 {
@@ -8,6 +7,5 @@ namespace Mirabeau.MySql.Library
     /// </summary>
     public interface IMySqlHelper : IDatabaseHelper
     {
-        
     }
 }
