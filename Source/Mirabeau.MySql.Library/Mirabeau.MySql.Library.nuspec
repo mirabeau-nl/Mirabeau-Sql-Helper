@@ -3,7 +3,7 @@
   <metadata>
     <id>MySqlHelper</id>
     <version>$version$</version>
-    <title>$title$</title>
+    <title>MySqlHelper</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
     <projectUrl>https://github.com/jeroenpot/Mirabeau-Sql-Helper</projectUrl>
