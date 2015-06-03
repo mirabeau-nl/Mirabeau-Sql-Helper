@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using Mirabeau.Sql.Library;
 using NUnit.Framework;
 
 namespace Mirabeau.MsSql.Library.UnitTests

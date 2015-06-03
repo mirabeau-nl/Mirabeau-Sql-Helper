@@ -32,6 +32,7 @@ There is also a now-static version (MsSqlHelper : IMsSqlHelper & MySqlHelper : I
 #### Executing queries ####
             IMsSqlHelper msSqlHelper = new MsSqlHelper();
             // Or in case of MySql: IMySqlHelper mySqlHelper = new MySqlHelper();
+			// Or use the static helper class DatabaseHelper
             string connectionString = "my database connection string";
 
             var parameters = new List<SqlParameter> { 1234.CreateSqlParameter("Parameter1"), "parmeter2value".CreateSqlParameter("Parameter2") };

@@ -1851,7 +1851,9 @@ namespace Mirabeau.Sql.Library
 
         internal void PrepareCommand(DbCommand command, DbConnection connection, DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters)
         {
+#pragma warning disable 4014
             PrepareCommandAsync(command, connection, transaction, commandType, commandText, commandParameters); 
+#pragma warning restore 4014
         }
 
         /// <summary>
