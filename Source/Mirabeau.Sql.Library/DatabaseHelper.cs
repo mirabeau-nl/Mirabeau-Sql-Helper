@@ -312,10 +312,6 @@ namespace Mirabeau.Sql.Library
             }
         }
 
-        
-
-        
-
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided DbTransaction. 
         /// </summary>
@@ -436,10 +432,6 @@ namespace Mirabeau.Sql.Library
                 return retval;
             }
         }
-
-        
-
-        
 
         #endregion ExecuteNonQuery
 
@@ -662,7 +654,7 @@ namespace Mirabeau.Sql.Library
             }
         }
 
-        
+
 
         #endregion ExecuteDataSet
 
@@ -943,9 +935,9 @@ namespace Mirabeau.Sql.Library
             return await ExecuteReaderAsync(connection, null, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
         }
 
-        
 
-        
+
+
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbTransaction. 
@@ -1058,9 +1050,9 @@ namespace Mirabeau.Sql.Library
             return await ExecuteReaderAsync(transaction.Connection, transaction, commandType, commandText, commandParameters, SqlConnectionOwnership.External);
         }
 
-        
 
-        
+
+
 
         /// <summary>
         /// This enum is used to indicate whether the connection was provided by the caller, or created by SqlHelper, so that
@@ -1287,9 +1279,9 @@ namespace Mirabeau.Sql.Library
             }
         }
 
-        
 
-        
+
+
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided DbConnection. 
@@ -1511,7 +1503,7 @@ namespace Mirabeau.Sql.Library
             }
         }
 
-        
+
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided DbTransaction. 
@@ -1852,7 +1844,7 @@ namespace Mirabeau.Sql.Library
         internal void PrepareCommand(DbCommand command, DbConnection connection, DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters)
         {
 #pragma warning disable 4014
-            PrepareCommandAsync(command, connection, transaction, commandType, commandText, commandParameters); 
+            PrepareCommandAsync(command, connection, transaction, commandType, commandText, commandParameters);
 #pragma warning restore 4014
         }
 
