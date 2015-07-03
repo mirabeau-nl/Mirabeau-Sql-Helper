@@ -4,8 +4,8 @@
     <id>MySqlHelper</id>
     <version>$version$</version>
     <title>MySqlHelper</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <authors>Jeroen Pot</authors>
+    <owners>Jeroen Pot</owners>
     <projectUrl>https://github.com/jeroenpot/Mirabeau-Sql-Helper</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>

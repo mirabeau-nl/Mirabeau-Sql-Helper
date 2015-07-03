@@ -35,7 +35,7 @@ namespace Mirabeau.MySql.Library.IntegrationTests
 
             _mySqlHelper.ExecuteNonQuery(ConnectionString, CommandType.Text, Properties.Resources.InsertIntoTable, parameters);
 
-            using (DbDataReader dataReader = _mySqlHelper.ExecuteReader(ConnectionString, CommandType.Text, "SELECT * FROM tmp_unittest_table"))
+            using (DbDataReader dataReader = _mySqlHelper.ExecuteReader<MySqlDataReader>(ConnectionString, CommandType.Text, "SELECT * FROM tmp_unittest_table"))
             {
                 List<TempTable> rows = Mapper.Map<IDataReader, List<TempTable>>(dataReader);
 
@@ -46,7 +46,7 @@ namespace Mirabeau.MySql.Library.IntegrationTests
 
             MySqlParameter emailParameter = Email.CreateMySqlParameter("emailaddress");
 
-            using (DbDataReader dataReader = _mySqlHelper.ExecuteReader(ConnectionString, CommandType.StoredProcedure, "GetByEmail",emailParameter))
+            using (DbDataReader dataReader = _mySqlHelper.ExecuteReader<MySqlDataReader>(ConnectionString, CommandType.StoredProcedure, "GetByEmail", emailParameter))
             {
                 List<TempTable> rows = Mapper.Map<IDataReader, List<TempTable>>(dataReader);
                 Assert.That(rows, Has.Count.EqualTo(1));
