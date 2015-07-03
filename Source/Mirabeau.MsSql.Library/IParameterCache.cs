@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace Mirabeau.MsSql.Library
 {
@@ -14,7 +15,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="connectionString">The connection string.</param>
         /// <param name="storedProcedureName">Name of the stored procedure.</param>
         /// <returns></returns>
-        IList<DbParameter> GetStoredProcedureParameterSet(string connectionString, string storedProcedureName);
+        IList<SqlParameter> GetStoredProcedureParameterSet(string connectionString, string storedProcedureName);
         /// <summary>
         /// Retrieves the set of SqlParameters appropriate for the stored procedure
         /// </summary>
@@ -22,7 +23,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="connection">The connection.</param>
         /// <param name="storedProcedureName">Name of the stored procedure.</param>
         /// <returns></returns>
-        IList<DbParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName);
+        IList<SqlParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName);
 
         /// <summary>
         /// Retrieves the set of SqlParameters appropriate for the stored procedure
@@ -35,6 +36,6 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="includeReturnValueParameter">A boolean value indicating whether the return value parameter should be included in the results</param>
         /// <returns>The <see cref="IList{SqlParameter}"/>.</returns>
-        IList<DbParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter);
+        IList<SqlParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter);
     }
 }

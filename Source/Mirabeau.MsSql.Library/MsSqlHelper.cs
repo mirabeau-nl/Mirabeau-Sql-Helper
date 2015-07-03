@@ -102,13 +102,13 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteNonQueryAsync(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteNonQueryAsync<SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
@@ -135,13 +135,13 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteNonQueryAsync(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteNonQueryAsync<SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
@@ -192,13 +192,13 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteNonQueryAsync(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteNonQueryAsync<SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
@@ -248,13 +248,13 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return ExecuteDataSet(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return ExecuteDataSet<SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
@@ -286,13 +286,13 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of SqlParameters
-                return ExecuteDataSet(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return ExecuteDataSet<SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Pass through the call providing null for the set of SqlParameters
@@ -324,13 +324,13 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return ExecuteDataSet(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return ExecuteDataSet<SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
@@ -380,13 +380,13 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteReaderAsync<SqlDataReader>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
@@ -417,11 +417,11 @@ namespace Mirabeau.MsSql.Library
             // If we receive parameter values, we need to figure out where they go
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 AssignParameterValues(commandParameters, parameterValues);
 
-                return await ExecuteReaderAsync<SqlDataReader>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Pass through the call providing null for the set of DbParameters
@@ -471,11 +471,11 @@ namespace Mirabeau.MsSql.Library
             // If we receive parameter values, we need to figure out where they go
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 AssignParameterValues(commandParameters, parameterValues);
 
-                return await ExecuteReaderAsync<SqlDataReader>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Pass through the call providing null for the set of DbParameters
@@ -519,23 +519,23 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        public async Task<T> ExecuteScalarAsync<T>(string connectionString, string storedProcedureName, params object[] parameterValues)
+        public async Task<TResult> ExecuteScalarAsync<TResult>(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
             // If we receive parameter values, we need to figure out where they go
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(connectionString, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteScalarAsync<T>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<TResult, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync<T>(connectionString, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync<TResult, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName);
         }
 
         /// <summary>
@@ -666,7 +666,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        public async Task<T> ExecuteScalarAsync<T>(DbConnection connection, string storedProcedureName, params object[] parameterValues)
+        public async Task<TResult> ExecuteScalarAsync<TResult>(DbConnection connection, string storedProcedureName, params object[] parameterValues)
         {
             if (connection == null)
             {
@@ -677,17 +677,17 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteScalarAsync<T>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<TResult, SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync<T>(connection, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync<TResult>(connection, CommandType.StoredProcedure, storedProcedureName);
         }
 
         /// <summary>
@@ -715,13 +715,13 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteScalarAsync(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
@@ -782,7 +782,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        public async Task<T> ExecuteScalarAsync<T>(DbTransaction transaction, string storedProcedureName, params object[] parameterValues)
+        public async Task<TResult> ExecuteScalarAsync<TResult>(DbTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
             if (transaction == null)
             {
@@ -793,17 +793,17 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteScalarAsync<T>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<TResult, SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync<T>(transaction, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync<TResult>(transaction, CommandType.StoredProcedure, storedProcedureName);
         }
 
         #endregion
@@ -857,9 +857,9 @@ namespace Mirabeau.MsSql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command using "FOR XML AUTO"</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
-        public XmlReader ExecuteXmlReader(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters)
+        public XmlReader ExecuteXmlReader(DbConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return ExecuteXmlReader(connection, commandType, commandText, commandParameters as IEnumerable<DbParameter>);
+            return ExecuteXmlReader(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
         }
 
         /// <summary>
@@ -875,9 +875,9 @@ namespace Mirabeau.MsSql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command using "FOR XML AUTO"</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
-        public async Task<XmlReader> ExecuteXmlReaderAsync(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters)
+        public async Task<XmlReader> ExecuteXmlReaderAsync(DbConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await ExecuteXmlReaderAsync(connection, commandType, commandText, commandParameters as IEnumerable<DbParameter>);
+            return await ExecuteXmlReaderAsync(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
         }
 
         /// <summary>
@@ -893,7 +893,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command using "FOR XML AUTO"</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
-        public XmlReader ExecuteXmlReader(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters)
+        public XmlReader ExecuteXmlReader(DbConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
             // Create a command and prepare it for execution
             using (SqlCommand cmd = new SqlCommand())
@@ -922,7 +922,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command using "FOR XML AUTO"</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
-        public async Task<XmlReader> ExecuteXmlReaderAsync(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters)
+        public async Task<XmlReader> ExecuteXmlReaderAsync(DbConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
             // Create a command and prepare it for execution
             using (SqlCommand cmd = new SqlCommand())
@@ -963,7 +963,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -1001,7 +1001,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(null, connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -1183,7 +1183,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
@@ -1221,7 +1221,7 @@ namespace Mirabeau.MsSql.Library
             if ((parameterValues != null) && (parameterValues.Length > 0))
             {
                 // Pull the parameters for this stored procedure from the parameter cache (or discover them & populate the cache)
-                IList<DbParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
+                IList<SqlParameter> commandParameters = _parameterCache.GetStoredProcedureParameterSet(transaction, transaction.Connection, storedProcedureName);
 
                 // Assign the provided values to these parameters based on parameter order
                 AssignParameterValues(commandParameters, parameterValues);
