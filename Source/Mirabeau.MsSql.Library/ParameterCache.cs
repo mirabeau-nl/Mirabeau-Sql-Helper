@@ -41,7 +41,7 @@ namespace Mirabeau.MsSql.Library
     {
         #region private methods, variables, and constructors
 
-        private static readonly ConcurrentDictionary<string, IList<DbParameter>> ParamCache = new ConcurrentDictionary<string, IList<DbParameter>>();
+        private static readonly ConcurrentDictionary<string, IList<SqlParameter>> ParamCache = new ConcurrentDictionary<string, IList<SqlParameter>>();
 
         /// <summary>
         /// Resolve at run time the appropriate set of DbParameters for a stored procedure
@@ -51,7 +51,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="includeReturnValueParameter">Whether or not to include their return value parameter</param>
         /// <returns>The parameter array discovered.</returns>
-        private static IList<DbParameter> DiscoverSpParameterSet(DbTransaction transaction, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
+        private static IList<SqlParameter> DiscoverSpParameterSet(DbTransaction transaction, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
         {
             using (SqlCommand cmd = new SqlCommand(storedProcedureName, connection as SqlConnection))
             {
@@ -73,7 +73,7 @@ namespace Mirabeau.MsSql.Library
                     cmd.Parameters.RemoveAt(0);
                 }
 
-                DbParameter[] discoveredParameters = new DbParameter[cmd.Parameters.Count];
+                SqlParameter[] discoveredParameters = new SqlParameter[cmd.Parameters.Count];
 
                 cmd.Parameters.CopyTo(discoveredParameters, 0);
 
@@ -86,13 +86,13 @@ namespace Mirabeau.MsSql.Library
         /// </summary>
         /// <param name="originalParameters">The original parameters.</param>
         /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
-        private static IList<DbParameter> CloneParameters(IList<DbParameter> originalParameters)
+        private static IList<SqlParameter> CloneParameters(IList<SqlParameter> originalParameters)
         {
-            DbParameter[] clonedParameters = new DbParameter[originalParameters.Count];
+            SqlParameter[] clonedParameters = new SqlParameter[originalParameters.Count];
 
             for (int i = 0; i < originalParameters.Count; i++)
             {
-                clonedParameters[i] = (DbParameter)((ICloneable)originalParameters[i]).Clone();
+                clonedParameters[i] = (SqlParameter)((ICloneable)originalParameters[i]).Clone();
             }
 
             return clonedParameters;
@@ -112,7 +112,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcdureName">The name of the stored procedure</param>
         /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        public IList<DbParameter> GetStoredProcedureParameterSet(string connectionString, string storedProcdureName)
+        public IList<SqlParameter> GetStoredProcedureParameterSet(string connectionString, string storedProcdureName)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             return GetStoredProcedureParameterSet(null, connection, storedProcdureName, false);
@@ -125,7 +125,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="connection">A valid SqlConnection object</param>
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
-        public IList<DbParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName)
+        public IList<SqlParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName)
         {
             return GetStoredProcedureParameterSet(connectionString, connection, storedProcedureName, false);
         }
@@ -141,7 +141,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName">The name of the stored procedure</param>
         /// <param name="includeReturnValueParameter">A boolean value indicating whether the return value parameter should be included in the results</param>
         /// <returns>The <see cref="IList{DbParameter}"/>.</returns>
-        public IList<DbParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
+        public IList<SqlParameter> GetStoredProcedureParameterSet(DbTransaction connectionString, DbConnection connection, string storedProcedureName, bool includeReturnValueParameter)
         {
             if (connection == null)
             {
@@ -156,7 +156,7 @@ namespace Mirabeau.MsSql.Library
             string hashKey = connection.ConnectionString + ":" + storedProcedureName + 
                              (includeReturnValueParameter ? ":include ReturnValue Parameter" : "");
 
-            IList<DbParameter> cachedParameters = null;
+            IList<SqlParameter> cachedParameters = null;
             if (ParamCache.ContainsKey(hashKey))
             {
                 cachedParameters = ParamCache[hashKey];

@@ -36,7 +36,7 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
             string insert =
                 "INSERT INTO dbo.tmp_dates (id, d1, d2, d3 , d4) VALUES(@id, @d1, @d2, @d3, @d4)";
 
-            _sqlHelper.ExecuteNonQuery(Connectionstring, CommandType.Text, insert, parameters);
+            _sqlHelper.ExecuteNonQuery<SqlParameter>(Connectionstring, CommandType.Text, insert, parameters);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
             string insert =
                 "INSERT INTO dbo.tmp_dates (id, d1, d2, d3 , d4) VALUES(@id, @d1, @d2, @d3, @d4)";
 
-            _sqlHelper.ExecuteNonQuery(Connectionstring, CommandType.Text, insert, parameters);
+            _sqlHelper.ExecuteNonQuery<SqlParameter>(Connectionstring, CommandType.Text, insert, parameters);
         }
 
         [TestFixtureTearDown]
