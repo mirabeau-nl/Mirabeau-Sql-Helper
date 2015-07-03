@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.Common;
 
 namespace Mirabeau.Sql.Library
@@ -16,8 +17,9 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="direction">The direction of the parameter.</param>
         /// <returns></returns>
-        public T CreateParameter(object theValue, string parameterName)
+        public T CreateParameter(object theValue, string parameterName, ParameterDirection direction)
         {
             ValidateParameter(parameterName);
 
@@ -31,6 +33,7 @@ namespace Mirabeau.Sql.Library
             T parameter = CreateParameter();
             parameter.ParameterName = parameterName;
             parameter.Value = valueToUse;
+            parameter.Direction = direction;
 
             return parameter;
         }

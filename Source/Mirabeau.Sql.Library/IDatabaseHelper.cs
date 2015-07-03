@@ -60,7 +60,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        int ExecuteNonQuery<TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
@@ -75,7 +75,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<int> ExecuteNonQueryAsync<TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
@@ -90,7 +90,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        int ExecuteNonQuery(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        int ExecuteNonQuery<TParameter>(string connectionString, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
@@ -105,7 +105,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<int> ExecuteNonQueryAsync<TParameter>(string connectionString, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided DbConnection. 
@@ -146,7 +146,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        int ExecuteNonQuery(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        int ExecuteNonQuery<TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the specified DbConnection 
@@ -161,7 +161,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        Task<int> ExecuteNonQueryAsync(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<int> ExecuteNonQueryAsync<TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the specified DbConnection 
@@ -176,7 +176,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        int ExecuteNonQuery(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        int ExecuteNonQuery<TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the specified DbConnection 
@@ -191,7 +191,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        Task<int> ExecuteNonQueryAsync(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<int> ExecuteNonQueryAsync<TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided DbTransaction. 
@@ -232,7 +232,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        int ExecuteNonQuery(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        int ExecuteNonQuery<TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the specified DbTransaction
@@ -247,7 +247,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        Task<int> ExecuteNonQueryAsync(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<int> ExecuteNonQueryAsync<TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the specified DbTransaction
@@ -262,7 +262,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        int ExecuteNonQuery(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        int ExecuteNonQuery<TParameter>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the specified DbTransaction
@@ -277,7 +277,8 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An int representing the number of rows affected by the command</returns>
-        Task<int> ExecuteNonQueryAsync(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<int> ExecuteNonQueryAsync<TParameter>(DbTransaction transaction, CommandType commandType,
+            string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
@@ -306,7 +307,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        DataSet ExecuteDataSet(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        DataSet ExecuteDataSet<TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
@@ -321,7 +322,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        DataSet ExecuteDataSet(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        DataSet ExecuteDataSet<TParameter>(string connectionString, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbConnection. 
@@ -349,7 +350,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        DataSet ExecuteDataSet(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        DataSet ExecuteDataSet<TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbConnection 
@@ -364,7 +365,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        DataSet ExecuteDataSet(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        DataSet ExecuteDataSet<TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbTransaction. 
@@ -392,7 +393,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        DataSet ExecuteDataSet(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        DataSet ExecuteDataSet<TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbTransaction
@@ -407,7 +408,8 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A dataset containing the resultset generated by the command</returns>
-        DataSet ExecuteDataSet(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        DataSet ExecuteDataSet<TParameter>(DbTransaction transaction, CommandType commandType, string commandText,
+            IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
@@ -421,7 +423,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        DbDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText);
+        TReader ExecuteReader<TReader>(string connectionString, CommandType commandType, string commandText) where TReader : DbDataReader;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
@@ -435,7 +437,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        Task<DbDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText);
+        Task<TReader> ExecuteReaderAsync<TReader>(string connectionString, CommandType commandType, string commandText) where TReader : DbDataReader;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
@@ -451,7 +453,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        DbDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        TReader ExecuteReader<TReader, TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
@@ -467,7 +471,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        Task<DbDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<TReader> ExecuteReaderAsync<TReader, TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters) 
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
@@ -483,7 +489,10 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        DbDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        TReader ExecuteReader<TReader, TParameter>(string connectionString, CommandType commandType, string commandText,
+            IEnumerable<TParameter> commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
@@ -499,7 +508,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
         [SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope")]
-        Task<DbDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<TReader> ExecuteReaderAsync<TReader, TParameter>(string connectionString, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) 
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbConnection. 
@@ -512,7 +523,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        DbDataReader ExecuteReader(DbConnection connection, CommandType commandType, string commandText);
+        TReader ExecuteReader<TReader>(DbConnection connection, CommandType commandType, string commandText) where TReader : DbDataReader;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbConnection. 
@@ -525,7 +536,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        Task<DbDataReader> ExecuteReaderAsync(DbConnection connection, CommandType commandType, string commandText);
+        Task<TReader> ExecuteReaderAsync<TReader>(DbConnection connection, CommandType commandType, string commandText) where TReader : DbDataReader;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbConnection 
@@ -540,7 +551,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        DbDataReader ExecuteReader(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        TReader ExecuteReader<TReader, TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbConnection 
@@ -555,7 +568,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        Task<DbDataReader> ExecuteReaderAsync(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<TReader> ExecuteReaderAsync<TReader, TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbConnection 
@@ -570,7 +585,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        DbDataReader ExecuteReader(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        TReader ExecuteReader<TReader, TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbConnection 
@@ -585,7 +602,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        Task<DbDataReader> ExecuteReaderAsync(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<TReader> ExecuteReaderAsync<TReader, TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbTransaction. 
@@ -598,7 +617,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        DbDataReader ExecuteReader(DbTransaction transaction, CommandType commandType, string commandText);
+        TReader ExecuteReader<TReader>(DbTransaction transaction, CommandType commandType, string commandText) where TReader : DbDataReader;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided DbTransaction. 
@@ -611,7 +630,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        Task<DbDataReader> ExecuteReaderAsync(DbTransaction transaction, CommandType commandType, string commandText);
+        Task<TReader> ExecuteReaderAsync<TReader>(DbTransaction transaction, CommandType commandType, string commandText) where TReader : DbDataReader;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbTransaction
@@ -626,7 +645,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        DbDataReader ExecuteReader(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        TReader ExecuteReader<TReader, TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbTransaction
@@ -641,7 +662,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        Task<DbDataReader> ExecuteReaderAsync(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<TReader> ExecuteReaderAsync<TReader, TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbTransaction
@@ -656,7 +679,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        DbDataReader ExecuteReader(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        TReader ExecuteReader<TReader, TParameter>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a resultset) against the specified DbTransaction
@@ -671,7 +696,9 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>A DbDataReader containing the resultset generated by the command</returns>
-        Task<DbDataReader> ExecuteReaderAsync(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<TReader> ExecuteReaderAsync<TReader, TParameter>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters)
+            where TReader : DbDataReader
+            where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the database specified in 
@@ -699,7 +726,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(string connectionString, CommandType commandType, string commandText);
+        TResult ExecuteScalar<TResult>(string connectionString, CommandType commandType, string commandText);
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the database specified in 
@@ -728,7 +755,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        object ExecuteScalar(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        object ExecuteScalar<TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
@@ -743,7 +770,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        TResult ExecuteScalar<TResult, TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
@@ -758,7 +785,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<object> ExecuteScalarAsync<TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
@@ -773,7 +800,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<T> ExecuteScalarAsync<T>(string connectionString, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<TResult> ExecuteScalarAsync<TResult, TParameter>(string connectionString, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
@@ -788,7 +815,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        object ExecuteScalar(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        object ExecuteScalar<TParameter>(string connectionString, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
@@ -803,7 +830,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        TResult ExecuteScalar<TResult, TParameter>(string connectionString, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
@@ -818,7 +845,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<object> ExecuteScalarAsync<TParameter>(string connectionString, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
@@ -833,7 +860,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<T> ExecuteScalarAsync<T>(string connectionString, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<TResult> ExecuteScalarAsync<TResult, TParameter>(string connectionString, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided DbConnection. 
@@ -859,7 +886,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(DbConnection connection, CommandType commandType, string commandText);
+        TResult ExecuteScalar<TResult>(DbConnection connection, CommandType commandType, string commandText);
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided DbConnection. 
@@ -885,7 +912,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<T> ExecuteScalarAsync<T>(DbConnection connection, CommandType commandType, string commandText);
+        Task<TResult> ExecuteScalarAsync<TResult>(DbConnection connection, CommandType commandType, string commandText);
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbConnection 
@@ -900,7 +927,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        object ExecuteScalar(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        object ExecuteScalar<TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbConnection 
@@ -915,7 +942,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        TResult ExecuteScalar<TResult, TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbConnection 
@@ -930,7 +957,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<object> ExecuteScalarAsync(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<object> ExecuteScalarAsync<TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbConnection 
@@ -945,7 +972,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<T> ExecuteScalarAsync<T>(DbConnection connection, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<TResult> ExecuteScalarAsync<TResult, TParameter>(DbConnection connection, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbConnection 
@@ -960,7 +987,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        object ExecuteScalar(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        object ExecuteScalar<TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbConnection 
@@ -975,7 +1002,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        TResult ExecuteScalar<TResult, TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbConnection 
@@ -990,7 +1017,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<object> ExecuteScalarAsync(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<object> ExecuteScalarAsync<TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbConnection 
@@ -1005,7 +1032,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<T> ExecuteScalarAsync<T>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<TResult> ExecuteScalarAsync<TResult, TParameter>(DbConnection connection, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided DbTransaction. 
@@ -1031,7 +1058,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(DbTransaction transaction, CommandType commandType, string commandText);
+        TResult ExecuteScalar<TResult>(DbTransaction transaction, CommandType commandType, string commandText);
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided DbTransaction. 
@@ -1057,7 +1084,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<T> ExecuteScalarAsync<T>(DbTransaction transaction, CommandType commandType, string commandText);
+        Task<TResult> ExecuteScalarAsync<TResult>(DbTransaction transaction, CommandType commandType, string commandText);
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbTransaction
@@ -1072,7 +1099,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        object ExecuteScalar(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        object ExecuteScalar<TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbTransaction
@@ -1087,7 +1114,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        TResult ExecuteScalar<TResult, TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbTransaction
@@ -1102,7 +1129,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<object> ExecuteScalarAsync(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<object> ExecuteScalarAsync<TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbTransaction
@@ -1117,7 +1144,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<T> ExecuteScalarAsync<T>(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters);
+        Task<TResult> ExecuteScalarAsync<TResult, TParameter>(DbTransaction transaction, CommandType commandType, string commandText, params TParameter[] commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbTransaction
@@ -1132,7 +1159,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        object ExecuteScalar(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        object ExecuteScalar<TParameter>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbTransaction
@@ -1147,7 +1174,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        T ExecuteScalar<T>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        TResult ExecuteScalar<TResult, TParameter>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbTransaction
@@ -1162,7 +1189,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<object> ExecuteScalarAsync(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<object> ExecuteScalarAsync<TParameter>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Execute a SqlCommand (that returns a 1x1 resultset) against the specified DbTransaction
@@ -1177,7 +1204,7 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandText">The stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">An array of DbParameters used to execute the command</param>
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
-        Task<T> ExecuteScalarAsync<T>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<DbParameter> commandParameters);
+        Task<TResult> ExecuteScalarAsync<TResult, TParameter>(DbTransaction transaction, CommandType commandType, string commandText, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter;
 
         /// <summary>
         /// Creates a new DbConnection.

@@ -30,13 +30,11 @@ There is also a now-static version (MsSqlHelper : IMsSqlHelper & MySqlHelper : I
 
 
 #### Executing queries ####
-            IMsSqlHelper msSqlHelper = new MsSqlHelper();
-            // Or in case of MySql: IMySqlHelper mySqlHelper = new MySqlHelper();
             string connectionString = "my database connection string";
 
             var parameters = new List<SqlParameter> { 1234.CreateSqlParameter("Parameter1"), "parmeter2value".CreateSqlParameter("Parameter2") };
 
-            using (IDataReader dataReader = msSqlHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, "MyStoredProcedure", parameters))
+            using (IDataReader dataReader = DatabaseHelper.ExecuteReader(connectionString, CommandType.StoredProcedure, "MyStoredProcedure", parameters))
             {
                 while (dataReader.Read())
                 {
@@ -55,8 +53,8 @@ There is also a now-static version (MsSqlHelper : IMsSqlHelper & MySqlHelper : I
                 sqlConnection.Open();
                 using (var sqlTransaction = sqlConnection.BeginTransaction())
                 {
-                    msSqlHelper.ExecuteScalar(sqlTransaction, CommandType.StoredProcedure, "StoredProcedureName1");
-                    msSqlHelper.ExecuteScalar(sqlTransaction, CommandType.StoredProcedure, "StoredProcedureName2");
+                    DatabaseHelper.ExecuteScalar(sqlTransaction, CommandType.StoredProcedure, "StoredProcedureName1");
+                    DatabaseHelper.ExecuteScalar(sqlTransaction, CommandType.StoredProcedure, "StoredProcedureName2");
                     sqlTransaction.Commit();
                 }
             }
