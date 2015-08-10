@@ -194,5 +194,41 @@ namespace Mirabeau.MySql.Library
         {
             return Factory.CreateParameter(theValue, parameterName, direction);
         }
+
+        /// <summary>
+        /// Creates a SqlParameter for a Time
+        /// </summary>
+        /// <param name="theValue">the value.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <param name="direction">The direction of the parameter.</param>
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateSqlParameter(this TimeSpan? theValue, string parameterName, ParameterDirection direction = DefaultDirectionInputDirection)
+        {
+            return Factory.CreateParameter(theValue, parameterName, direction);
+        }
+
+        /// <summary>
+        /// Creates a SqlParameter for a float
+        /// </summary>
+        /// <param name="theValue">the value.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <param name="direction">The direction of the parameter.</param>
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateSqlParameter(this float theValue, string parameterName, ParameterDirection direction = DefaultDirectionInputDirection)
+        {
+            return Factory.CreateParameter(theValue, parameterName, direction);
+        }
+
+        /// <summary>
+        /// Creates a SqlParameter for a float
+        /// </summary>
+        /// <param name="theValue">the value.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <param name="direction">The direction of the parameter.</param>
+        /// <returns>The <see cref="MySqlParameter"/></returns>
+        public static MySqlParameter CreateSqlParameter(this float? theValue, string parameterName, ParameterDirection direction = DefaultDirectionInputDirection)
+        {
+            return Factory.CreateParameter(theValue, parameterName, direction);
+        }
     }
 }
