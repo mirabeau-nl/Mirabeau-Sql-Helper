@@ -20,18 +20,25 @@ namespace Mirabeau.MsSql.Library
         public static string CreateExecutableSqlStatement(string sql, IEnumerable<SqlParameter> parameters)
         {
             // Bold assumtion, if sql has no space, then it's a stored procedure.
-            if (sql.Contains(" "))
-            {
-                return CreateExecutableQueryStatement(sql, parameters);
-            }
-            else
-            {
-                // Asume sp -> TODO:
-                throw new NotImplementedException("TODO: SP running");
-            }
+            return sql.Contains(" ") ? CreateExecutableQueryStatement(sql, parameters) : CreateExecutableStoredProcedureStatement(sql, parameters);
         }
 
-        private static string CreateExecutableQueryStatement(string sql, IEnumerable<SqlParameter> parameters)
+        public static string CreateExecutableStoredProcedureStatement(string storedProcedureName, IEnumerable<SqlParameter> parameters)
+        {
+            IList<string> sqlParameters = new List<string>();
+
+            foreach (SqlParameter sqlParameter in parameters)
+            {
+                string param = string.Format("@{0} = {1}", sqlParameter.ParameterName, GetParameterValue(sqlParameter));
+                sqlParameters.Add(param);
+            }
+
+            string spString = String.Format("EXEC {0} {1}", storedProcedureName, string.Join(", ", sqlParameters));
+            return spString;
+
+        }
+
+        public static string CreateExecutableQueryStatement(string sql, IEnumerable<SqlParameter> parameters)
         {
             string sqlString = String.Empty;
             foreach (var dbParameter in parameters)
@@ -88,23 +95,25 @@ namespace Mirabeau.MsSql.Library
                 case SqlDbType.DateTime:
                 case SqlDbType.DateTime2:
                 case SqlDbType.DateTimeOffset:
-                    retval = "'" + sqlParameter.Value.ToString().Replace("'", "''") + "'";
+                    retval = string.Format("'{0}'", sqlParameter.Value.ToString().ReplaceSingleQuote());
                     break;
-
                 case SqlDbType.Bit:
-                    bool b = Boolean.Parse(sqlParameter.Value.ToString());
-                    retval = (b) ? "1" : "0";
+                    retval = (Boolean.Parse(sqlParameter.Value.ToString())) ? "1" : "0";
                     break;
                 case SqlDbType.Decimal:
                     retval = ((decimal) sqlParameter.Value).ToString(System.Globalization.CultureInfo.InvariantCulture);
                     break;
                 default:
-                    retval = sqlParameter.Value.ToString().Replace("'", "''");
+                    retval = sqlParameter.Value.ToString().ReplaceSingleQuote();
                     break;
             }
 
             return retval;
+        }
 
+        private static string ReplaceSingleQuote(this string sql)
+        {
+            return sql.Replace("'", "''");
         }
     }
 }
