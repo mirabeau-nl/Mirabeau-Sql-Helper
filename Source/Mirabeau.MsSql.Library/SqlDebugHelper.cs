@@ -95,7 +95,9 @@ namespace Mirabeau.MsSql.Library
                     bool b = Boolean.Parse(sqlParameter.Value.ToString());
                     retval = (b) ? "1" : "0";
                     break;
-
+                case SqlDbType.Decimal:
+                    retval = ((decimal) sqlParameter.Value).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    break;
                 default:
                     retval = sqlParameter.Value.ToString().Replace("'", "''");
                     break;
