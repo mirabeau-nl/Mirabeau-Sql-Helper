@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
+using System.Globalization;
 
 namespace Mirabeau.MsSql.Library
 {
@@ -12,7 +12,7 @@ namespace Mirabeau.MsSql.Library
     public static class SqlDebugHelper
     {
         /// <summary>
-        /// Creates a SQL-string with the parameter declaration and the sql statement so it can be executed in Management studio.
+        /// Creates a SQL-string with the parameter declaration and the sql statement so it can be executed in Sql Server Management studio.
         /// </summary>
         /// <param name="sql">The sql-query</param>
         /// <param name="parameters"></param>
@@ -23,14 +23,23 @@ namespace Mirabeau.MsSql.Library
             return sql.Contains(" ") ? CreateExecutableQueryStatement(sql, parameters) : CreateExecutableStoredProcedureStatement(sql, parameters);
         }
 
+        /// <summary>
+        /// Creates a T-SQL notation for a stored procedure that can be executed in Sql server management studio.
+        /// </summary>
+        /// <param name="storedProcedureName"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public static string CreateExecutableStoredProcedureStatement(string storedProcedureName, IEnumerable<SqlParameter> parameters)
         {
             IList<string> sqlParameters = new List<string>();
-
-            foreach (SqlParameter sqlParameter in parameters)
+            if (parameters != null)
             {
-                string param = string.Format("@{0} = {1}", sqlParameter.ParameterName, GetParameterValue(sqlParameter));
-                sqlParameters.Add(param);
+                foreach (SqlParameter sqlParameter in parameters)
+                {
+                    string param = string.Format("@{0} = {1}", sqlParameter.ParameterName,
+                        GetParameterValue(sqlParameter));
+                    sqlParameters.Add(param);
+                }
             }
 
             string spString = String.Format("EXEC {0} {1}", storedProcedureName, string.Join(", ", sqlParameters));
@@ -38,12 +47,21 @@ namespace Mirabeau.MsSql.Library
 
         }
 
+        /// <summary>
+        /// Creates a T-SQL notation for a SQL Query that can be executed in Sql server management studio.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public static string CreateExecutableQueryStatement(string sql, IEnumerable<SqlParameter> parameters)
         {
             string sqlString = String.Empty;
-            foreach (var dbParameter in parameters)
+            if (parameters != null)
             {
-                sqlString += CreateParameterText(dbParameter);
+                foreach (var dbParameter in parameters)
+                {
+                    sqlString += CreateParameterText(dbParameter);
+                }
             }
 
             sqlString += sql;
@@ -83,10 +101,12 @@ namespace Mirabeau.MsSql.Library
 
             switch (sqlParameter.SqlDbType)
             {
-                case SqlDbType.Char:
-                case SqlDbType.NChar:
                 case SqlDbType.NText:
                 case SqlDbType.NVarChar:
+                    retval = string.Format("N'{0}'", sqlParameter.Value.ToString().ReplaceSingleQuote());
+                    break;
+                case SqlDbType.Char:
+                case SqlDbType.NChar:
                 case SqlDbType.Text:
                 case SqlDbType.Time:
                 case SqlDbType.VarChar:
@@ -101,7 +121,7 @@ namespace Mirabeau.MsSql.Library
                     retval = (Boolean.Parse(sqlParameter.Value.ToString())) ? "1" : "0";
                     break;
                 case SqlDbType.Decimal:
-                    retval = ((decimal) sqlParameter.Value).ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    retval = ((decimal)sqlParameter.Value).ToString(CultureInfo.InvariantCulture);
                     break;
                 default:
                     retval = sqlParameter.Value.ToString().ReplaceSingleQuote();

@@ -1,0 +1,5 @@
+﻿declare @value1 Int = 0
+declare @value2 NVarChar(11) = N'hello world'
+declare @value3 NVarChar = null
+declare @value4 Decimal = 123.456
+Select * FROM [dbo].[TableX] Where Column1 > @value1 and Column2 = @value2 and Column3 = @value3 and Column4 = @value4
