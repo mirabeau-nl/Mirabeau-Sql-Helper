@@ -1,4 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/4yjr27j3sjaym8u9?svg=true)](https://ci.appveyor.com/project/jeroenpot/mirabeau-sql-helper-rpin0)
+[![NuGet downloads MsSqlHelper](https://img.shields.io/nuget/dt/MsSqlHelper.svg)](https://www.nuget.org/packages/MsSqlHelper)
+[![NuGet downloads MySqlHelper](https://img.shields.io/nuget/dt/MySqlHelper.svg)](https://www.nuget.org/packages/MySqlHelper)
 
 # README #
 
