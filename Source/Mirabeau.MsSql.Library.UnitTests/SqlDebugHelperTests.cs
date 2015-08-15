@@ -118,7 +118,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
 
         private static string ReplaceNewLine(string value)
         {
-            return value.Replace(@"\n", Environment.NewLine);
+            return value.Replace(@"\n", " ").Replace(@"\r\n", " ");
         }
     }
 }
