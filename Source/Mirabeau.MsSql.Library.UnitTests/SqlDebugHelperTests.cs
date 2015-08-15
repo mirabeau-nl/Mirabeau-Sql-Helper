@@ -35,7 +35,11 @@ namespace Mirabeau.MsSql.Library.UnitTests
 
             string executableSql = SqlDebugHelper.CreateExecutableSqlStatement(sql, parameters);
             Trace.WriteLine(executableSql);
-            Assert.That(ReplaceNewLine(executableSql), Is.EqualTo(ReplaceNewLine(Resources.ExpectedSqlQuery)));
+
+            string value = executableSql.Replace(@"\n", " ").Replace(Environment.NewLine, " ");
+            string expected = Resources.ExpectedSqlQuery.Replace(@"\n", " ").Replace(Environment.NewLine, " ");
+
+            Assert.That(value, Is.EqualTo(expected));
         }
 
         [Test]
@@ -114,11 +118,6 @@ namespace Mirabeau.MsSql.Library.UnitTests
 
             Assert.That(() => SqlDebugHelper.CreateExecutableSqlStatement(null, CommandType.StoredProcedure, null),
                 Throws.Exception.TypeOf<ArgumentNullException>());
-        }
-
-        private static string ReplaceNewLine(string value)
-        {
-            return value.Replace(@"\n", " ").Replace(@"\r\n", " ");
         }
     }
 }
