@@ -2,4 +2,7 @@
 declare @value2 NVarChar(11) = N'hello world'
 declare @value3 NVarChar = null
 declare @value4 Decimal = 123.456
-Select * FROM [dbo].[TableX] Where Column1 > @value1 and Column2 = @value2 and Column3 = @value3 and Column4 = @value4
+declare @value5 Bit = 1
+declare @value6 Decimal(10,2) = 321.12
+declare @value7 DateTime = convert(datetime,'2010-12-31T23:59:59.0000000', 127)
+Select * FROM [dbo].[TableX] Where Column1 > @value1 and Column2 = @value2 and Column3 = @value3 and Column4 = @value4 and Column5 = @value5 and Column6 = @value6 and Column7 = @value7
