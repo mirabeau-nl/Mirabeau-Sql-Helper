@@ -4,13 +4,14 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using Mirabeau.Sql.Library;
 
 namespace Mirabeau.MsSql.Library
 {
     /// <summary>
     /// Helper class to create sql statements with parameter declaration and values.
     /// </summary>
-    public static class SqlDebugHelper
+    public class SqlDebugHelper
     {
         private static readonly CultureInfo FormatCulture = CultureInfo.InvariantCulture;
 
@@ -74,12 +75,14 @@ namespace Mirabeau.MsSql.Library
                 safeParameters = safeParameters.Where(p => p != null).ToArray();
             }
 
+            var debugHelper = new SqlDebugHelper();
+
             switch (commandType)
             {
                 case CommandType.StoredProcedure:
-                    return CreateExecutableStoredProcedureStatement(sql, safeParameters);
+                    return debugHelper.CreateExecutableStoredProcedureStatement(sql, safeParameters);
                 case CommandType.Text:
-                    return CreateExecutableQueryStatement(sql, safeParameters);
+                    return debugHelper.CreateExecutableQueryStatement(sql, safeParameters);
                 default:
                     throw new NotSupportedException(string.Format(FormatCulture, "The command type {0} is not supported.", commandType));
             }
@@ -107,7 +110,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="storedProcedureName"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        private static string CreateExecutableStoredProcedureStatement(string storedProcedureName, IEnumerable<SqlParameter> parameters)
+        private string CreateExecutableStoredProcedureStatement(string storedProcedureName, IEnumerable<SqlParameter> parameters)
         {
             IList<string> sqlParameters = new List<string>();
             if (parameters != null)
@@ -131,7 +134,7 @@ namespace Mirabeau.MsSql.Library
         /// <param name="sql"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        private static string CreateExecutableQueryStatement(string sql, IEnumerable<SqlParameter> parameters)
+        private string CreateExecutableQueryStatement(string sql, IEnumerable<SqlParameter> parameters)
         {
             string sqlString = String.Empty;
             if (parameters != null)
@@ -146,7 +149,21 @@ namespace Mirabeau.MsSql.Library
             return sqlString;
         }
 
-        private static string CreateParameterText(SqlParameter dbParameter)
+        private string CreateParameterText(SqlParameter dbParameter)
+        {
+            var sql = GetParameterDeclaration(dbParameter);
+            sql += " = ";
+            sql += GetParameterValue(dbParameter);
+            sql += Environment.NewLine;
+            return sql;
+        }
+
+        /// <summary>
+        /// Formats the declaration of the the sql parameter to text. (declare @myparam int)
+        /// </summary>
+        /// <param name="dbParameter">The database parameter.</param>
+        /// <returns></returns>
+        protected virtual string GetParameterDeclaration(SqlParameter dbParameter)
         {
             string declare = string.Format(FormatCulture, "declare @{0} {1}", dbParameter.ParameterName, dbParameter.SqlDbType);
             if (dbParameter.Size > 0)
@@ -160,15 +177,15 @@ namespace Mirabeau.MsSql.Library
                     declare += string.Format(FormatCulture, "({0})", dbParameter.Size);
                 }
             }
-
-            declare += " = ";
-            declare += GetParameterValue(dbParameter);
-            declare += Environment.NewLine;
-
             return declare;
         }
 
-        private static string GetParameterValue(SqlParameter sqlParameter)
+        /// <summary>
+        /// Formats the value of the the sql parameter to text.
+        /// </summary>
+        /// <param name="sqlParameter"></param>
+        /// <returns></returns>
+        protected virtual string GetParameterValue(SqlParameter sqlParameter)
         {
             string retval;
 
@@ -210,11 +227,6 @@ namespace Mirabeau.MsSql.Library
             }
 
             return retval;
-        }
-
-        private static string ReplaceSingleQuote(this string sql)
-        {
-            return sql.Replace("'", "''");
         }
     }
 }
