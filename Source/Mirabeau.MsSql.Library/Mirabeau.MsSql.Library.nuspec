@@ -4,7 +4,7 @@
     <id>MsSqlHelper</id>
     <version>$version$</version>
     <title>MsSqlHelper</title>
-    <authors>Dorus Verhoeckx, Jeroen Pot, Sander Kinds</authors>
+    <authors>Jeroen Pot,Dorus Verhoeckx,Sander Kinds</authors>
     <owners>$author$</owners>
     <projectUrl>https://github.com/jeroenpot/Mirabeau-Sql-Helper</projectUrl>
 	<iconUrl>https://raw.githubusercontent.com/jeroenpot/Mirabeau-Sql-Helper/develop/mssql-icon.png</iconUrl>
@@ -14,6 +14,6 @@
       Based on the Microsoft .NET Data Access Application Block v2.0.
     </description>
     <copyright>Copyright 2015</copyright>
-    <tags>SqlHelper,Sql Server, DatabaseHelper, SqlServer, SQL, MsSqlHelper</tags>
+    <tags>SqlHelper,Sql Server,DatabaseHelper,SqlServer,SQL,MsSqlHelper</tags>
   </metadata>
 </package>
