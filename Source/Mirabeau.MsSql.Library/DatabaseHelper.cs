@@ -85,7 +85,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText);
+            return await MsSqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(connectionString, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteNonQueryAsync(connectionString, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText);
+            return await MsSqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(connection, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteNonQueryAsync(connection, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText);
+            return await MsSqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteNonQueryAsync(transaction, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteNonQueryAsync(transaction, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         #endregion ExecuteNonQuery
@@ -736,7 +736,7 @@ namespace Mirabeau.MsSql.Library
         public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader>(connectionString, commandType, commandText);
+            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader>(connectionString, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -772,7 +772,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -808,7 +808,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -846,7 +846,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteReaderAsync(connectionString, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteReaderAsync(connectionString, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -878,7 +878,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader>(connection, commandType, commandText);
+            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader>(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -914,7 +914,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -950,7 +950,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -988,7 +988,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteReaderAsync(connection, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteReaderAsync(connection, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1020,7 +1020,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader>(transaction, commandType, commandText);
+            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader>(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1056,7 +1056,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await ExecuteReaderAsync(transaction, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return await ExecuteReaderAsync(transaction, commandType, commandText, commandParameters as IEnumerable<SqlParameter>).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1092,7 +1092,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteReaderAsync<SqlDataReader, SqlParameter>(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1130,7 +1130,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A SqlDataReader containing the resultset generated by the command</returns>
         public static async Task<SqlDataReader> ExecuteReaderAsync(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteReaderAsync(transaction, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteReaderAsync(transaction, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         #endregion ExecuteReader
@@ -1185,7 +1185,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(connectionString, commandType, commandText);
+            return await MsSqlHelper.ExecuteScalarAsync(connectionString, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1239,7 +1239,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<object, SqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync<object, SqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1311,7 +1311,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(connectionString, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1329,7 +1329,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(string connectionString, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1386,7 +1386,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(connectionString, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteScalarAsync(connectionString, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1405,7 +1405,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult>(connectionString, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult>(connectionString, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1453,7 +1453,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(connection, commandType, commandText);
+            return await MsSqlHelper.ExecuteScalarAsync(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1469,7 +1469,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(SqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult>(connection, commandType, commandText);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult>(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1523,7 +1523,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1541,7 +1541,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1595,7 +1595,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1613,7 +1613,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1670,7 +1670,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(connection, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteScalarAsync(connection, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1689,7 +1689,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult>(connection, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult>(connection, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1737,7 +1737,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(transaction, commandType, commandText);
+            return await MsSqlHelper.ExecuteScalarAsync(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1753,7 +1753,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(SqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult>(transaction, commandType, commandText);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult>(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1807,7 +1807,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1825,7 +1825,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1879,7 +1879,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1897,7 +1897,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult, SqlParameter>(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1954,7 +1954,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<object>(transaction, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteScalarAsync<object>(transaction, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1973,7 +1973,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteScalarAsync<TResult>(transaction, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteScalarAsync<TResult>(transaction, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         #endregion ExecuteScalar
@@ -2009,7 +2009,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public static async Task<XmlReader> ExecuteXmlReaderAsync(SqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteXmlReaderAsync(connection, commandType, commandText);
+            return await MsSqlHelper.ExecuteXmlReaderAsync(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2045,7 +2045,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public static async Task<XmlReader> ExecuteXmlReaderAsync(SqlConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteXmlReaderAsync(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteXmlReaderAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2081,7 +2081,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public static async Task<XmlReader> ExecuteXmlReaderAsync(SqlConnection connection, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteXmlReaderAsync(connection, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteXmlReaderAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2119,7 +2119,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public static async Task<XmlReader> ExecuteXmlReaderAsync(SqlConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteXmlReaderAsync(connection, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteXmlReaderAsync(connection, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2151,7 +2151,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public static async Task<XmlReader> ExecuteXmlReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MsSqlHelper.ExecuteXmlReaderAsync(transaction, commandType, commandText);
+            return await MsSqlHelper.ExecuteXmlReaderAsync(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2187,7 +2187,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public static async Task<XmlReader> ExecuteXmlReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await MsSqlHelper.ExecuteXmlReaderAsync(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteXmlReaderAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2223,7 +2223,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public static async Task<XmlReader> ExecuteXmlReaderAsync(SqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<SqlParameter> commandParameters)
         {
-            return await MsSqlHelper.ExecuteXmlReaderAsync(transaction, commandType, commandText, commandParameters);
+            return await MsSqlHelper.ExecuteXmlReaderAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2261,7 +2261,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>A dataset containing the resultset generated by the command</returns>
         public static async Task<XmlReader> ExecuteXmlReaderAsync(SqlTransaction transaction, string storedProcedureName, params object[] parameterValues)
         {
-            return await MsSqlHelper.ExecuteXmlReaderAsync(transaction, storedProcedureName, parameterValues);
+            return await MsSqlHelper.ExecuteXmlReaderAsync(transaction, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         #endregion ExecuteXmlReader

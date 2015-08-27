@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeadlockIntegrationTest.cs" />
     <Compile Include="DatabaseExecutionTests.cs" />
     <Compile Include="DateTimeParameterIntegrationTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />
