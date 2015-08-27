@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Globalization;
-using System.Linq;
-using Mirabeau.Sql.Library;
 
 namespace Mirabeau.MsSql.Library
 {
     /// <summary>
     /// Helper class to create sql statements with parameter declaration and values.
     /// </summary>
-    public class SqlDebugHelper
+    public static class SqlDebugHelper
     {
-        private static readonly CultureInfo FormatCulture = CultureInfo.InvariantCulture;
+        /// <summary>
+        /// The object that creates the SQL statements. You can override this class and implement your own if you're having issues with the generated SQL.
+        /// </summary>
+        public static SqlGenerator SqlGenerator = new SqlGenerator();
 
         /// <summary>
         /// Creates a SQL-string with the parameter declaration and the sql statement so it can be executed in Sql Server Management studio.
@@ -27,7 +27,7 @@ namespace Mirabeau.MsSql.Library
             {
                 throw new ArgumentNullException("sql");
             }
-            return CreateExecutableSqlStatement(sql, GetCommandType(sql), parameters);
+            return CreateExecutableSqlStatement(sql, SqlGenerator.GetCommandType(sql), parameters);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns></returns>
         public static string CreateExecutableSqlStatement(string sql, IList<SqlParameter> parameters)
         {
-            var sqlParameters = ConvertToParams(parameters);
+            var sqlParameters = SqlGenerator.ConvertToParams(parameters);
             return CreateExecutableSqlStatement(sql, sqlParameters);
         }
 
@@ -51,182 +51,8 @@ namespace Mirabeau.MsSql.Library
         /// <returns></returns>
         public static string CreateExecutableSqlStatement(string sql, CommandType commandType, IList<SqlParameter> parameters)
         {
-            var param = ConvertToParams(parameters);
-            return CreateExecutableSqlStatement(sql, commandType, param);
-        }
-
-        /// <summary>
-        /// Creates a SQL-string with the parameter declaration and the sql statement so it can be executed in Sql Server Management studio.
-        /// </summary>
-        /// <param name="sql">The sql-query</param>
-        /// <param name="commandType">The <see cref="CommandType"/>. Only StoredProcedure and Text are supported.</param>
-        /// <param name="parameters">The SqlParameters used for the sql-statement</param>
-        /// <returns></returns>
-        public static string CreateExecutableSqlStatement(string sql, CommandType commandType, params SqlParameter[] parameters)
-        {
-            if (sql == null)
-            {
-                throw new ArgumentNullException("sql");
-            }
-
-            var safeParameters = parameters;
-            if (safeParameters != null)
-            {
-                safeParameters = safeParameters.Where(p => p != null).ToArray();
-            }
-
-            var debugHelper = new SqlDebugHelper();
-
-            switch (commandType)
-            {
-                case CommandType.StoredProcedure:
-                    return debugHelper.CreateExecutableStoredProcedureStatement(sql, safeParameters);
-                case CommandType.Text:
-                    return debugHelper.CreateExecutableQueryStatement(sql, safeParameters);
-                default:
-                    throw new NotSupportedException(string.Format(FormatCulture, "The command type {0} is not supported.", commandType));
-            }
-        }
-
-        private static CommandType GetCommandType(string sql)
-        {
-            // Bold assumtion, if sql has no space, then it's a stored procedure.
-            return sql.Contains(" ") ? CommandType.Text : CommandType.StoredProcedure;
-        }
-
-        private static SqlParameter[] ConvertToParams(IList<SqlParameter> sqlParameters)
-        {
-            SqlParameter[] parameters = null;
-            if (sqlParameters != null)
-            {
-                parameters = sqlParameters.ToArray();
-            }
-            return parameters;
-        }
-
-        /// <summary>
-        /// Creates a T-SQL notation for a stored procedure that can be executed in Sql server management studio.
-        /// </summary>
-        /// <param name="storedProcedureName"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        private string CreateExecutableStoredProcedureStatement(string storedProcedureName, IEnumerable<SqlParameter> parameters)
-        {
-            IList<string> sqlParameters = new List<string>();
-            if (parameters != null)
-            {
-                foreach (SqlParameter sqlParameter in parameters)
-                {
-                    string param = string.Format(FormatCulture, "@{0} = {1}", sqlParameter.ParameterName,
-                        GetParameterValue(sqlParameter));
-                    sqlParameters.Add(param);
-                }
-            }
-
-            string spString = String.Format(FormatCulture, "EXEC {0} {1}", storedProcedureName, string.Join(", ", sqlParameters));
-            return spString;
-
-        }
-
-        /// <summary>
-        /// Creates a T-SQL notation for a SQL Query that can be executed in Sql server management studio.
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <param name="parameters"></param>
-        /// <returns></returns>
-        private string CreateExecutableQueryStatement(string sql, IEnumerable<SqlParameter> parameters)
-        {
-            string sqlString = String.Empty;
-            if (parameters != null)
-            {
-                foreach (var dbParameter in parameters)
-                {
-                    sqlString += CreateParameterText(dbParameter);
-                }
-            }
-
-            sqlString += sql;
-            return sqlString;
-        }
-
-        private string CreateParameterText(SqlParameter dbParameter)
-        {
-            var sql = GetParameterDeclaration(dbParameter);
-            sql += " = ";
-            sql += GetParameterValue(dbParameter);
-            sql += Environment.NewLine;
-            return sql;
-        }
-
-        /// <summary>
-        /// Formats the declaration of the the sql parameter to text. (declare @myparam int)
-        /// </summary>
-        /// <param name="dbParameter">The database parameter.</param>
-        /// <returns></returns>
-        protected virtual string GetParameterDeclaration(SqlParameter dbParameter)
-        {
-            string declare = string.Format(FormatCulture, "declare @{0} {1}", dbParameter.ParameterName, dbParameter.SqlDbType);
-            if (dbParameter.Size > 0)
-            {
-                if (dbParameter.Precision > 0)
-                {
-                    declare += string.Format(FormatCulture, "({0},{1})", dbParameter.Size, dbParameter.Precision);
-                }
-                else
-                {
-                    declare += string.Format(FormatCulture, "({0})", dbParameter.Size);
-                }
-            }
-            return declare;
-        }
-
-        /// <summary>
-        /// Formats the value of the the sql parameter to text.
-        /// </summary>
-        /// <param name="sqlParameter"></param>
-        /// <returns></returns>
-        protected virtual string GetParameterValue(SqlParameter sqlParameter)
-        {
-            string retval;
-
-            if (sqlParameter.Value == DBNull.Value)
-            {
-                return "null";
-            }
-
-            switch (sqlParameter.SqlDbType)
-            {
-                case SqlDbType.NText:
-                case SqlDbType.NVarChar:
-                    retval = string.Format(FormatCulture, "N'{0}'", sqlParameter.Value.ToString().ReplaceSingleQuote());
-                    break;
-                case SqlDbType.Char:
-                case SqlDbType.NChar:
-                case SqlDbType.Text:
-                case SqlDbType.VarChar:
-                case SqlDbType.Xml:
-                case SqlDbType.Time:
-                    retval = string.Format(FormatCulture, "'{0}'", sqlParameter.Value.ToString().ReplaceSingleQuote());
-                    break;
-                case SqlDbType.Date:
-                case SqlDbType.DateTime:
-                case SqlDbType.DateTime2:
-                case SqlDbType.DateTimeOffset:
-                    var iso8601DateTime = ((DateTime)sqlParameter.Value).ToString("O", FormatCulture);
-                    retval = string.Format(FormatCulture, "convert(datetime,'{0}', 127)", iso8601DateTime);
-                    break;
-                case SqlDbType.Bit:
-                    retval = (Boolean.Parse(sqlParameter.Value.ToString())) ? "1" : "0";
-                    break;
-                case SqlDbType.Decimal:
-                    retval = ((decimal)sqlParameter.Value).ToString(FormatCulture);
-                    break;
-                default:
-                    retval = sqlParameter.Value.ToString().ReplaceSingleQuote();
-                    break;
-            }
-
-            return retval;
+            var param = SqlGenerator.ConvertToParams(parameters);
+            return SqlGenerator.CreateExecutableSqlStatement(sql, commandType, param);
         }
     }
 }
