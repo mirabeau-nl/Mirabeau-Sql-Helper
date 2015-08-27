@@ -108,11 +108,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteNonQueryAsync<SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteNonQueryAsync<SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteNonQueryAsync(connectionString, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteNonQueryAsync(connectionString, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -141,11 +141,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteNonQueryAsync<SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteNonQueryAsync<SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteNonQueryAsync(connection, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteNonQueryAsync(connection, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,11 +198,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteNonQueryAsync<SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteNonQueryAsync<SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteNonQueryAsync(transaction, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteNonQueryAsync(transaction, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -386,11 +386,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteReaderAsync<SqlDataReader>(connectionString, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteReaderAsync<SqlDataReader>(connectionString, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -421,11 +421,11 @@ namespace Mirabeau.MsSql.Library
 
                 AssignParameterValues(commandParameters, parameterValues);
 
-                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Pass through the call providing null for the set of DbParameters
-            return await ExecuteReaderAsync<SqlDataReader>(connection, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteReaderAsync<SqlDataReader>(connection, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -475,11 +475,11 @@ namespace Mirabeau.MsSql.Library
 
                 AssignParameterValues(commandParameters, parameterValues);
 
-                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteReaderAsync<SqlDataReader, SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Pass through the call providing null for the set of DbParameters
-            return await ExecuteReaderAsync<SqlDataReader>(transaction, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteReaderAsync<SqlDataReader>(transaction, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -531,11 +531,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteScalarAsync<TResult, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<TResult, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync<TResult, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync<TResult, SqlParameter>(connectionString, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -592,7 +592,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public async Task<object> ExecuteScalarAsync(string connectionString, string storedProcedureName, params object[] parameterValues)
         {
-            return await ExecuteScalarAsync<object>(connectionString, storedProcedureName, parameterValues);
+            return await ExecuteScalarAsync<object>(connectionString, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -649,7 +649,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public async Task<object> ExecuteScalarAsync(DbConnection connection, string storedProcedureName, params object[] parameterValues)
         {
-            return await ExecuteScalarAsync<object>(connection, storedProcedureName, parameterValues);
+            return await ExecuteScalarAsync<object>(connection, storedProcedureName, parameterValues).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -683,11 +683,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteScalarAsync<TResult, SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<TResult, SqlParameter>(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync<TResult>(connection, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync<TResult>(connection, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -721,11 +721,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteScalarAsync<SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync(transaction, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync(transaction, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -799,11 +799,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteScalarAsync<TResult, SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteScalarAsync<TResult, SqlParameter>(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteScalarAsync<TResult>(transaction, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteScalarAsync<TResult>(transaction, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         #endregion
@@ -841,7 +841,7 @@ namespace Mirabeau.MsSql.Library
         public async Task<XmlReader> ExecuteXmlReaderAsync(DbConnection connection, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of DbParameters
-            return await ExecuteXmlReaderAsync(connection, commandType, commandText, null);
+            return await ExecuteXmlReaderAsync(connection, commandType, commandText, null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -877,7 +877,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public async Task<XmlReader> ExecuteXmlReaderAsync(DbConnection connection, CommandType commandType, string commandText, params SqlParameter[] commandParameters)
         {
-            return await ExecuteXmlReaderAsync(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>);
+            return await ExecuteXmlReaderAsync(connection, commandType, commandText, commandParameters as IEnumerable<SqlParameter>).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -927,10 +927,10 @@ namespace Mirabeau.MsSql.Library
             // Create a command and prepare it for execution
             using (SqlCommand cmd = new SqlCommand())
             {
-                await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters);
+                await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Create the DataAdapter & DataSet
-                XmlReader retval = await cmd.ExecuteXmlReaderAsync();
+                XmlReader retval = await cmd.ExecuteXmlReaderAsync().ConfigureAwait(false);
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -1007,11 +1007,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteXmlReaderAsync(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteXmlReaderAsync(connection, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Otherwise we can just call the SP without params
-            return await ExecuteXmlReaderAsync(connection, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteXmlReaderAsync(connection, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1045,7 +1045,7 @@ namespace Mirabeau.MsSql.Library
         public async Task<XmlReader> ExecuteXmlReaderAsync(DbTransaction transaction, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of DbParameters
-            return await ExecuteXmlReaderAsync(transaction, commandType, commandText, null);
+            return await ExecuteXmlReaderAsync(transaction, commandType, commandText, null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1081,7 +1081,7 @@ namespace Mirabeau.MsSql.Library
         /// <returns>An XmlReader containing the resultset generated by the command</returns>
         public async Task<XmlReader> ExecuteXmlReaderAsync(DbTransaction transaction, CommandType commandType, string commandText, params DbParameter[] commandParameters)
         {
-            return await ExecuteXmlReaderAsync(transaction, commandType, commandText, commandParameters as IEnumerable<DbParameter>);
+            return await ExecuteXmlReaderAsync(transaction, commandType, commandText, commandParameters as IEnumerable<DbParameter>).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1146,10 +1146,10 @@ namespace Mirabeau.MsSql.Library
             // Create a command and prepare it for execution
             using (SqlCommand cmd = new SqlCommand())
             {
-                await PrepareCommandAsync(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters);
+                await PrepareCommandAsync(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Create the DataAdapter & DataSet
-                retval = await cmd.ExecuteXmlReaderAsync();
+                retval = await cmd.ExecuteXmlReaderAsync().ConfigureAwait(false);
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -1227,11 +1227,11 @@ namespace Mirabeau.MsSql.Library
                 AssignParameterValues(commandParameters, parameterValues);
 
                 // Call the overload that takes an array of DbParameters
-                return await ExecuteXmlReaderAsync(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters);
+                return await ExecuteXmlReaderAsync(transaction, CommandType.StoredProcedure, storedProcedureName, commandParameters).ConfigureAwait(false);
             }
 
             // Pass through the call providing null for the set of DbParameters
-            return await ExecuteXmlReaderAsync(transaction, CommandType.StoredProcedure, storedProcedureName);
+            return await ExecuteXmlReaderAsync(transaction, CommandType.StoredProcedure, storedProcedureName).ConfigureAwait(false);
         }
 
         #endregion ExecuteXmlReader

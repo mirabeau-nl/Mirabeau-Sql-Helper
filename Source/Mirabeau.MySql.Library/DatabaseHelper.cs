@@ -84,7 +84,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText);
+            return await MySqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteNonQueryAsync(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(MySqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText);
+            return await MySqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(MySqlConnection connection, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteNonQueryAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(MySqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText);
+            return await MySqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An int representing the number of rows affected by the command</returns>
         public static async Task<int> ExecuteNonQueryAsync(MySqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteNonQueryAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         #endregion ExecuteNonQuery
@@ -564,7 +564,7 @@ namespace Mirabeau.MySql.Library
         public static async Task<MySqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText)
         {
             // Pass through the call providing null for the set of SqlParameters
-            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader>(connectionString, commandType, commandText);
+            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader>(connectionString, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>A MySqlDataReader containing the resultset generated by the command</returns>
         public static async Task<MySqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -636,7 +636,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>A MySqlDataReader containing the resultset generated by the command</returns>
         public static async Task<MySqlDataReader> ExecuteReaderAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -668,7 +668,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>A MySqlDataReader containing the resultset generated by the command</returns>
         public static async Task<MySqlDataReader> ExecuteReaderAsync(MySqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader>(connection, commandType, commandText);
+            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader>(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -704,7 +704,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>A MySqlDataReader containing the resultset generated by the command</returns>
         public static async Task<MySqlDataReader> ExecuteReaderAsync(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(connection, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -740,7 +740,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>A MySqlDataReader containing the resultset generated by the command</returns>
         public static async Task<MySqlDataReader> ExecuteReaderAsync(MySqlConnection connection, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(connection, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -772,7 +772,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>A MySqlDataReader containing the resultset generated by the command</returns>
         public static async Task<MySqlDataReader> ExecuteReaderAsync(MySqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader>(transaction, commandType, commandText);
+            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader>(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -808,7 +808,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>A MySqlDataReader containing the resultset generated by the command</returns>
         public static async Task<MySqlDataReader> ExecuteReaderAsync(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await ExecuteReaderAsync(transaction, commandType, commandText, commandParameters as IEnumerable<MySqlParameter>);
+            return await ExecuteReaderAsync(transaction, commandType, commandText, commandParameters as IEnumerable<MySqlParameter>).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -844,7 +844,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>A MySqlDataReader containing the resultset generated by the command</returns>
         public static async Task<MySqlDataReader> ExecuteReaderAsync(MySqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(transaction, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteReaderAsync<MySqlDataReader, MySqlParameter>(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         #endregion ExecuteReader
@@ -899,7 +899,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteScalarAsync(connectionString, commandType, commandText);
+            return await MySqlHelper.ExecuteScalarAsync(connectionString, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -953,7 +953,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync<object, MySqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync<object, MySqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -971,7 +971,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(string connectionString, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1025,7 +1025,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(string connectionString, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync(connectionString, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1043,7 +1043,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(string connectionString, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(connectionString, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(connectionString, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1091,7 +1091,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(MySqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteScalarAsync(connection, commandType, commandText);
+            return await MySqlHelper.ExecuteScalarAsync(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1107,7 +1107,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(MySqlConnection connection, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteScalarAsync<TResult>(connection, commandType, commandText);
+            return await MySqlHelper.ExecuteScalarAsync<TResult>(connection, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1161,7 +1161,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync(connection, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1179,7 +1179,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(MySqlConnection connection, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(connection, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1233,7 +1233,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(MySqlConnection connection, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync(connection, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1251,7 +1251,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(MySqlConnection connection, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(connection, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(connection, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1299,7 +1299,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(MySqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteScalarAsync(transaction, commandType, commandText);
+            return await MySqlHelper.ExecuteScalarAsync(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1315,7 +1315,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(MySqlTransaction transaction, CommandType commandType, string commandText)
         {
-            return await MySqlHelper.ExecuteScalarAsync<TResult>(transaction, commandType, commandText);
+            return await MySqlHelper.ExecuteScalarAsync<TResult>(transaction, commandType, commandText).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1369,7 +1369,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync(transaction, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1387,7 +1387,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(MySqlTransaction transaction, CommandType commandType, string commandText, params MySqlParameter[] commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(transaction, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1441,7 +1441,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<object> ExecuteScalarAsync(MySqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync(transaction, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1459,7 +1459,7 @@ namespace Mirabeau.MySql.Library
         /// <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
         public static async Task<TResult> ExecuteScalarAsync<TResult>(MySqlTransaction transaction, CommandType commandType, string commandText, IEnumerable<MySqlParameter> commandParameters)
         {
-            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(transaction, commandType, commandText, commandParameters);
+            return await MySqlHelper.ExecuteScalarAsync<TResult, MySqlParameter>(transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
         }
 
         #endregion ExecuteScalar

@@ -131,3 +131,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Scope = "member", Target = "Mirabeau.MsSql.Library.UnitTests.SqlDebugHelperTests.#ShouldThrowExceptionIfSqlIsNull()")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "Mirabeau.MsSql.Library.UnitTests")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1824:MarkAssembliesWithNeutralResourcesLanguage")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Scope = "member", Target = "Mirabeau.MsSql.Library.UnitTests.SqlDebugHelperTests.#ShouldCreateCustomImplementation()")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Scope = "member", Target = "Mirabeau.MsSql.Library.UnitTests.SqlDebugHelperTests.#Setup()")]
