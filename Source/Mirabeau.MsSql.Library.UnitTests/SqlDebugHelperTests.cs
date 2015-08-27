@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using Mirabeau.MsSql.Library.UnitTests.Properties;
 using NUnit.Framework;
 
 namespace Mirabeau.MsSql.Library.UnitTests
@@ -11,6 +10,12 @@ namespace Mirabeau.MsSql.Library.UnitTests
     [TestFixture]
     public class SqlDebugHelperTests
     {
+        [SetUp]
+        public void Setup()
+        {
+            SqlDebugHelper.SqlGenerator = new SqlGenerator();
+        }
+
         [Test]
         public void ShouldCreateExecutableQuery()
         {
@@ -49,11 +54,12 @@ namespace Mirabeau.MsSql.Library.UnitTests
             parameters.Add("hello world".CreateSqlParameter("value2"));
             parameters.Add(nullable.CreateSqlParameter("value3"));
             parameters.Add(decimalValue.CreateSqlParameter("value4"));
-            
+
 
             string executableSql = SqlDebugHelper.CreateExecutableSqlStatement(sql, parameters);
             Trace.WriteLine(executableSql);
-            Assert.That(executableSql, Is.EqualTo("EXEC sp_test @value1 = 0, @value2 = N'hello world', @value3 = null, @value4 = 123.456"));
+            Assert.That(executableSql,
+                Is.EqualTo("EXEC sp_test @value1 = 0, @value2 = N'hello world', @value3 = null, @value4 = 123.456"));
         }
 
         [Test]
@@ -64,7 +70,8 @@ namespace Mirabeau.MsSql.Library.UnitTests
 
             string executableSql = SqlDebugHelper.CreateExecutableSqlStatement("my_sp", parameter);
             Trace.WriteLine(executableSql);
-            Assert.That(executableSql, Is.EqualTo("EXEC my_sp @param = convert(datetime,'2015-12-31T23:59:22.3450000', 127)"));
+            Assert.That(executableSql,
+                Is.EqualTo("EXEC my_sp @param = convert(datetime,'2015-12-31T23:59:22.3450000', 127)"));
         }
 
         [Test]
@@ -99,7 +106,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
         [Test]
         public void ShouldIgnoreNullValuedSqlParameters()
         {
-            var list = new List<SqlParameter>() {null, null, null};
+            var list = new List<SqlParameter>() { null, null, null };
             string sp = SqlDebugHelper.CreateExecutableSqlStatement("sp", list);
 
             Assert.That(sp, Is.EqualTo("EXEC sp "));
@@ -113,6 +120,33 @@ namespace Mirabeau.MsSql.Library.UnitTests
 
             Assert.That(() => SqlDebugHelper.CreateExecutableSqlStatement(null, CommandType.StoredProcedure, null),
                 Throws.Exception.TypeOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void ShouldCreateCustomImplementation()
+        {
+            SqlDebugHelper.SqlGenerator = new CustomerGenerator();
+
+            var parameter = "test".CreateSqlParameter("param");
+            parameter.SqlDbType = SqlDbType.VarChar;
+
+            string executableSql = SqlDebugHelper.CreateExecutableSqlStatement("my_sp", parameter);
+            Trace.WriteLine(executableSql);
+            Assert.That(executableSql, Is.EqualTo("EXEC my_sp @param = 'ConstantValue'"));
+        }
+
+        class CustomerGenerator : SqlGenerator
+        {
+            /// <summary>
+            /// Formats the value of the the sql parameter to text.
+            /// 
+            /// </summary>
+            /// <param name="sqlParameter"></param>
+            /// <returns></returns>
+            protected override string GetParameterValue(SqlParameter sqlParameter)
+            {
+                return "'ConstantValue'";
+            }
         }
     }
 }
