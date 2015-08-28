@@ -186,8 +186,8 @@ namespace Mirabeau.MsSql.Library
                 case SqlDbType.DateTime:
                 case SqlDbType.DateTime2:
                 case SqlDbType.DateTimeOffset:
-                    var iso8601DateTime = ((DateTime)sqlParameter.Value).ToString("O", FormatCulture);
-                    retval = string.Format(FormatCulture, "convert(datetime,'{0}', 127)", iso8601DateTime);
+                    var dateTime = ((DateTime)sqlParameter.Value).ToString("yyyy-MM-dd HH:mm:ss:fff", FormatCulture);
+                    retval = string.Format(FormatCulture, "convert(datetime,'{0}', 121)", dateTime);
                     break;
                 case SqlDbType.Bit:
                     retval = (Boolean.Parse(sqlParameter.Value.ToString())) ? "1" : "0";

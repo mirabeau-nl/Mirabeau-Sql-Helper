@@ -71,7 +71,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
             string executableSql = SqlDebugHelper.CreateExecutableSqlStatement("my_sp", parameter);
             Trace.WriteLine(executableSql);
             Assert.That(executableSql,
-                Is.EqualTo("EXEC my_sp @param = convert(datetime,'2015-12-31T23:59:22.3450000', 127)"));
+                Is.EqualTo("EXEC my_sp @param = convert(datetime,'2015-12-31 23:59:22:345', 121)"));
         }
 
         [Test]
