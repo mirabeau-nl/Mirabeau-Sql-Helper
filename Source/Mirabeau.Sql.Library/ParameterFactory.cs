@@ -38,6 +38,7 @@ namespace Mirabeau.Sql.Library
             return parameter;
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private static void ValidateParameter(string parameterName)
         {
             if (string.IsNullOrWhiteSpace(parameterName))
