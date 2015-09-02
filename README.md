@@ -10,7 +10,8 @@ There is also a now-static version (MsSqlHelper : IMsSqlHelper & MySqlHelper : I
 
 The is also an option to generate Sql-staments for queries and stored procedure with parameter declaration to debug your queries in Sql Server Managerment studio (Sql-server only).
 
-[![Build status](https://ci.appveyor.com/api/projects/status/4yjr27j3sjaym8u9?svg=true)](https://ci.appveyor.com/project/jeroenpot/mirabeau-sql-helper-rpin0)[![NuGet downloads MsSqlHelper](https://img.shields.io/nuget/dt/MsSqlHelper.svg)](https://www.nuget.org/packages/MsSqlHelper)[![NuGet downloads MySqlHelper](https://img.shields.io/nuget/dt/MySqlHelper.svg)](https://www.nuget.org/packages/MySqlHelper)
+[![Build status](https://ci.appveyor.com/api/projects/status/ip703gxi2cy8i6bh?svg=true)](https://ci.appveyor.com/project/jeroenpot/sqlhelper)[![NuGet downloads MsSqlHelper](https://img.shields.io/nuget/dt/MsSqlHelper.svg)](https://www.nuget.org/packages/MsSqlHelper)[![NuGet downloads MySqlHelper](https://img.shields.io/nuget/dt/MySqlHelper.svg)](https://www.nuget.org/packages/MySqlHelper)
+
 
 ### Examples ###
 #### Sql parameters ####
@@ -68,7 +69,7 @@ The is also an option to generate Sql-staments for queries and stored procedure 
                 }
             }
 ```
-#### Generate Executable Sql Statements ####
+#### Generate Executable Sql Statements (sql-server only) ####
 ```C#
 float? nullable = null;
 decimal decimalValue = 123.456m;

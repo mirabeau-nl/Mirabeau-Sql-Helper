@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Mirabeau.Sql.Library;
 
@@ -132,18 +133,29 @@ namespace Mirabeau.MsSql.Library
             {
                 throw new ArgumentNullException("dbParameter");
             }
-
-            string declare = string.Format(FormatCulture, "declare @{0} {1}", dbParameter.ParameterName, dbParameter.SqlDbType);
-            if (dbParameter.Size > 0)
+            string declare;
+            switch (dbParameter.SqlDbType)
             {
-                if (dbParameter.Precision > 0)
-                {
-                    declare += string.Format(FormatCulture, "({0},{1})", dbParameter.Size, dbParameter.Precision);
-                }
-                else
-                {
-                    declare += string.Format(FormatCulture, "({0})", dbParameter.Size);
-                }
+                case SqlDbType.NText:
+                case SqlDbType.Text:
+                    declare = string.Format(FormatCulture, "declare @{0} nvarchar(max)", dbParameter.ParameterName);
+                    break;
+                default:
+
+                    declare = string.Format(FormatCulture, "declare @{0} {1}", dbParameter.ParameterName,
+                        dbParameter.SqlDbType);
+                    if (dbParameter.Size > 0)
+                    {
+                        if (dbParameter.Precision > 0)
+                        {
+                            declare += string.Format(FormatCulture, "({0},{1})", dbParameter.Size, dbParameter.Precision);
+                        }
+                        else
+                        {
+                            declare += string.Format(FormatCulture, "({0})", dbParameter.Size);
+                        }
+                    }
+                    break;
             }
             return declare;
         }
@@ -180,20 +192,26 @@ namespace Mirabeau.MsSql.Library
                 case SqlDbType.VarChar:
                 case SqlDbType.Xml:
                 case SqlDbType.Time:
+                case SqlDbType.UniqueIdentifier:
                     retval = string.Format(FormatCulture, "'{0}'", sqlParameter.Value.ToString().ReplaceSingleQuote());
                     break;
                 case SqlDbType.Date:
                 case SqlDbType.DateTime:
                 case SqlDbType.DateTime2:
                 case SqlDbType.DateTimeOffset:
-                    var iso8601DateTime = ((DateTime)sqlParameter.Value).ToString("O", FormatCulture);
-                    retval = string.Format(FormatCulture, "convert(datetime,'{0}', 127)", iso8601DateTime);
+                    var dateTime = ((DateTime)sqlParameter.Value).ToString("yyyy-MM-dd HH:mm:ss:fff", FormatCulture);
+                    retval = string.Format(FormatCulture, "convert(datetime,'{0}', 121)", dateTime);
                     break;
                 case SqlDbType.Bit:
                     retval = (Boolean.Parse(sqlParameter.Value.ToString())) ? "1" : "0";
                     break;
                 case SqlDbType.Decimal:
                     retval = ((decimal)sqlParameter.Value).ToString(FormatCulture);
+                    break;
+                case SqlDbType.Image:
+                case SqlDbType.Binary:
+                case SqlDbType.VarBinary:
+                    retval = " -- The image and binary data types are not supported --";
                     break;
                 default:
                     retval = sqlParameter.Value.ToString().ReplaceSingleQuote();

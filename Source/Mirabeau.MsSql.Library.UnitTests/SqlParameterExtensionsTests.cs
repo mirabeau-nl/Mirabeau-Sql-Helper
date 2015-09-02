@@ -148,6 +148,21 @@ namespace Mirabeau.MsSql.Library.UnitTests
             Assert.That(sqlParameter4.ParameterName, Is.EqualTo("ParameterName"));
         }
 
+        [Test]
+        public void ShouldCreateGuidparameters()
+        {
+            Guid? guid = null;
+            SqlParameter sqlParameter1 = guid.CreateSqlParameter("ParameterName");
+            Assert.That(sqlParameter1.Value, Is.EqualTo(DBNull.Value));
+            Assert.That(sqlParameter1.ParameterName, Is.EqualTo("ParameterName"));
+
+            Guid otherGuid = Guid.Empty;
+            SqlParameter sqlParameter2 = otherGuid.CreateSqlParameter("ParameterName");
+            Assert.That(sqlParameter2.Value, Is.EqualTo(otherGuid));
+            Assert.That(sqlParameter2.ParameterName, Is.EqualTo("ParameterName"));
+
+        }
+
         /// <summary>
         /// Test that null values cannot be passed.
         /// </summary>
