@@ -69,7 +69,7 @@ The is also an option to generate Sql-staments for queries and stored procedure 
                 }
             }
 ```
-#### Generate Executable Sql Statements ####
+#### Generate Executable Sql Statements (sql-server only) ####
 ```C#
 float? nullable = null;
 decimal decimalValue = 123.456m;
