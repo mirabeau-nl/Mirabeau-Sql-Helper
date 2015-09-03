@@ -1,0 +1,20 @@
+version: 3.1.2.{build}
+skip_tags: true
+configuration: Release
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+  include_nuget_references: true
+deploy:
+- provider: NuGet
+  api_key:
+    secure: sgFlZQ6SSawwtiKcN23uO3hdwEGvy8M4hA8ye2iTAPdmz4gByofx2ZljpJHZ+Pm3
+  on:
+    branch: master
