@@ -766,8 +766,6 @@ namespace Mirabeau.MsSql.Library
             return ExecuteScalarAsync<T>(transaction, storedProcedureName, parameterValues).TaskResult();
         }
 
-
-
         /// <summary>
         /// Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified
         /// DbTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
@@ -1235,5 +1233,47 @@ namespace Mirabeau.MsSql.Library
         }
 
         #endregion ExecuteXmlReader
+
+        #region bulkInsert
+
+        /// <summary>
+        /// Inserts a list of data in bulk.
+        /// </summary>
+        /// <param name="data">The set of dataobjects you want to insert</param>
+        /// <param name="sqlBulkCopy">The <see cref="SqlBulkCopy"/> class.</param>
+        /// <typeparam name="T">The type of record you to insert</typeparam>
+        public void BulkInsert<T>(IEnumerable<T> data, SqlBulkCopy sqlBulkCopy)
+        {
+            BulkInsertAsync(data, sqlBulkCopy).Wait();
+        }
+
+        /// <summary>
+        /// Insert data in bulk.
+        /// </summary>
+        /// <param name="data">The set of dataobjects you want to insert</param>
+        /// <param name="sqlBulkCopy">The <see cref="SqlBulkCopy"/> class.</param>
+        /// <typeparam name="T">The type of record you to insert</typeparam>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task BulkInsertAsync<T>(IEnumerable<T> data, SqlBulkCopy sqlBulkCopy)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+
+            if (sqlBulkCopy == null)
+            {
+                throw new ArgumentNullException("sqlBulkCopy");
+            }
+
+            using (ObjectDataReader<T> dataReader = new ObjectDataReader<T>(data))
+            {
+                await sqlBulkCopy.WriteToServerAsync(dataReader).ConfigureAwait(false);
+            }
+        }
+
+        #endregion
+
     }
 }

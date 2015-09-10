@@ -21,6 +21,7 @@
 // FITNESS FOR A PARTICULAR PURPOSE.
 // ==============================================================================
 
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -2265,6 +2266,34 @@ namespace Mirabeau.MsSql.Library
         }
 
         #endregion ExecuteXmlReader
+
+        #region BulkInsert
+
+        /// <summary>
+        /// Inserts a list of data in bulk.
+        /// </summary>
+        /// <param name="data">The set of dataobjects you want to insert</param>
+        /// <param name="sqlBulkCopy">The <see cref="SqlBulkCopy"/> class.</param>
+        /// <typeparam name="T">The type of record you to insert</typeparam>
+        public static void BulkInsert<T>(IEnumerable<T> data, SqlBulkCopy sqlBulkCopy)
+        {
+            MsSqlHelper.BulkInsert(data, sqlBulkCopy);
+        }
+
+        /// <summary>
+        /// Insert data in bulk.
+        /// </summary>
+        /// <param name="data">The set of dataobjects you want to insert</param>
+        /// <param name="sqlBulkCopy">The <see cref="SqlBulkCopy"/> class.</param>
+        /// <typeparam name="T">The type of record you to insert</typeparam>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static async Task BulkInsertAsync<T>(IEnumerable<T> data, SqlBulkCopy sqlBulkCopy)
+        {
+            await MsSqlHelper.BulkInsertAsync(data, sqlBulkCopy);
+        }
+
+        #endregion
     }
 }
 // ReSharper restore MethodOverloadWithOptionalParameter

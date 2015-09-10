@@ -1,0 +1,9 @@
+﻿IF OBJECT_ID('People') IS NOT NULL
+  DROP TABLE People
+
+CREATE TABLE People
+(
+	Id int not null identity(1, 1) primary key,
+	NAME varchar(100) not null,
+	Date datetime not null
+)
