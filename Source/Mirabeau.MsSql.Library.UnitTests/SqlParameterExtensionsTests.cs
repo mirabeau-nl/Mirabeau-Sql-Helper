@@ -149,7 +149,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
         }
 
         [Test]
-        public void ShouldCreateGuidparameters()
+        public void ShouldCreateGuidParameters()
         {
             Guid? guid = null;
             SqlParameter sqlParameter1 = guid.CreateSqlParameter("ParameterName");
