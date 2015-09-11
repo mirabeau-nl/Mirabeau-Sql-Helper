@@ -1732,12 +1732,12 @@ namespace Mirabeau.Sql.Library
         /// <param name="commandParameters">
         /// An array of DbParameters to be added to command
         /// </param>
-        private static void AttachParameters<TParameter>(DbCommand command, IEnumerable<TParameter> commandParameters) where TParameter:DbParameter
+        private static void AttachParameters<TParameter>(DbCommand command, IEnumerable<TParameter> commandParameters) where TParameter : DbParameter
         {
             foreach (TParameter dbParameter in commandParameters)
             {
-                // Controleer op een output parameter (die afgeleid is als InputOutput) die geen waarde is gegeven.
-                if ((dbParameter.Direction == ParameterDirection.InputOutput) && (dbParameter.Value == null))
+                // If dbparameter doens't have a value, set it to DBNull.
+                if ((dbParameter.Direction == ParameterDirection.Input || dbParameter.Direction == ParameterDirection.InputOutput) && (dbParameter.Value == null))
                 {
                     dbParameter.Value = DBNull.Value;
                 }
