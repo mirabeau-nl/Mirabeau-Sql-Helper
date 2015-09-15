@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.SqlServer.Types;
 using NUnit.Framework;
 
 // ReSharper disable ExpressionIsAlwaysNull
@@ -149,7 +150,7 @@ namespace Mirabeau.MsSql.Library.UnitTests
         }
 
         [Test]
-        public void ShouldCreateGuidparameters()
+        public void ShouldCreateGuidParameters()
         {
             Guid? guid = null;
             SqlParameter sqlParameter1 = guid.CreateSqlParameter("ParameterName");
@@ -160,7 +161,24 @@ namespace Mirabeau.MsSql.Library.UnitTests
             SqlParameter sqlParameter2 = otherGuid.CreateSqlParameter("ParameterName");
             Assert.That(sqlParameter2.Value, Is.EqualTo(otherGuid));
             Assert.That(sqlParameter2.ParameterName, Is.EqualTo("ParameterName"));
+        }
 
+        [Test]
+        public void ShouldCreateGeometryParameter()
+        {
+            SqlParameter sqlParameter = SqlGeometry.Point(52.123, 5.321, 4326).CreateSqlParameter("geometry");
+
+            Assert.That(sqlParameter.Value.ToString(), Is.EqualTo("POINT (52.123 5.321)"));
+            Assert.That(sqlParameter.UdtTypeName, Is.EqualTo("Geometry"));
+        }
+
+        [Test]
+        public void ShouldCreateGeographyParameter()
+        {
+            SqlParameter sqlParameter = SqlGeography.Point(52.123, 5.321, 4326).CreateSqlParameter("geography");
+
+            Assert.That(sqlParameter.Value.ToString(), Is.EqualTo("POINT (5.321 52.123)"));
+            Assert.That(sqlParameter.UdtTypeName, Is.EqualTo("Geography"));
         }
 
         /// <summary>
