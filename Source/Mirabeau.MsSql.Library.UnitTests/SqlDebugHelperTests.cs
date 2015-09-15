@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using Microsoft.SqlServer.Types;
 using NUnit.Framework;
 
 namespace Mirabeau.MsSql.Library.UnitTests
@@ -133,6 +134,20 @@ namespace Mirabeau.MsSql.Library.UnitTests
             string executableSql = SqlDebugHelper.CreateExecutableSqlStatement("my_sp", parameter);
             Trace.WriteLine(executableSql);
             Assert.That(executableSql, Is.EqualTo("EXEC my_sp @param = 'ConstantValue'"));
+        }
+
+        [Test]
+        public void ShouldHandleGeometry()
+        {
+            var geom = SqlGeometry.Point(52.123, 5.321, 4326).CreateSqlParameter("geom");
+            var geof = SqlGeography.Point(52.123, 5.321, 4326).CreateSqlParameter("geof");
+
+            IList<SqlParameter> parameters = new List<SqlParameter>();
+            parameters.Add(geom);
+            parameters.Add(geof);
+
+            var executableSqlStatement = SqlDebugHelper.CreateExecutableSqlStatement("insert into geo VALUES (@geom, @geof)", parameters);
+            Trace.WriteLine(executableSqlStatement);
         }
 
         class CustomerGenerator : SqlGenerator
