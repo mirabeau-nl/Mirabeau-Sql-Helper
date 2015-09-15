@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.SqlServer.Types;
 
 namespace Mirabeau.MsSql.Library
 {
@@ -277,6 +278,34 @@ namespace Mirabeau.MsSql.Library
         public static SqlParameter CreateSqlParameter(this Guid? theValue, string parameterName, ParameterDirection direction = DefaultDirectionInputDirection)
         {
             return Factory.CreateParameter(theValue, parameterName, direction);
+        }
+
+        /// <summary>
+        /// Creates a SqlParameter for a SqlGeometry.
+        /// </summary>
+        /// <param name="theValue">the value.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <param name="direction">The direction of the parameter.</param>
+        /// <returns>The <see cref="SqlParameter"/></returns>
+        public static SqlParameter CreateSqlParameter(this SqlGeometry theValue, string parameterName, ParameterDirection direction = DefaultDirectionInputDirection)
+        {
+            SqlParameter parameter = Factory.CreateParameter(theValue, parameterName, direction);
+            parameter.UdtTypeName = "Geometry";
+            return parameter;
+        }
+
+        /// <summary>
+        /// Creates a SqlParameter for a SqlGeography.
+        /// </summary>
+        /// <param name="theValue">the value.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <param name="direction">The direction of the parameter.</param>
+        /// <returns>The <see cref="SqlParameter"/></returns>
+        public static SqlParameter CreateSqlParameter(this SqlGeography theValue, string parameterName, ParameterDirection direction = DefaultDirectionInputDirection)
+        {
+            SqlParameter parameter = Factory.CreateParameter(theValue, parameterName, direction);
+            parameter.UdtTypeName = "Geography";
+            return parameter;
         }
     }
 }

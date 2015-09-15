@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Microsoft.SqlServer.Types;
 using Mirabeau.Sql.Library;
 
 namespace Mirabeau.MsSql.Library
@@ -140,6 +142,9 @@ namespace Mirabeau.MsSql.Library
                 case SqlDbType.Text:
                     declare = string.Format(FormatCulture, "declare @{0} nvarchar(max)", dbParameter.ParameterName);
                     break;
+                case SqlDbType.Udt:
+                    declare = string.Format(FormatCulture, "declare @{0} {1}", dbParameter.ParameterName, dbParameter.UdtTypeName);
+                    break;
                 default:
 
                     declare = string.Format(FormatCulture, "declare @{0} {1}", dbParameter.ParameterName,
@@ -212,6 +217,20 @@ namespace Mirabeau.MsSql.Library
                 case SqlDbType.Binary:
                 case SqlDbType.VarBinary:
                     retval = " -- The image and binary data types are not supported --";
+                    break;
+                case SqlDbType.Udt:
+                    retval = "udt";
+                    if (sqlParameter.UdtTypeName.Equals("geometry", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var geometry = sqlParameter.Value as SqlGeometry;
+                        retval = string.Format("geometry::STGeomFromText('{0}',{1})", sqlParameter.Value, geometry.STSrid);
+                    }
+
+                    if (sqlParameter.UdtTypeName.Equals("geography", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var sqlGeography = sqlParameter.Value as SqlGeography;
+                        retval = string.Format("geography::STGeomFromText('{0}',{1})", sqlParameter.Value, sqlGeography.STSrid);
+                    }
                     break;
                 default:
                     retval = sqlParameter.Value.ToString().ReplaceSingleQuote();
