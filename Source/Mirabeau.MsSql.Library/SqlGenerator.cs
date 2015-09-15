@@ -223,13 +223,13 @@ namespace Mirabeau.MsSql.Library
                     if (sqlParameter.UdtTypeName.Equals("geometry", StringComparison.OrdinalIgnoreCase))
                     {
                         var geometry = sqlParameter.Value as SqlGeometry;
-                        retval = string.Format("geometry::STGeomFromText('{0}',{1})", sqlParameter.Value, geometry.STSrid);
+                        retval = string.Format(FormatCulture, "geometry::STGeomFromText('{0}',{1})", sqlParameter.Value, geometry.STSrid);
                     }
 
                     if (sqlParameter.UdtTypeName.Equals("geography", StringComparison.OrdinalIgnoreCase))
                     {
                         var sqlGeography = sqlParameter.Value as SqlGeography;
-                        retval = string.Format("geography::STGeomFromText('{0}',{1})", sqlParameter.Value, sqlGeography.STSrid);
+                        retval = string.Format(FormatCulture, "geography::STGeomFromText('{0}',{1})", sqlParameter.Value, sqlGeography.STSrid);
                     }
                     break;
                 default:
