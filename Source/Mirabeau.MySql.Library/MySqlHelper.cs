@@ -38,10 +38,5 @@ namespace Mirabeau.MySql.Library
         {
             return new MySqlDataAdapter(command as MySqlCommand);
         }
-
-        protected override T SqlCommandExecuter<T>(Func<T> action)
-        {
-            return action();
-        }
     }
 }

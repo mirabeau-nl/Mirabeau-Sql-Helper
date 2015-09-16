@@ -1898,7 +1898,14 @@ namespace Mirabeau.Sql.Library
         /// <typeparam name="T"></typeparam>
         /// <param name="action">The action.</param>
         /// <returns></returns>
-        protected abstract T SqlCommandExecuter<T>(Func<T> action);
+        protected virtual T SqlCommandExecuter<T>(Func<T> action)
+        {
+            if (action == null)
+            {
+                throw new ArgumentNullException("action");
+            }
+            return action();
+        }
     }
 }
 // ReSharper restore MethodOverloadWithOptionalParameter
