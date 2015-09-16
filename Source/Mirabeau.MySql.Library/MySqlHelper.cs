@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 using Mirabeau.Sql.Library;
 using MySql.Data.MySqlClient;
 
@@ -36,6 +37,11 @@ namespace Mirabeau.MySql.Library
         public override DbDataAdapter CreateDataAdapter(DbCommand command)
         {
             return new MySqlDataAdapter(command as MySqlCommand);
+        }
+
+        protected override T SqlCommandExecuter<T>(Func<T> action)
+        {
+            return action();
         }
     }
 }

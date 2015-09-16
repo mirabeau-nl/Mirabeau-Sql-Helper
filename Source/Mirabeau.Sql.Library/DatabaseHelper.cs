@@ -28,6 +28,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 
 // ReSharper disable MethodOverloadWithOptionalParameter
@@ -305,7 +306,7 @@ namespace Mirabeau.Sql.Library
                 await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Finally, execute the command
-                int retval = await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+                int retval = await SqlCommandExecuter(() => cmd.ExecuteNonQueryAsync().ConfigureAwait(false));
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -426,7 +427,7 @@ namespace Mirabeau.Sql.Library
                 await PrepareCommandAsync(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Execute the query
-                int retval = await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+                int retval = await SqlCommandExecuter(() => cmd.ExecuteNonQueryAsync().ConfigureAwait(false));
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -685,11 +686,11 @@ namespace Mirabeau.Sql.Library
             // Call ExecuteReader with the appropriate CommandBehavior
             if (connectionOwnership == SqlConnectionOwnership.External)
             {
-                dr = await cmd.ExecuteReaderAsync().ConfigureAwait(false);
+                dr = await SqlCommandExecuter(() => cmd.ExecuteReaderAsync().ConfigureAwait(false));
             }
             else
             {
-                dr = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection).ConfigureAwait(false);
+                dr = await SqlCommandExecuter(() => cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection));
             }
 
             // Detach the DbParameters from the command object, so they can be used again.
@@ -1481,7 +1482,7 @@ namespace Mirabeau.Sql.Library
                 await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Execute the command & return the results
-                object retval = await cmd.ExecuteScalarAsync().ConfigureAwait(false);
+                object retval = await SqlCommandExecuter(() => cmd.ExecuteScalarAsync().ConfigureAwait(false));
 
                 // Wis de DbParameters van het command object, zodat ze opnieuw kunnen worden gebruikt.
                 cmd.Parameters.Clear();
@@ -1707,7 +1708,7 @@ namespace Mirabeau.Sql.Library
                 await PrepareCommandAsync(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Create the DataAdapter & DataSet
-                object retval = await cmd.ExecuteScalarAsync().ConfigureAwait(false);
+                object retval = await SqlCommandExecuter(() => cmd.ExecuteScalarAsync().ConfigureAwait(false));
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -1890,6 +1891,14 @@ namespace Mirabeau.Sql.Library
         /// <param name="command">the <see cref="DbCommand"/>.</param>
         /// <returns></returns>
         public abstract DbDataAdapter CreateDataAdapter(DbCommand command);
+
+        /// <summary>
+        /// Wrapper around the sql execution.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="action">The action.</param>
+        /// <returns></returns>
+        protected abstract T SqlCommandExecuter<T>(Func<T> action);
     }
 }
 // ReSharper restore MethodOverloadWithOptionalParameter

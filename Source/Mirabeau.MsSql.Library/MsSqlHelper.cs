@@ -61,6 +61,11 @@ namespace Mirabeau.MsSql.Library
             return new SqlDataAdapter(command as SqlCommand);
         }
 
+        protected override T SqlCommandExecuter<T>(Func<T> action)
+        {
+            return action();
+        }
+
         #region ExecuteNonQuery
 
         /// <summary>
@@ -899,7 +904,7 @@ namespace Mirabeau.MsSql.Library
                 PrepareCommand(cmd, connection, null, commandType, commandText, commandParameters);
 
                 // Create the DataAdapter & DataSet
-                XmlReader retval = cmd.ExecuteXmlReader();
+                XmlReader retval = SqlCommandExecuter(() => cmd.ExecuteXmlReader());
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -928,7 +933,7 @@ namespace Mirabeau.MsSql.Library
                 await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Create the DataAdapter & DataSet
-                XmlReader retval = await cmd.ExecuteXmlReaderAsync().ConfigureAwait(false);
+                XmlReader retval = await SqlCommandExecuter(() => cmd.ExecuteXmlReaderAsync().ConfigureAwait(false));
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -1110,7 +1115,7 @@ namespace Mirabeau.MsSql.Library
                 PrepareCommand(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters);
 
                 // Create the DataAdapter & DataSet
-                retval = cmd.ExecuteXmlReader();
+                retval = SqlCommandExecuter(() => cmd.ExecuteXmlReader());
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
