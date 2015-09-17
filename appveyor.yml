@@ -18,7 +18,7 @@ environment:
 after_test: 
   - Source\packages\OpenCover.4.5.3723\OpenCover.Console.exe -mergeoutput -register:user -target:"Source\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" "-targetargs:""Source\Mirabeau.MsSql.Library.UnitTests\bin\Release\Mirabeau.MsSql.Library.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
   - Source\packages\OpenCover.4.5.3723\OpenCover.Console.exe -mergeoutput -register:user -target:"Source\packages\NUnit.Runners.2.6.4\tools\nunit-console.exe" "-targetargs:""Source\Mirabeau.MySql.Library.UnitTests\bin\Release\Mirabeau.MySql.Library.UnitTests.dll"" /noshadow" -output:opencoverCoverage.xml
-  - Source\packages\coveralls.net.0.5.0\csmacnz.Coveralls.exe --opencover -i opencoverCoverage.xml --repoToken %COVERALLS_REPO_TOKEN% --commitBranch %APPVEYOR_REPO_BRANCH%
+  - Source\packages\coveralls.net.0.6.0\tools\csmacnz.Coveralls.exe --opencover -i opencoverCoverage.xml --repoToken %COVERALLS_REPO_TOKEN% --commitBranch %APPVEYOR_REPO_BRANCH%
 deploy:
 - provider: NuGet
   api_key:
