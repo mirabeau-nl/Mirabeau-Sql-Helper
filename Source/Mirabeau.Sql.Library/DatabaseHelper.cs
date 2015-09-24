@@ -187,15 +187,16 @@ namespace Mirabeau.Sql.Library
             {
                 throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "connectionString");
             }
-
-            // Create & open a DbConnection, and dispose of it after we are done
-            using (DbConnection cn = CreateConnection(connectionString))
+            return await ActionExecuter(async () =>
             {
-                await cn.OpenAsync().ConfigureAwait(false);
+                using (DbConnection cn = ActionExecuter(() => CreateConnection(connectionString)))
+                {
+                    await cn.OpenAsync().ConfigureAwait(false);
 
-                // Call the overload that takes a connection in place of the connection string
-                return await ExecuteNonQueryAsync(cn, commandType, commandText, commandParameters).ConfigureAwait(false);
-            }
+                    // Call the overload that takes a connection in place of the connection string
+                    return await ExecuteNonQueryAsync(cn, commandType, commandText, commandParameters).ConfigureAwait(false);
+                }
+            });
         }
 
         /// <summary>
@@ -306,7 +307,7 @@ namespace Mirabeau.Sql.Library
                 await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Finally, execute the command
-                int retval = await SqlCommandExecuter(() => cmd.ExecuteNonQueryAsync().ConfigureAwait(false));
+                int retval = await ActionExecuter(() => cmd.ExecuteNonQueryAsync().ConfigureAwait(false));
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -427,7 +428,7 @@ namespace Mirabeau.Sql.Library
                 await PrepareCommandAsync(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Execute the query
-                int retval = await SqlCommandExecuter(() => cmd.ExecuteNonQueryAsync().ConfigureAwait(false));
+                int retval = await ActionExecuter(() => cmd.ExecuteNonQueryAsync().ConfigureAwait(false));
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -496,13 +497,17 @@ namespace Mirabeau.Sql.Library
             }
 
             // Create & open a DbConnection, and dispose of it after we are done
-            using (DbConnection cn = CreateConnection(connectionString))
+            return ActionExecuter(() =>
             {
-                cn.Open();
+                using (DbConnection cn = CreateConnection(connectionString))
+                {
+                    cn.Open();
 
-                // Call the overload that takes a connection in place of the connection string
-                return ExecuteDataSet(cn, commandType, commandText, commandParameters);
-            }
+                    // Call the overload that takes a connection in place of the connection string
+                    return ExecuteDataSet(cn, commandType, commandText, commandParameters);
+                }
+            });
+            
         }
 
         /// <summary>
@@ -686,11 +691,11 @@ namespace Mirabeau.Sql.Library
             // Call ExecuteReader with the appropriate CommandBehavior
             if (connectionOwnership == SqlConnectionOwnership.External)
             {
-                dr = await SqlCommandExecuter(() => cmd.ExecuteReaderAsync().ConfigureAwait(false));
+                dr = await ActionExecuter(() => cmd.ExecuteReaderAsync().ConfigureAwait(false));
             }
             else
             {
-                dr = await SqlCommandExecuter(() => cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection));
+                dr = await ActionExecuter(() => cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection));
             }
 
             // Detach the DbParameters from the command object, so they can be used again.
@@ -819,22 +824,26 @@ namespace Mirabeau.Sql.Library
                 throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "connectionString");
             }
 
-            // Create and open the sql connection.
-            DbConnection cn = CreateConnection(connectionString);
-            await cn.OpenAsync().ConfigureAwait(false);
+            return await ActionExecuter(async () =>
+            {
+                // Create and open the sql connection.
+                DbConnection cn = CreateConnection(connectionString);
+                await cn.OpenAsync().ConfigureAwait(false);
 
-            try
-            {
-                // Call the private overload that takes an internally owned connection in place of the connection string
-                TReader reader = await ExecuteReaderAsync<TReader, TParameter>(cn, null, commandType, commandText, commandParameters, SqlConnectionOwnership.Internal).ConfigureAwait(false);
-                return reader;
-            }
-            catch
-            {
-                // If we fail to return the SqlDatReader, we need to close the connection ourselves
-                cn.Close();
-                throw;
-            }
+                try
+                {
+                    // Call the private overload that takes an internally owned connection in place of the connection string
+                    TReader reader = await ExecuteReaderAsync<TReader, TParameter>(cn, null, commandType, commandText, commandParameters, SqlConnectionOwnership.Internal).ConfigureAwait(false);
+                    return reader;
+                }
+                catch
+                {
+                    // If we fail to return the SqlDatReader, we need to close the connection ourselves
+                    cn.Close();
+                    throw;
+                }
+            });
+            
         }
 
         /// <summary>
@@ -1284,14 +1293,17 @@ namespace Mirabeau.Sql.Library
                 throw new ArgumentException(String_Resources.CannotbeNullOrEmpty, "connectionString");
             }
 
-            // Create & open a SqlConnection, and dispose of it after we are done
-            using (DbConnection cn = CreateConnection(connectionString))
+            return await ActionExecuter(async () =>
             {
-                await cn.OpenAsync().ConfigureAwait(false);
+                // Create & open a SqlConnection, and dispose of it after we are done
+                using (DbConnection cn = CreateConnection(connectionString))
+                {
+                    await cn.OpenAsync().ConfigureAwait(false);
 
-                // Stuur de aanvraag door naar de overload waaraan een connectie meegegeven kan worden.
-                return await ExecuteScalarAsync<TResult, TParameter>(cn, commandType, commandText, commandParameters).ConfigureAwait(false);
-            }
+                    // Stuur de aanvraag door naar de overload waaraan een connectie meegegeven kan worden.
+                    return await ExecuteScalarAsync<TResult, TParameter>(cn, commandType, commandText, commandParameters).ConfigureAwait(false);
+                }
+            });
         }
 
         /// <summary>
@@ -1506,7 +1518,7 @@ namespace Mirabeau.Sql.Library
                 await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Execute the command & return the results
-                object retval = await SqlCommandExecuter(() => cmd.ExecuteScalarAsync().ConfigureAwait(false));
+                object retval = await ActionExecuter(() => cmd.ExecuteScalarAsync().ConfigureAwait(false));
 
                 // Wis de DbParameters van het command object, zodat ze opnieuw kunnen worden gebruikt.
                 cmd.Parameters.Clear();
@@ -1732,7 +1744,7 @@ namespace Mirabeau.Sql.Library
                 await PrepareCommandAsync(cmd, transaction.Connection, transaction, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Create the DataAdapter & DataSet
-                object retval = await SqlCommandExecuter(() => cmd.ExecuteScalarAsync().ConfigureAwait(false));
+                object retval = await ActionExecuter(() => cmd.ExecuteScalarAsync().ConfigureAwait(false));
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();
@@ -1922,7 +1934,7 @@ namespace Mirabeau.Sql.Library
         /// <typeparam name="T"></typeparam>
         /// <param name="action">The action.</param>
         /// <returns></returns>
-        public virtual T SqlCommandExecuter<T>(Func<T> action)
+        public virtual T ActionExecuter<T>(Func<T> action)
         {
             if (action == null)
             {

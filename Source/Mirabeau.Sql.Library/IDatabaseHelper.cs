@@ -1234,6 +1234,6 @@ namespace Mirabeau.Sql.Library
         /// <typeparam name="T"></typeparam>
         /// <param name="action">The action.</param>
         /// <returns></returns>
-        T SqlCommandExecuter<T>(Func<T> action);
+        T ActionExecuter<T>(Func<T> action);
     }
 }
