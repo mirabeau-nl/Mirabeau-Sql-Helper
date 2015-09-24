@@ -37,7 +37,10 @@ namespace Mirabeau.MySql.Library
     /// </remarks>
     public static class DatabaseHelper
     {
-        private static readonly IMySqlHelper MySqlHelper = new MySqlHelper();
+        /// <summary>
+        /// The MYSQL helper you want to use to execute the statements.
+        /// </summary>
+        public static IMySqlHelper MySqlHelper = new MySqlHelper();
 
         /// <summary>
         /// Gets or sets the command timeout property. Default value is read from config.
