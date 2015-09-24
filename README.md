@@ -87,6 +87,13 @@ string executableSql = SqlDebugHelper.CreateExecutableSqlStatement(sql, paramete
 //EXEC sp_test @value1 = 0, @value2 = N'hello world', @value3 = null, @value4 = 123.456"));
 ```
 
+### Extend and override ###
+Do you want to log all exceptions, or want to override any action in the SqlHelper?
+See this test how to override and interact with every executed action
+
+[ActionExecuterTests.cs](https://github.com/jeroenpot/SqlHelper/blob/master/Source/Mirabeau.MsSql.Library.UnitTests/ActionExecuterTests.cs)
+
+
 ### How do I get set up? ###
 
 Build the project, or get the nuget package:
