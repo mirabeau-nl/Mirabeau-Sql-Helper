@@ -39,7 +39,10 @@ namespace Mirabeau.MsSql.Library
     /// </remarks>
     public static class DatabaseHelper
     {
-        private static readonly IMsSqlHelper MsSqlHelper = new MsSqlHelper();
+        /// <summary>
+        /// The ms SQL helper you want to use to execute the statements.
+        /// </summary>
+        public static IMsSqlHelper MsSqlHelper = new MsSqlHelper();
 
         /// <summary>
         /// Gets or sets the command timeout property. Default value is read from config.
