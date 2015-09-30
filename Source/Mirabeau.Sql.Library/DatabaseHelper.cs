@@ -692,7 +692,7 @@ namespace Mirabeau.Sql.Library
             }
             else
             {
-                dr = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection);
+                dr = await cmd.ExecuteReaderAsync(CommandBehavior.CloseConnection).ConfigureAwait(false);
             }
 
             // Detach the DbParameters from the command object, so they can be used again.
