@@ -917,7 +917,7 @@ namespace Mirabeau.MsSql.Library
                 await PrepareCommandAsync(cmd, connection, null, commandType, commandText, commandParameters).ConfigureAwait(false);
 
                 // Create the DataAdapter & DataSet
-                XmlReader retval = await ActionExecuter(() => cmd.ExecuteXmlReaderAsync().ConfigureAwait(false));
+                XmlReader retval = await cmd.ExecuteXmlReaderAsync().ConfigureAwait(false);
 
                 // Detach the DbParameters from the command object, so they can be used again
                 cmd.Parameters.Clear();

@@ -90,7 +90,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionExecuterTests.cs" />
     <Compile Include="DatabaseHelperTests.cs" />
     <Compile Include="DbDataReaderHelperTests.cs" />
     <Compile Include="GlobalSuppressions.cs" />

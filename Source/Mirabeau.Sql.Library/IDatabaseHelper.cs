@@ -1227,13 +1227,5 @@ namespace Mirabeau.Sql.Library
         /// <param name="command">the <see cref="DbCommand"/>.</param>
         /// <returns></returns>
         DbDataAdapter CreateDataAdapter(DbCommand command);
-
-        /// <summary>
-        /// Wrapper around the sql execution.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="action">The action.</param>
-        /// <returns></returns>
-        T ActionExecuter<T>(Func<T> action);
     }
 }

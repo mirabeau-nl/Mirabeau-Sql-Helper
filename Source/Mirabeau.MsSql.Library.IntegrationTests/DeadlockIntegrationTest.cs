@@ -16,7 +16,7 @@ namespace Mirabeau.MsSql.Library.IntegrationTests
             // http://stackoverflow.com/questions/13489065/best-practice-to-call-configureawait-for-all-server-side-code/13489639#13489639
             // http://blog.stephencleary.com/2012/07/dont-block-on-async-code.html
 
-            string connectionstring = "Insert connection string";
+            string connectionstring = "Server=.;Database=master;Integrated Security=true";
 
             SqlConnection conn = new SqlConnection(connectionstring);
             await conn.OpenAsync();
