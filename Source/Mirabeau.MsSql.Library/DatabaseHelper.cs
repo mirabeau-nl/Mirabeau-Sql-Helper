@@ -2293,7 +2293,7 @@ namespace Mirabeau.MsSql.Library
         /// <exception cref="ArgumentNullException"></exception>
         public static async Task BulkInsertAsync<T>(IEnumerable<T> data, SqlBulkCopy sqlBulkCopy)
         {
-            await MsSqlHelper.BulkInsertAsync(data, sqlBulkCopy);
+            await MsSqlHelper.BulkInsertAsync(data, sqlBulkCopy).ConfigureAwait(false);
         }
 
         #endregion
