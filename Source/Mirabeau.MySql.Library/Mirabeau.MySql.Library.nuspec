@@ -16,7 +16,7 @@
     <copyright>Copyright 2015</copyright>
     <tags>SqlHelper,MySql, DatabaseHelper, SQL, MySqlHelper</tags>
     <dependencies>
-      <dependency id="MySql.Data" />
+      <dependency id="MySql.Data" version="6.7.8" />
     </dependencies>
   </metadata>
 </package>
