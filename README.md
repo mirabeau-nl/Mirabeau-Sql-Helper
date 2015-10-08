@@ -10,9 +10,9 @@ There is also a now-static version (MsSqlHelper : IMsSqlHelper & MySqlHelper : I
 
 The is also an option to generate Sql-staments for queries and stored procedure with parameter declaration to debug your queries in Sql Server Managerment studio (Sql-server only).
 
-Build status| Coverage Status| NuGet downloads (MSSql) | NuGet downloads (MYSQL)
------------ | -------------- | --------------- | ---------------
-[![Build status](https://ci.appveyor.com/api/projects/status/ip703gxi2cy8i6bh?svg=true)](https://ci.appveyor.com/project/jeroenpot/sqlhelper)|[![Coverage Status](https://coveralls.io/repos/jeroenpot/SqlHelper/badge.svg?branch=&service=github)](https://coveralls.io/github/jeroenpot/SqlHelper?branch=)|[![NuGet downloads MsSqlHelper](https://img.shields.io/nuget/dt/MsSqlHelper.svg)](https://www.nuget.org/packages/MsSqlHelper)|[![NuGet downloads MySqlHelper](https://img.shields.io/nuget/dt/MySqlHelper.svg)](https://www.nuget.org/packages/MySqlHelper)
+NuGet downloads (MSSql) | NuGet downloads (MYSQL)
+--------------- | ---------------
+[![NuGet downloads Mirabeau.MsSql.Library](https://img.shields.io/nuget/dt/Mirabeau.Sql.Library.svg)](https://www.nuget.org/packages/Mirabeau.Sql.Library)|[![NuGet downloads Mirabeau.MySql.Library](https://img.shields.io/nuget/dt/Mirabeau.MySql.Library.svg)](https://www.nuget.org/packages/Mirabeau.MySql.Library)
 
 ### Examples ###
 #### Sql parameters ####
@@ -86,13 +86,6 @@ string executableSql = SqlDebugHelper.CreateExecutableSqlStatement(sql, paramete
 // Results in
 //EXEC sp_test @value1 = 0, @value2 = N'hello world', @value3 = null, @value4 = 123.456"));
 ```
-
-### Extend and override ###
-Do you want to log all exceptions, or want to override any action in the SqlHelper?
-See this test how to override and interact with every executed action
-
-[ActionExecuterTests.cs](https://github.com/jeroenpot/SqlHelper/blob/master/Source/Mirabeau.MsSql.Library.UnitTests/ActionExecuterTests.cs)
-
 
 ### How do I get set up? ###
 
