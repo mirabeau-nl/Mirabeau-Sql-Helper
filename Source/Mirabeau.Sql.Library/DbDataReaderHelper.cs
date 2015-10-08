@@ -12,7 +12,6 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <typeparam name="T">The type.</typeparam>
-        /// <returns>The <see cref="T"/>.</returns>
         public static T GetDbValueOrDefaultForValueType<T>(this object theValue) where T : struct
         {
             if (theValue is DBNull)
@@ -28,7 +27,6 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <typeparam name="T">The type.</typeparam>
-        /// <returns>The nullable <see cref="T"/>.</returns>
         public static T? GetDbValueForNullableValueType<T>(this object theValue) where T : struct
         {
             if (theValue == DBNull.Value)
@@ -44,7 +42,6 @@ namespace Mirabeau.Sql.Library
         /// </summary>
         /// <param name="theValue">The value.</param>
         /// <typeparam name="T">The type.</typeparam>
-        /// <returns>The <see cref="T"/></returns>
         public static T GetDbValueOrNullForReferenceType<T>(this object theValue) where T : class
         {
             if (theValue is DBNull)
