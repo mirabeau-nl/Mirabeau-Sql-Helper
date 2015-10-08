@@ -7,7 +7,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using Microsoft.SqlServer.Types;
-using Mirabeau.Sql.Library;
+
+using Mirabeau.Sql;
 
 namespace Mirabeau.MsSql.Library
 {

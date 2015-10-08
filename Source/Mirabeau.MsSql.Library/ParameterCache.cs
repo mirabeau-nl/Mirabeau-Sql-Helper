@@ -29,7 +29,8 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
-using Mirabeau.Sql.Library;
+
+using Mirabeau.Sql;
 
 namespace Mirabeau.MsSql.Library
 {

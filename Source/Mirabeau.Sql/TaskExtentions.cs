@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Mirabeau.Sql.Library
+namespace Mirabeau.Sql
 {
     internal static class TaskExtentions
     {

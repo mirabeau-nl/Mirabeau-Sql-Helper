@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.Common;
-using Mirabeau.Sql.Library;
+
+using Mirabeau.Sql;
+
 using MySql.Data.MySqlClient;
 
 namespace Mirabeau.MySql.Library

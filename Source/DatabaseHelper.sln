@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.Sql.Library", "Mirabeau.Sql.Library\Mirabeau.Sql.Library.csproj", "{0D304D74-5711-401F-9E23-0485524821E2}"
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.Sql", "Mirabeau.Sql\Mirabeau.Sql.csproj", "{0D304D74-5711-401F-9E23-0485524821E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirabeau.MsSql.Library.UnitTests", "Mirabeau.MsSql.Library.UnitTests\Mirabeau.MsSql.Library.UnitTests.csproj", "{E602608D-DA5D-4430-960A-694D1FD8D2A2}"
 EndProject

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mirabeau.Sql.Library
+namespace Mirabeau.Sql
 {
     /// <summary>
     /// Helper for the DatabaseDataReader object.

@@ -8,8 +8,8 @@
     <ProjectGuid>{0D304D74-5711-401F-9E23-0485524821E2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mirabeau.Sql.Library</RootNamespace>
-    <AssemblyName>Mirabeau.Sql.Library</AssemblyName>
+    <RootNamespace>Mirabeau.Sql</RootNamespace>
+    <AssemblyName>Mirabeau.Sql</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -53,7 +53,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <DocumentationFile>bin\Debug\Mirabeau.Sql.Library.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Mirabeau.Sql.xml</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -65,7 +65,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\Mirabeau.Sql.Library.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Mirabeau.Sql.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>

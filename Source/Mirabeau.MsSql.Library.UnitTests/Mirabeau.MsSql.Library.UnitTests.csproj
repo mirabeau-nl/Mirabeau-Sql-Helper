@@ -108,9 +108,9 @@
       <Project>{b7ef69f5-0582-4c03-b8d0-ade4060ed8fc}</Project>
       <Name>Mirabeau.MsSql.Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mirabeau.Sql.Library\Mirabeau.Sql.Library.csproj">
+    <ProjectReference Include="..\Mirabeau.Sql\Mirabeau.Sql.csproj">
       <Project>{0D304D74-5711-401F-9E23-0485524821E2}</Project>
-      <Name>Mirabeau.Sql.Library</Name>
+      <Name>Mirabeau.Sql</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

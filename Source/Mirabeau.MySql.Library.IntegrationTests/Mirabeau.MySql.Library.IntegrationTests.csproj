@@ -72,9 +72,9 @@
       <Project>{aaded218-6603-4ed4-8bba-0f994cc62286}</Project>
       <Name>Mirabeau.MySql.Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mirabeau.Sql.Library\Mirabeau.Sql.Library.csproj">
+    <ProjectReference Include="..\Mirabeau.Sql\Mirabeau.Sql.csproj">
       <Project>{0D304D74-5711-401F-9E23-0485524821E2}</Project>
-      <Name>Mirabeau.Sql.Library</Name>
+      <Name>Mirabeau.Sql</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

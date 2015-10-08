@@ -6,7 +6,8 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Xml;
-using Mirabeau.Sql.Library;
+
+using Mirabeau.Sql;
 
 namespace Mirabeau.MsSql.Library
 {

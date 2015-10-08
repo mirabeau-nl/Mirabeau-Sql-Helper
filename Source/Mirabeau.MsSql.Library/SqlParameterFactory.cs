@@ -1,5 +1,6 @@
 ﻿using System.Data.SqlClient;
-using Mirabeau.Sql.Library;
+
+using Mirabeau.Sql;
 
 namespace Mirabeau.MsSql.Library
 {

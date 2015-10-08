@@ -1,5 +1,7 @@
 ﻿using System;
-using Mirabeau.Sql.Library;
+
+using Mirabeau.Sql;
+
 using NUnit.Framework;
 
 namespace Mirabeau.MsSql.Library.UnitTests

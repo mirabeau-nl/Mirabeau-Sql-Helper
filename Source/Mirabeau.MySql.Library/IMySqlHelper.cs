@@ -1,4 +1,4 @@
-using Mirabeau.Sql.Library;
+using Mirabeau.Sql;
 
 namespace Mirabeau.MySql.Library
 {

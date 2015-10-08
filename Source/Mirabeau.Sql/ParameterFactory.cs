@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 
-namespace Mirabeau.Sql.Library
+namespace Mirabeau.Sql
 {
     /// <summary>
     /// Factory for creating <see cref="DbParameter"/>s.

@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Mirabeau.Sql.Library")]
+[assembly: AssemblyTitle("Mirabeau.Sql")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mirabeau BV")]
-[assembly: AssemblyProduct("Mirabeau.Sql.Library")]
+[assembly: AssemblyProduct("Mirabeau.Sql")]
 [assembly: AssemblyCopyright("Copyright © Mirabeau BV 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
