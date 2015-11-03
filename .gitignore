@@ -1,2 +1,4 @@
 Source/packages/
 msbuild-by-convention/
+*.metaproj
+*.tmp

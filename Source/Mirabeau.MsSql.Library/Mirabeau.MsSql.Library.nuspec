@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Mirabeau.Sql.Library</id>
+    <version>$version$</version>
+    <title>Mirabeau.MsSql.Library</title>
+    <authors>Jeroen Pot,Dorus Verhoeckx,Sander Kinds</authors>
+    <owners>mirabeau</owners>
+    <projectUrl>https://github.com/mirabeau-nl/Mirabeau-Sql-Helper</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Mirabeau-Sql-Helper/develop/mssql-icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Static helper class for performing MS SQL operations.
+      Based on the Microsoft .NET Data Access Application Block v2.0.
+    </description>
+    <copyright>Copyright 2015</copyright>
+    <tags>SqlHelper,Sql Server,DatabaseHelper,SqlServer,SQL,MsSqlHelper</tags>
+  </metadata>
+</package>
